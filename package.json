@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +13,7 @@
     "express": "^4.16.3",
     "mongoose": "^5.7.7",
     "node-sass": "^4.13.0",
+    "nodemon": "^1.19.4",
     "the.rest": "^1.0.29"
   }
 }
