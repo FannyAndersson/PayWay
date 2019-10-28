@@ -1,11 +1,11 @@
-const express = require('express');
+const express = require( 'express' );
 
 const app = express();
 
 const port = 3000;
 
-app.listen(port, () => {
+app.listen( port, () => {
 
-    console.log('server listening on', port);
+    console.log( 'Server listening on', port );
 
-});
+} );

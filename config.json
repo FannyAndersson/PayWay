@@ -1,5 +1,5 @@
 {
-    "sass": [{
+    "sass": [ {
         "compileAtBootup": true,
         "watch": true,
         "arguments": {
@@ -8,5 +8,5 @@
             "outFile": "./src/css/style.css",
             "outputStyle": "compressed"
         }
-    }]
+    } ]
 }
