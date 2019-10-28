@@ -14,7 +14,8 @@ const connectionstring= require('./connectionstring.js')
 // Connect to MongoDB via Mongoose
 mongoose.connect(connectionstring , {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
 }, 
 console.log('db is up & running') );
 
