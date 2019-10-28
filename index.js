@@ -7,11 +7,12 @@ const config = require( './config.json' );
 const mongoose = require( 'mongoose' );
 const theRest = require( 'the.rest' );
 const port = 3000;
+const connectionstring= require('./connectionstring.js')
 
 
 
 // Connect to MongoDB via Mongoose
-mongoose.connect( 'mongodb+srv://dbAdmin:dbpassword@paywaydb-lsbwf.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect(connectionstring , {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }, 
