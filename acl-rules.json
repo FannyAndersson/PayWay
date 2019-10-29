@@ -5,16 +5,13 @@
             "user": "all",
             "admin": "all"
         },
-        "register": {
-            "user": "all",
-            "admin": "all"
-        },
         "transactions": {
             "user": "post put get",
             "admin": "all"
         },
         "users": {
-            "admin": "all"
+            "admin": "all", 
+            "user":  "all"
         }
     }
 }

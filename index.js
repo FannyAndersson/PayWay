@@ -19,7 +19,8 @@ mongoose.connect(
 	connectionstring,
 	{
 		useNewUrlParser: true,
-		useUnifiedTopology: true
+    useUnifiedTopology: true, 
+    useCreateIndex: true
 	},
 	console.log("db is up & running")
 );
@@ -63,11 +64,15 @@ app.post('/api/login', async (req, res) => {
   
   // check if/which user that is logged in
   app.get('/api/login', (req, res) => {
+    console.log(req, 'rekan')
     res.json(req.session.user ?
       req.session.user :
       {status: 'not logged in'}
     );
   });
+
+  app.post('/')
+
 
 app.use(express.static("public"));
 app.listen(port, () => {
