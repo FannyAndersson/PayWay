@@ -1,0 +1,20 @@
+{
+    "apiPath": "/api",
+    "rules": {
+        "login": {
+            "user": "all",
+            "admin": "all"
+        },
+        "register": {
+            "user": "all",
+            "admin": "all"
+        },
+        "transactions": {
+            "user": "post put get",
+            "admin": "all"
+        },
+        "users": {
+            "admin": "all"
+        }
+    }
+}
