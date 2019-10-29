@@ -1,10 +1,15 @@
 const express = require("express");
-const app = express();
 // Require the express module
 const path = require("path");
 const Sass = require("./sass");
 const config = require("./config.json");
 const mongoose = require("mongoose");
+const session = require('express-session');
+const connectMongo = require('connect-mongo')(session);
+const app = express();
+const User = require('./mongoose-models/user.model');
+const salt = 'ljusekatter are the best'; // unique secret
+
 const theRest = require("the.rest");
 const port = 3000;
 const connectionstring = require("./connectionstring.js");
@@ -23,6 +28,15 @@ for (let conf of config.sass) {
 	new Sass(conf);
 }
 
+// connect middleware
+app.use(express.json()) // body parser
+app.use(session({
+  secret: salt, // a unique secret
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }, // true on htttps server
+  store: new connectMongo({mongooseConnection: mongoose.connection})
+}));
 // connect our own acl middleware
 const acl = require('./acl');
 const aclRules = require('./acl-rules.json');
