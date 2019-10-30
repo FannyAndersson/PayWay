@@ -76,7 +76,7 @@ app.post('/api/login', async (req, res) => {
     );
   });
 
-  app.post('/')
+
 
 
 app.use(express.static("public"));
