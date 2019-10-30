@@ -2,16 +2,16 @@ module.exports = ({ expect, response, assert }) => ({
   path: "users",
   method: "post",
   body: {
-    name: "Lennon",
-    email: "lennon@gmail.se",
-    phone: "666",
-    password: "11111",
+    name: "Nala",
+    email: "nala@admin.se",
+    phone: "072666666",
+    password: "1234",
     activated: false,
-    role: "user"
+    role: "admin"
   },
   test() {
     // does the server say user created
-    expect(response.name).to.equal("Lennon");
-    expect(response.phone).to.equal("666");
+    expect(response.name).to.equal("Nala");
+    expect(response.phone).to.equal("072666666");
   }
 });

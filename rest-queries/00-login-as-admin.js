@@ -3,7 +3,7 @@ module.exports = ({ expect, response }) => ({
   method: "post",
   body: {
     name: "Nala",
-    password: "23456"
+    password: "1234"
   },
   test() {
     expect(response.name).to.equal("Nala");
