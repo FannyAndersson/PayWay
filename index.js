@@ -16,15 +16,21 @@ const connectionstring = require("./connectionstring.js");
 const useCustomRoutes = require("./routes/index");
 
 // Connect to MongoDB via Mongoose
-global.db = mongoose.connect(
-	connectionstring,
-	{
+mongoose
+	.connect(connectionstring, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		useCreateIndex: true
-	},
-	console.log("db is up & running")
-);
+	})
+	.then(
+		() => {
+			global.db = mongoose.connection;
+			console.log("db is up & running");
+		},
+		err => {
+			console.log(err);
+		}
+	);
 
 for (let conf of config.sass) {
 	new Sass(conf);

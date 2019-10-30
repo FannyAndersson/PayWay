@@ -1,3 +1,5 @@
+const User = require("../mongoose-models/user.model");
+
 function exampleRoutes(app, db) {
 	app.get("/chicken", (req, res) => {
 		res.json("chicken");
@@ -7,13 +9,14 @@ function exampleRoutes(app, db) {
 		res.json(req.params.id);
 	});
 
-	app.put("/api/users/:id", (req, res) => {
-		res.json(req.params._id);
-		let userId = res.json(req.params._id);
-		if (req.session.user._id === userId) {
-			res.json(db.find(x => x._id === userId));
+	app.put("/api/profile/:id", async (req, res) => {
+		let user = await User.findOne({ _id: req.params.id });
+		// if (user === req.session.user) {
+		if (user) {
+			let result = await User.updateOne({ _id: req.params.id }, req.body);
+			res.json(await User.findOne({ _id: req.params.id }));
 		} else {
-			res.json("Another user logged in");
+			res.json({ error: "Another user logged in" });
 		}
 	});
 }
