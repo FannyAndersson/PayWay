@@ -54,22 +54,38 @@ async function run() {
                 method: q.method,
                 'content-type': 'application/json',
                 json: q.body,
-                jar: cookieJar
+                jar: cookieJar,
+                resolveWithFullResponse: true,
             };
-            let res = { error: 404 };
+            let res = { body: { error: 404 }};
+
             try {
                 res = await request( req );
+            } catch (e) {
+                res = {
+                    statusCode: e.statusCode,
+                }
             }
-            catch ( e ) { }
-            if ( typeof res === 'string' ) {
+
+            if ( typeof res.body === 'string' ) {
                 try {
-                    res = JSON.parse( res );
+                    res.body = JSON.parse( res.body );
                 }
                 catch ( e ) {
-                    res = { nonJSON: res };
+                    res.body = { nonJSON: res.body };
                 }
             }
-            Object.assign( response, res );
+
+            const { statusCode } = res;
+
+            // keep the body, add the statusCode, so we don't have to rewrite stuff
+            const customResponseObject = {
+                ...res.body,
+                statusCode,
+            };
+
+            Object.assign( response, customResponseObject );
+
             req.json && ( req.body = req.json );
             delete req['content-type'];
             delete req.json;
@@ -77,7 +93,7 @@ async function run() {
             let t = {
                 name: query.name,
                 request: { ...req },
-                response: res,
+                response: customResponseObject,
                 tests: [],
                 status: 'passed'
             };
