@@ -57,11 +57,16 @@ async function run() {
                 jar: cookieJar,
                 resolveWithFullResponse: true,
             };
-            let res = { error: 404 };
+            let res = { body: { error: 404 }};
+
             try {
                 res = await request( req );
+            } catch (e) {
+                res = {
+                    statusCode: e.statusCode,
+                }
             }
-            catch ( e ) { }
+
             if ( typeof res.body === 'string' ) {
                 try {
                     res.body = JSON.parse( res.body );
