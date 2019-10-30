@@ -13,6 +13,7 @@ const salt = 'ljusekatter are the best'; // unique secret
 const theRest = require("the.rest");
 const port = 3000;
 const connectionstring = require("./connectionstring.js");
+const useCustomRoutes = require('./routes/index');
 
 // Connect to MongoDB via Mongoose
 mongoose.connect(
@@ -38,6 +39,10 @@ app.use(session({
   cookie: { secure: false }, // true on htttps server
   store: new connectMongo({mongooseConnection: mongoose.connection})
 }));
+
+// custom routes
+useCustomRoutes(app, mongoose.connection);
+
 // connect our own acl middleware
 const acl = require('./acl');
 const aclRules = require('./acl-rules.json');
