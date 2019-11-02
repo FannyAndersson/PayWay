@@ -1,6 +1,6 @@
 const User = require('../mongoose-models/user.model');
 const crypto = require('crypto')
-const salt = 'ljusekatter are the best'; // unique secret
+const salt = 'lussekatter are the best'; // unique secret
 
 
 function encryptPassword(password){
@@ -32,20 +32,31 @@ await user.save()
     app.post('/api/login', async (req, res) => {
         let {email, password} = req.body;
         password = encryptPassword(password);
-        let user = await User.findOne({email, password})
-          .select('name email').exec();
+        let user = await User.findOne({email:email})
+          .select('name email role').exec();
         if(user){ 
             req.session.user = user 
+            // console.log(user, 'loggedIn user')
         };
         res.json(user ? user : {error: 'User not found'});
       });
       
       // check if/which user that is logged in
-      app.get('/api/login', (req, res) => {
+      app.get('/api/login', async (req, res) => {
+          let user = await req.session.user
+          console.log(user.role, 'user role?')
         res.json(req.session.user ?
           req.session.user :
           {status: 'Not logged in'}
         );
     });
+
+    // app.delete( '/users/:id', async ( req, res ) => {
+    //     let user = await req.session.user
+    //     if(user.role !== "admin"){
+    //         console.log(user, 'admin?')
+    //     return res.status(401).send('For now: only admin allowed') 
+        // User.findByIdAndRemove({_id:  req.params.id })
+    // }} )
 }
 module.exports = register;
