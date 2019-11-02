@@ -11,7 +11,7 @@
         },
         "users": {
             "admin": "all", 
-            "user":  "all"
+            "user":  "post put get"
         }
     }
 }

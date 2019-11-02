@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const session = require('express-session');
 const connectMongo = require('connect-mongo')(session);
 const app = express();
-const salt = 'ljusekatter are the best'; // unique secret
+const salt = 'lussekatter are the best'; // unique secret
 
 const theRest = require("the.rest");
 const port = 3000;
