@@ -22,7 +22,7 @@ function register(app){
         }
 await user.save()
         res.json({
-            message: 'successfully registered', 
+            message: 'User successfully registered', 
             user: user,
             email: user.email
         });
@@ -37,14 +37,14 @@ await user.save()
         if(user){ 
             req.session.user = user 
         };
-        res.json(user ? user : {error: 'user not found'});
+        res.json(user ? user : {error: 'User not found'});
       });
       
       // check if/which user that is logged in
       app.get('/api/login', (req, res) => {
         res.json(req.session.user ?
           req.session.user :
-          {status: 'not logged in'}
+          {status: 'Not logged in'}
         );
     });
 }
