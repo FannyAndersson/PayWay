@@ -18,16 +18,18 @@ function resetPassword(app) {
             return res.status(404).send('no such user');
         }
 
+        // generate the users reset link (to the endpoint we create below)
         const link = `http://localhost:3000/api/reset-password/${user._id}`;
 
-        console.log('link', link);
-
+        // send email to the user with the password reset link
         sendEmail({
-            html: `<body><p>Click this link to get a new password and a free iPad - ${link}</p></body>`,
-            subject: 'PayWay - Återställ lösenord',
+            to: user.email,
+            html: `<body><p>Click this link to get a new assword and a free iPad - ${link}</p></body>`,
+            subject: 'PayWay - Reset Password',
         });
 
-        res.send(link);
+        // respond with status 200 (ok) to let frontend know that it was successful
+        res.status(200).end();
 
     });
 
@@ -37,18 +39,13 @@ function resetPassword(app) {
     // send to the user
     app.get('/api/reset-password/:id', async (req, res) => {
 
-        console.log('request parameter', req.params.id);
-
-        // get a password
+        // get a password (it's not really unique, but it should be 'unique enough' for our purposes)
         const password = generateUniquePassword();
 
         try {
+
             // get the user
             const user = await User.findById(req.params.id);
-
-            console.log('found user', user);
-
-            res.send('hello');
 
             // change the password
             user.password = password;
@@ -57,26 +54,32 @@ function resetPassword(app) {
             // notify the user with mail
             sendMailWithNewPassword(user.email, password);
 
+            res.send('We have sent an email to you containing your new assword. You can use this assword to login.');
+
         } catch (error) {
 
-            res.status(500).send('something went horribly wrong!');
+            // respond with status 500 (internal server error) to let frontend know there was an error when processing
+            // the request. Also send error obj as response.
+            res.status(500).json(error);
 
         }
 
-    })
+    });
 
 }
 
 function generateUniquePassword() {
 
     return String(Math.random());
+
 }
 
 function sendMailWithNewPassword(email, password) {
 
     sendEmail({
-        subject: 'Custom subject',
-        html: `<body><p>${password} - ${email}`,
+        to: email,
+        subject: 'PayWay - New password',
+        html: `<body><p>Hi! Your new password is ${password}. You can now user your new password to log into PayWay. We recommend that you change this password to something more fun.`,
     });
 
 }

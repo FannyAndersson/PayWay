@@ -16,14 +16,24 @@ const transporter = nodemailer.createTransport({
 
 function sendEmail(options) {
 
-    const mailOptions = {
+    const defaultMailOptions = {
         from: `"PayWay" payway@gmail.com`,
-        to: "elias.hj@gmail.com",
-        subject: "Hej Zhenya",
+        subject: "Email subject",
         html:
             "<body><h3>Hello Zhenya!</h3><p>Hallå Zhenya! Hur är det med dig?</p></body>",
-        ...options
+        to: null,
     };
+
+    const mailOptions = {
+        ...defaultMailOptions,
+        ...options,
+    };
+
+    if (!mailOptions.to) {
+
+        throw new Error('Mail must have recipient (\'to\' property)');
+
+    }
 
     transporter.sendMail(mailOptions, function(err, res) {
         if (err) {
