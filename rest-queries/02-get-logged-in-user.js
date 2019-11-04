@@ -3,6 +3,6 @@ module.exports = ({ expect, response, assert }) => ({
 	method: "get",
 	test() {
 		// does the server accept login - in that case it returns user object
-		expect(response.name).to.equal("Lennon");
+		expect(response.name).to.equal("Muffin");
 	}
 });

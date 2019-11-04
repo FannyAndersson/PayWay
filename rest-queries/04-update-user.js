@@ -1,10 +1,10 @@
 module.exports = ({ expect, response, store, req, assert }) => ({
-	path: "profile/5db981ba0da67b4100d07fbe",
+	path: "profile/5dbc3e048e367e72fc8b8109",
 	method: "put",
 	body: {
-		name: "Lena",
+		name: "MuffinA",
 		activated: true,
-		email: "lena345@gmail.com"
+		email: "brownie@gmail.com"
 	},
 	test() {
 		expect(response.error).to.not.equal("Another user logged in");
