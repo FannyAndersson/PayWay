@@ -2,10 +2,10 @@ module.exports = ({ expect, response }) => ({
 	path: "login",
 	method: "post",
 	body: {
-		name: "Lennon",
-		password: "11111"
+		name: "Muffin",
+		password: "11123"
 	},
 	test() {
-		expect(response.name).to.equal("Lennon");
+		expect(response.name).to.equal("Muffin");
 	}
 });
