@@ -84,17 +84,6 @@ app.get("/api/login", (req, res) => {
 	res.json(req.session.user ? req.session.user : { status: "not logged in" });
 });
 
-app.put("/api/profile/:id", (req, res) => {
-	let userId = res.json(req.params._id);
-	if (req.session.user._id === userId) {
-		res.send(db.find(x => x._id === userId));
-	} else {
-		res.send("Another user logged in");
-	}
-});
-
-app.post("/");
-
 app.use(express.static("public"));
 app.listen(port, () => {
 	console.log("Server listening on", port);
