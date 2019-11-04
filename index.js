@@ -69,7 +69,6 @@ app.post('/api/login', async (req, res) => {
   
   // check if/which user that is logged in
   app.get('/api/login', (req, res) => {
-    console.log(req, 'rekan')
     res.json(req.session.user ?
       req.session.user :
       {status: 'not logged in'}
