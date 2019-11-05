@@ -7,5 +7,6 @@ module.exports = ({ expect, response }) => ({
 	},
 	test() {
 		expect(response.name).to.equal("Muffin");
+		expect(response.role).to.equal("admin");
 	}
 });

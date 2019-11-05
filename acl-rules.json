@@ -9,6 +9,10 @@
             "user": "post put get",
             "admin": "all"
         },
+        "profile": {
+            "user": "post put get",
+            "admin": "all"
+        },
         "users": {
             "admin": "all", 
             "user":  "post put get"

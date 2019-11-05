@@ -4,47 +4,55 @@ const path = require("path");
 const Sass = require("./sass");
 const config = require("./config.json");
 const mongoose = require("mongoose");
-const session = require('express-session');
-const connectMongo = require('connect-mongo')(session);
+const session = require("express-session");
+const connectMongo = require("connect-mongo")(session);
 const app = express();
 const salt = 'lussekatter are the best'; // unique secret
 
 const theRest = require("the.rest");
 const port = 3000;
 const connectionstring = require("./connectionstring.js");
-const useCustomRoutes = require('./routes/index');
+const useCustomRoutes = require("./routes/index");
 
 // Connect to MongoDB via Mongoose
-mongoose.connect(
-	connectionstring,
-	{
+mongoose
+	.connect(connectionstring, {
 		useNewUrlParser: true,
-    useUnifiedTopology: true, 
-    useCreateIndex: true
-	},
-	console.log("db is up & running")
-);
+		useUnifiedTopology: true,
+		useCreateIndex: true
+	})
+	.then(
+		() => {
+			global.db = mongoose.connection;
+			console.log("db is up & running");
+		},
+		err => {
+			console.log(err);
+		}
+	);
 
 for (let conf of config.sass) {
 	new Sass(conf);
 }
 
 // connect middleware
-app.use(express.json()) // body parser
-app.use(session({
-  secret: salt, // a unique secret
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false }, // true on htttps server
-  store: new connectMongo({mongooseConnection: mongoose.connection})
-}));
+app.use(express.json()); // body parser
+app.use(
+	session({
+		secret: salt, // a unique secret
+		resave: false,
+		saveUninitialized: true,
+		cookie: { secure: false }, // true on htttps server
+		store: new connectMongo({ mongooseConnection: mongoose.connection })
+	})
+);
 
 // custom routes
 useCustomRoutes(app, mongoose.connection);
 
 // connect our own acl middleware
-const acl = require('./acl');
-const aclRules = require('./acl-rules.json');
+const acl = require("./acl");
+const aclRules = require("./acl-rules.json");
 app.use(acl(aclRules));
 
 // ..and install the.rest as middleware
