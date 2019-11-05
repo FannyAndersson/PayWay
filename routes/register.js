@@ -40,6 +40,7 @@ function register(app) {
 
 		const link = `http://localhost:3000/api/register/${user._id}`;
 
+		//send email for activation
 		sendEmail({
 			to: user.email,
 			html: `<body><p>Click this link to activate your PayWay account - ${link}</p></body>`,
@@ -58,6 +59,9 @@ function register(app) {
 			const user = await User.findById(req.params.id);
 			user.activated = true;
 			await user.save();
+
+			//send email after activation
+
 			sendEmail({
 				to: user.email,
 				html: `<body><p>Your account has been activated!</p></body>`,
