@@ -5,6 +5,7 @@ const transactionSchema =  new Schema({
     amount: {
         type: Number,
         required: true,
+        min: 1,
     },
 
     date: {
@@ -27,6 +28,7 @@ const transactionSchema =  new Schema({
     message: {
         type: String,
         required: true,
+        maxlength: 50,
     },
 
 });
