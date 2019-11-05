@@ -3,11 +3,10 @@ const User = require('../mongoose-models/user.model');
 function createChild(app, db) {
 
     app.post('/api/createchild', async(req, res) => {
-        let { phone } = req.body;
 
         console.log(req.body, 'req body')
 
-        const user = await User.findOne({ phone })
+        const user = await User.findOne({ phone: req.body.phone })
             .select('phone').exec();
         console.log('user', user)
 
