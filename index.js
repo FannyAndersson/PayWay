@@ -7,8 +7,7 @@ const mongoose = require("mongoose");
 const session = require('express-session');
 const connectMongo = require('connect-mongo')(session);
 const app = express();
-const User = require('./mongoose-models/user.model');
-const salt = 'ljusekatter are the best'; // unique secret
+const salt = 'lussekatter are the best'; // unique secret
 
 const theRest = require("the.rest");
 const port = 3000;
@@ -56,27 +55,6 @@ app.use(acl(aclRules));
 //    Please Note: This path must be absolute
 const pathToModelFolder = path.join(__dirname, "mongoose-models");
 app.use(theRest(express, "/api", pathToModelFolder));
-
-// route to login
-app.post('/api/login', async (req, res) => {
-    let {name, password} = req.body;
-    // password = encryptPassword(password);
-    let user = await User.findOne({name, password})
-      .select('name role').exec();
-    if(user){ req.session.user = user };
-    res.json(user ? user : {error: 'not found'});
-  });
-  
-  // check if/which user that is logged in
-  app.get('/api/login', (req, res) => {
-    console.log(req, 'rekan')
-    res.json(req.session.user ?
-      req.session.user :
-      {status: 'not logged in'}
-    );
-  });
-
-
 
 
 app.use(express.static("public"));
