@@ -56,7 +56,6 @@ app.use(acl(aclRules));
 const pathToModelFolder = path.join(__dirname, "mongoose-models");
 app.use(theRest(express, "/api", pathToModelFolder));
 
-
 app.use(express.static("public"));
 app.listen(port, () => {
 	console.log("Server listening on", port);
