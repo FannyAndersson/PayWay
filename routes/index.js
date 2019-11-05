@@ -1,12 +1,12 @@
 // import custom routes, add your custom routes here ...
 const exampleRoutes = require('./example-routes');
 const logout = require('./logout');
+const createChild = require('./createChild');
 
 const routesList = [];
 
 // ... and here
-routesList.push(exampleRoutes);
-routesList.push(logout);
+routesList.push(exampleRoutes, logout, createChild);
 
 function useCustomRoutes(app, db) {
 
