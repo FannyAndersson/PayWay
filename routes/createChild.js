@@ -1,41 +1,37 @@
 const User = require('../mongoose-models/user.model');
+const sendMailToChild = require('../send-email.js');
 
 function createChild(app, db) {
 
     app.post('/api/createchild', async(req, res) => {
 
-        console.log(req.body, 'req body')
+        const { user } = req.session;
 
-        const user = await User.findOne({ phone: req.body.phone })
-            .select('phone').exec();
-        console.log('user', user)
+        const parent = await User.findById(user._id);
 
-        res.send('Check')
+        const child = await User.findOne({ phone: req.body.phone })
 
-        if (!user) {
+        parent.children.pending.push(child);
 
-            res.status(404).send('User not found');
+        parent.save();
 
-        }
+        const confirmLink = `http://localhost:3000/api/confirm-parent/${parent._id}`;
 
-        // if (user) { req.session.user = user };
+        const rejectLink = `http://localhost:3000/api/reject-parent/${parent._id}`;
 
+        sendMailToChild({
 
+            to: child.email,
+            html: `<body><p>${parent.name} with phone number ${parent.phone} wish to get access to your account- Do you confirm? ${confirmLink} or do you reject? ${rejectLink}</p></body>`,
+            subject: "PayWay - Confirm parent NO REPLY"
 
-    });
+        })
 
-    app.get('/api/createchild/:id', async(req, res) => {
+        res.status(200).end();
 
-        try {
-            const user = await User.findById(req.params.id);
+        if (!child) {
 
-            console.log('user found', user);
-
-            res.send('user found');
-
-        } catch (error) {
-
-            res.status(500).send('something went wrong');
+            res.status(404).send('Child not found');
 
         }
 
@@ -44,16 +40,6 @@ function createChild(app, db) {
 }
 
 
-// app.post('/api/profile/:id', async (req, res) => {
-//   let user = await User.findOne({ _id: req.params.id });
-//   // if (user === req.session.user) {
-//   if (user) {
-//     let result = await User.updateOne({ _id: req.params.id }, req.body);
-//     res.json(await User.findOne({ _id: req.params.id }));
-//   } else {
-//     res.json({ error: 'Another user logged in' });
-//   }
-// });
 
 
 module.exports = createChild;

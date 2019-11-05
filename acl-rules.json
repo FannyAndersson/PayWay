@@ -14,8 +14,13 @@
             "admin": "all"
         },
         "users": {
-            "admin": "all", 
-            "user":  "post put get"
+            "admin": "all",
+            "user": "post put get"
+        },
+
+        "createchild": {
+            "admin": "all",
+            "user": "all"
         }
     }
 }
