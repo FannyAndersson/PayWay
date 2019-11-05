@@ -1,4 +1,4 @@
-module.exports = ({ expect, response }) => ({
+module.exports = ({ expect, response, store }) => ({
 	path: "login",
 	method: "post",
 	body: {
@@ -7,5 +7,6 @@ module.exports = ({ expect, response }) => ({
 	},
 	test() {
 		expect(response.name).to.equal("Muffin");
+		store.user = response._id;
 	}
 });
