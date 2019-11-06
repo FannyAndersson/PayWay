@@ -11,7 +11,7 @@ function createChild(app, db) {
 
         const child = await User.findOne({ phone: req.body.phone })
 
-        parent.children.pending.push(child);
+        parent.children.pending.includes(child) ? res.send('You have already send a rquest to this user') : parent.children.pending.push(child);
 
         parent.save();
 
