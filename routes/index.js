@@ -8,6 +8,7 @@ const sendMoney = require("./send-money");
 const emailRoute = require("./email-route");
 const updateUser = require("./update-user");
 const resetPassword = require("./reset-password");
+const rejectParent = require("./reject-parent");
 
 const routesList = [];
 
@@ -20,6 +21,7 @@ routesList.push(emailRoute);
 routesList.push(updateUser);
 routesList.push(resetPassword);
 routesList.push(createChild);
+routesList.push(rejectParent);
 
 function useCustomRoutes(app, db) {
     // tell express server to use routes
