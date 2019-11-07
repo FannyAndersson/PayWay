@@ -11,6 +11,14 @@ function createChild(app, db) {
 
         const child = await User.findOne({ phone: req.body.phone });
 
+        if (!child) {
+            return res.status(404).send('User with such phone number is not found');
+        }
+
+        if (!parent) {
+            return res.status(404).send('Parent is not found');
+        }
+
         //check if request has been already sent to child
         //return message that request has been already sent
         if(parent.children.pending.indexOf(child._id) !== -1) {
@@ -37,18 +45,8 @@ function createChild(app, db) {
         res.send(`Your request is sent to ${child.name}. Wait for confirmation, please!`);
 
         res.status(200).end();
-
-        if (!child) {
-
-            res.status(404).send('Child not found');
-
-        }
-
     });
 
 }
-
-
-
 
 module.exports = createChild;

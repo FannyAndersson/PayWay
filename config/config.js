@@ -1,5 +1,5 @@
 const config = {
-  mail: "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"
+  mail: "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"
 };
 
 module.exports = config;

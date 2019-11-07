@@ -13,34 +13,45 @@ function confirmParent(app) {
             res.status(404).send('Parent not found');
         }
 
-        //if parent end child exists remove child from pending
-        parent.children.pending.splice(
-            parent.children.pending.indexOf(child._id), 1
-        );
+        if(parent) {
+            //check if child has been already added to pending
+            //return message that didn't send any request
+            if(parent.children.pending.indexOf(child._id) === -1) {
+                
+                return res.send(`${parent.name} didn't send request to be your parent. Sorry about it!`) 
+            }
 
-        //check if child has been already added to confirmed
-        //return message that parent has been already confirmed
-        if(parent.children.confirmed.indexOf(child._id) !== -1) {
-           return res.send(`You have already confirmed ${parent.name} as your parent. Link is invalid.`) 
+            // if parent and child exists and child is pending, remove child from pending
+            parent.children.pending.splice(
+                parent.children.pending.indexOf(child._id), 1
+            );
+
+            //check if child has been already added to confirmed
+            //return message that parent has been already confirmed
+            if(parent.children.confirmed.indexOf(child._id) !== -1) {
+            return res.send(`You have already confirmed ${parent.name} as your parent. Link is invalid.`) 
+            }
+
+
+            //add child to confirmed array
+            parent.children.confirmed.push(child);
+            parent.save();
+
+            const linkToTransactions = `http://localhost:3000/api/child-transactions/${child._id}`;
+            //send mail to parent about confirmation
+            sendMail({
+                to: parent.email,
+                html: `<body><p>${child.name} with phone number ${child.phone} confirmed you as parent.</p>
+                <p>Click <a href="${linkToTransactions}" target="_blank">here</a> to see ${child.name}'s transaction.</p></body>`,
+                subject: "PayWay -  You are parent finally! NO REPLY"
+            });
+
+            //send message to frontend about success
+            res.send(`You confirmed ${parent.name} as your parent.`);
+
+            res.status(200).end();
         }
-
-        //add child to confirmed array
-        parent.children.confirmed.push(child);
-        parent.save();
-
-        const linkToTransactions = `http://localhost:3000/api/child-transactions/${child._id}`;
-        //send mail to parent about confirmation
-        sendMail({
-            to: parent.email,
-            html: `<body><p>${child.name} with phone number ${child.phone} confirmed you as parent.</p>
-            <p>Click <a href="${linkToTransactions}" target="_blank">here</a> to see ${child.name}'s transaction.</p></body>`,
-            subject: "PayWay -  You are parent finally! NO REPLY"
-        });
-
-        //send message to frontend about success
-        res.send(`You confirmed ${parent.name} as your parent.`);
-
-        res.status(200).end();
+            
     });
 }
 
