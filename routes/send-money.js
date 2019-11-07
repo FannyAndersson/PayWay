@@ -33,13 +33,10 @@ function sendMoney(app) {
             // convert phone nr to string just in case
             const actualRecipient = await User.findOne({ phone: String(recipient) });
 
+
             if (!actualRecipient) {
                 return res.status(404).send('No such user');
             }
-
-            let b = sender.balance;
-
-            console.log(b, 'bbb');
 
             // show me the money
             const transaction = new Transaction({
@@ -49,17 +46,26 @@ function sendMoney(app) {
                 sender
             });
 
-            // decrease senders money on account
-            let remainingTransactions =
-                transaction.sender.balance - transaction.amount;
-
-            sender.balance = remainingTransactions;
-
-            const newBalance = await sender.save();
-
             const result = await transaction.save();
 
+            // decrease senders money on account
+            let remainingTransactionsFromSender =
+                transaction.sender.balance - transaction.amount;
+
+            sender.balance = remainingTransactionsFromSender;
+
+            await sender.save();
+
+            // increase recipients money on account
+            let remainingTransactionsFromRecipient = actualRecipient.balance + transaction.amount;
+
+            actualRecipient.balance = remainingTransactionsFromRecipient;
+
+            await actualRecipient.save();
+
             res.json(result);
+
+
         } catch (error) {
             res.status(500).json(error);
         }
