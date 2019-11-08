@@ -16,6 +16,10 @@ function rejectParent(app) {
             res.status(404).send('Parent not found');
         }
 
+        if (child._id === req.params.id) {
+            return res.status(404).send(`You cant be your own child`);
+        }
+
         //Delete child from pending array
 
         parent.children.pending.splice(
