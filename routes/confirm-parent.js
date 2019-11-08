@@ -11,9 +11,16 @@ function confirmParent(app) {
         }
         if(!parent) {
             res.status(404).send('Parent not found');
+            
         }
 
+
         if(parent) {
+            
+            //check if child's id pasted in link
+            if(String(child._id) === req.params.id) {
+                return res.status(404).send('It is your id, you can\'t be your child!');
+            }
             //check if child has been already added to pending
             //return message that didn't send any request
             if(parent.children.pending.indexOf(child._id) === -1) {
