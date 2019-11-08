@@ -1,5 +1,5 @@
 const User = require('../mongoose-models/user.model');
-const sendMail = require('../send-email');
+const sendEmail = require('../send-email');
 
 function deleteChild(app) {
     app.post('/api/delete-child/:id', async (req, res) => {
@@ -27,7 +27,7 @@ function deleteChild(app) {
                     html: `<body><h2>Hello, ${childToDelete.name}!</h2><p>You became an adult! Your parent ${parent.name} successfully deleted you from children and can't watch your transactions anymore!</p></body>`,
                     subject: "PayWay - Deleted from children NO REPLY"
                 });
-                return res.status(200).send(`You deleted ${child.name} from your children. You can't watch ${child.name}'s transactions anymore.`);
+                return res.status(200).send(`You deleted ${childToDelete.name} from your children. You can't watch ${childToDelete.name}'s transactions anymore.`);
             }
             else {
                 return res.status(400).send(`This parent has no child with such id in confirmed children`);
