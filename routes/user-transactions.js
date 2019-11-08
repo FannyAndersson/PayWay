@@ -8,7 +8,7 @@ if(user !== req.session.user){
     return res.status(400).json('You are not logged in');
 }
 const myMonies = await User.findById(req.params.id).populate('incomingTransactions').populate('outgoingTransactions');
-console.log(myMonies, 'making money move')
+// console.log(myMonies, 'making money move')
         res.json({
             incomingTransactions: myMonies.incomingTransactions, 
             outgoingTransactions: myMonies.outgoingTransactions, 
