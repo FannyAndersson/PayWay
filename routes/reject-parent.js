@@ -7,43 +7,46 @@ function rejectParent(app) {
 
         const child = await User.findOne({ email });
         const parent = await User.findById(req.params.id);
-        console.log(parent, 'parent');
 
-        if (!child) {
-            res.status(404).send('Child not found');
+        try {
+            if (!child) {
+                res.status(404).send('Child not found');
+            }
+            if (!parent) {
+                res.status(404).send('Parent not found');
+            }
+            if (child._id === req.params.id) {
+                return res
+                    .status(404)
+                    .send(`You cant be your own child`);
+            }
+
+            //Delete child from pending array
+
+            parent.children.pending.splice(parent.children.pending.indexOf(child._id), 1);
+            parent.save();
+
+            //Check if parent aldready been rejected
+            if (parent.children.pending.indexOf(child._id) !== -1) {
+                return res.send(`You've aldready reject ${parent.name} as your parent.`);
+            }
+
+            //Send mail to parent that child has reject the request
+
+            sendRejectMailToParent({
+                to: parent.email,
+                html: `${child.name} rejected you as a parent`,
+                subject: 'PayWay - You are rejected'
+            });
+
+            res.send(`You rejected ${parent.name} as your parent.`);
+
+            res.status(200).end();
+
+        } catch (error) {
+            res.status(500).send(error);
         }
-        if (!parent) {
-            res.status(404).send('Parent not found');
-        }
 
-        if (child._id === req.params.id) {
-            return res.status(404).send(`You cant be your own child`);
-        }
-
-        //Delete child from pending array
-
-        parent.children.pending.splice(
-            parent.children.pending.indexOf(child._id),
-            1
-        );
-        parent.save();
-
-        //Check if parent aldready been rejected
-        if (parent.children.pending.indexOf(child._id) !== -1) {
-            return res.send(`You've aldready reject ${parent.name} as your parent.`)
-        }
-
-        //Send mail to parent that child has reject the request
-
-        sendRejectMailToParent({
-            to: parent.email,
-            html: `${child.name} rejected you as a parent`,
-            subject: 'PayWay - You are rejected'
-        });
-
-        res.send(`You rejected ${parent.name} as your parent.`);
-
-        res.status(200).end();
     });
 }
 
