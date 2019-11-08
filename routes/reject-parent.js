@@ -24,6 +24,11 @@ function rejectParent(app) {
         );
         parent.save();
 
+        //Check if parent aldready been rejected
+        if (parent.children.pending.indexOf(child._id) !== -1) {
+            return res.send(`You've aldready reject ${parent.name} as your parent.`)
+        }
+
         //Send mail to parent that child has reject the request
 
         sendRejectMailToParent({
