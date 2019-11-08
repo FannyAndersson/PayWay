@@ -6,19 +6,25 @@ function rejectParent(app) {
         const { email } = req.body;
 
         const child = await User.findOne({ email });
-        const parent = await User.findById(req.params.id);
 
         try {
+            const parent = await User.findById(req.params.id);
+
             if (!child) {
-                res.status(404).send('Child not found');
+                return res.status(404).send('Child not found');
             }
             if (!parent) {
-                res.status(404).send('Parent not found');
+                return res.status(404).send('Parent not found');
             }
-            if (child._id === req.params.id) {
+            if (String(child._id) === req.params.id) {
                 return res
                     .status(404)
-                    .send(`You cant be your own child`);
+                    .send(`You can't be your own child`);
+            }
+
+            //Check if parent aldready been rejected
+            if (!parent.children.pending.includes(child._id)) {
+                return res.send(`You've aldready reject ${parent.name} as your parent.`);
             }
 
             //Delete child from pending array
@@ -26,17 +32,12 @@ function rejectParent(app) {
             parent.children.pending.splice(parent.children.pending.indexOf(child._id), 1);
             parent.save();
 
-            //Check if parent aldready been rejected
-            if (parent.children.pending.indexOf(child._id) !== -1) {
-                return res.send(`You've aldready reject ${parent.name} as your parent.`);
-            }
-
             //Send mail to parent that child has reject the request
 
             sendRejectMailToParent({
                 to: parent.email,
                 html: `${child.name} rejected you as a parent`,
-                subject: 'PayWay - You are rejected'
+                subject: 'PayWay - You are rejected NO REPLY!'
             });
 
             res.send(`You rejected ${parent.name} as your parent.`);
