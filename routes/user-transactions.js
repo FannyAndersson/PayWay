@@ -10,6 +10,8 @@ if(!user){
 try{
     const myMonies = await User.findById(req.params.id).populate('incomingTransactions').populate('outgoingTransactions');
     // console.log(myMonies, 'making money move')
+    // console.log(myMonies.balance, 'my balance')
+
 
     if(user._id !== req.params.id){
         return res.status(400).json('Are you sure you are logged in?')
