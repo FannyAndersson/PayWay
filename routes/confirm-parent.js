@@ -16,7 +16,7 @@ function confirmParent(app) {
 
 
         if(parent) {
-            
+
             //check if child's id pasted in link
             if(String(child._id) === req.params.id) {
                 return res.status(404).send('It is your id, you can\'t be your child!');

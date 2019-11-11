@@ -1,7 +1,7 @@
 // import custom routes, add your custom routes here ...
 const exampleRoutes = require('./example-routes');
 const logout = require('./logout');
-const createChild = require('./createchild');
+const createChild = require('./createChild');
 const register = require("./register");
 const sendMoney = require("./send-money");
 const emailRoute = require("./email-route");

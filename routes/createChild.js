@@ -22,8 +22,8 @@ function createChild(app, db) {
         //check if request has been already sent to child
         //return message that request has been already sent
         if(parent.children.pending.indexOf(child._id) !== -1) {
-            return res.send(`You have already sent request to add ${child.name} as your child. Wait for confirmation. This link is invalid.`) 
-         }
+            return res.send(`You have already sent request to add ${child.name} as your child. Wait for confirmation. This link is invalid.`)
+        }
 
         parent.children.pending.push(child);
 
