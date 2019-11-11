@@ -25,7 +25,7 @@ function createChild(app, db) {
             return res.send(`You have already sent request to add ${child.name} as your child. Wait for confirmation. This link is invalid.`)
         }
 
-        parent.children.pending.push(child);
+        parent.children.pending.includes(child._id) ? res.send('You have already send a rquest to this user') : parent.children.pending.push(child);
 
         parent.save();
 
