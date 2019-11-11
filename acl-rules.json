@@ -6,7 +6,6 @@
             "admin": "all"
         },
         "transactions": {
-            "user": "post put get",
             "admin": "all"
         },
         "profile": {
@@ -14,8 +13,7 @@
             "admin": "all"
         },
         "users": {
-            "admin": "all",
-            "user": "post put get"
+            "admin": "all"
         },
 
         "createchild": {
