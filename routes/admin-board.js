@@ -1,5 +1,4 @@
 const User = require('../mongoose-models/user.model');
-const Transaction = require('../mongoose-models/transaction.model')
 
 function adminBoard (app){
 app.get('/api/admin-dashboard', async (req, res)=>{
