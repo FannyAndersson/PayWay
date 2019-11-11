@@ -41,30 +41,29 @@ function sendMoney(app) {
             // show me the money
             const transaction = new Transaction({
                 recipient: actualRecipient._id,
+                sender: sender._id,
                 amount,
                 message,
-                sender
             });
 
             const result = await transaction.save();
 
-            // decrease senders money on account
-            let remainingTransactionsFromSender =
-                transaction.sender.balance - transaction.amount;
+            // only adjust balance if sender and recipient are different accounts
+            if (actualRecipient.id !== senderId) {
 
-            sender.balance = remainingTransactionsFromSender;
+                // decrease senders money on account
+                sender.balance -= transaction.amount;
 
-            await sender.save();
+                await sender.save();
 
-            // increase recipients money on account
-            let remainingTransactionsFromRecipient = actualRecipient.balance + transaction.amount;
+                // increase recipients money on account
+                actualRecipient.balance += transaction.amount;
 
-            actualRecipient.balance = remainingTransactionsFromRecipient;
+                await actualRecipient.save();
 
-            await actualRecipient.save();
+            }
 
             res.json(result);
-
 
         } catch (error) {
             res.status(500).json(error);
