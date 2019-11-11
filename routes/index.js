@@ -2,6 +2,7 @@
 const exampleRoutes = require('./example-routes');
 const logout = require('./logout');
 const createChild = require('./createChild');
+const getUserTransactions= require('./user-transactions');
 const register = require("./register");
 const sendMoney = require("./send-money");
 const emailRoute = require("./email-route");
@@ -27,6 +28,7 @@ routesList.push(deleteChild);
 routesList.push(getChildTransactions);
 routesList.push(confirmParent);
 routesList.push(rejectParent);
+routesList.push(getUserTransactions)
 
 function useCustomRoutes(app, db) {
     // tell express server to use routes
