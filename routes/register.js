@@ -20,15 +20,14 @@ function encryptPassword(password) {
 
 function register(app) {
 	app.post('/api/register', async (req, res) => {
-		// const {name, email, password} = req.body
-		let email = req.body.email;
+		const {email, password} = req.body;
 		let user = await User.findOne({ email });
 		if (user) {
 			return res.status(400).send('Email already exists!');
 		} else {
 			user = new User({
 				...req.body,
-				password: encryptPassword(req.body.password)
+				password: encryptPassword(password)
 			});
 		}
 		await user.save();
@@ -81,15 +80,18 @@ function register(app) {
 	app.post('/api/login', async (req, res) => {
 		let { email, password } = req.body;
 		password = encryptPassword(password);
-		let user = await User.findOne({ email: email })
-
-			.select("name email role")
-			.exec();
-		if (user) {
-			req.session.user = user;
-			// console.log(user, 'loggedIn user')
+		let user = await User.findOne({ email: email});
+		if(user){
+			if(user.password === password) {
+				return res.json(user);
+			}
+			else {
+				return res.json({ error: "Password doesn't match" });
+			}
 		}
-		res.json(user ? user : { error: "User not found" });
+		else {
+			return res.json(user ? user : { error: "User not found" });
+		}		
 	});
 
 	// check if/which user that is logged in
