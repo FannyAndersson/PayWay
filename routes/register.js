@@ -30,7 +30,12 @@ function register(app) {
 				password: encryptPassword(password)
 			});
 		}
-		await user.save();
+		try {
+			await user.save();
+		} catch (error) {
+			res.status(500).json(error.message);
+			return;
+		}
 		res.json({
 			message: 'User successfully registered',
 			user: user,
@@ -83,6 +88,7 @@ function register(app) {
 		let user = await User.findOne({ email: email});
 		if(user){
 			if(user.password === password) {
+				req.session.user = user;
 				return res.json(user);
 			}
 			else {

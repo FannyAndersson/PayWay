@@ -3,6 +3,8 @@ const User = require("../mongoose-models/user.model");
 function updateUser(app) {
 	app.put("/api/profile/:id", async (req, res) => {
 		let user = await User.findOne({ _id: req.params.id });
+		console.log(user, 'user');
+		console.log(req.session.user, 'session');
 		if (
 			(user && String(user._id) === req.session.user._id) ||
 			req.session.user.role === "admin"
