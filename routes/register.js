@@ -83,6 +83,7 @@ function register(app) {
 		let user = await User.findOne({ email: email});
 		if(user){
 			if(user.password === password) {
+				req.session.user = user;
 				return res.json(user);
 			}
 			else {
