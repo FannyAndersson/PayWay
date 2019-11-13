@@ -18,7 +18,12 @@ function register(app) {
 				password: encryptPassword(password)
 			});
 		}
-		await user.save();
+		try {
+			await user.save();
+		} catch (error) {
+			res.status(500).json(error.message);
+			return;
+		}
 		res.json({
 			message: 'User successfully registered',
 			user: user,

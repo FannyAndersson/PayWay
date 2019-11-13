@@ -25,6 +25,13 @@ const userSchema = new Schema({
         type: String,
         required: true,
         default: 'user',
+        enum: ['user', 'admin'],
+        immutable: true
+    },
+
+    isAdmin: {
+        type: String,
+        unique: true
     },
 
     balance: {
@@ -75,6 +82,35 @@ userSchema.virtual('outgoingTransactions', {
     foreignField: 'sender',
 });
 
+const checkIfAdmin = (user) => {
+    user.isAdmin = user._id;
+    if(user.role === "admin") {
+        user.isAdmin = "-1";
+    }
+}
+
+userSchema.pre('save', function() {
+    checkIfAdmin(this);
+});
+
+userSchema.post('save', function(error, doc, next) {
+    if (error.name === 'MongoError' && error.code === 11000) {
+      next(new Error('Admin already exists'));
+    } else {
+      next();
+    }
+  });
+
+  userSchema.methods.toJSON = function() {
+    var obj = this.toObject();
+    delete obj.password;
+    delete obj.isAdmin;
+    return obj;
+   }
+
 const userModel = new model('User', userSchema);
+
+
+
 
 module.exports = userModel;
