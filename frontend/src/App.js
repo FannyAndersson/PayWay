@@ -1,18 +1,21 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import './App.css';
-import MainPage from './components/MainPage/MainPage';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "./App.css";
+import MainPage from "./components/MainPage/MainPage";
+import TransactionPage from "./components/TransactionPage";
 
 function App() {
   return (
-
-	<Router>
-		<Switch>
-          <Route path="/">
-            <MainPage />
-          </Route>
-        </Switch>
-	</Router>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <MainPage />
+        </Route>
+        <Route path="/transaction">
+          <TransactionPage />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
