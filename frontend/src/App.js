@@ -1,11 +1,18 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import './App.css';
+import MainPage from './components/MainPage/MainPage';
 
 function App() {
   return (
-    <div className="App">
-      <h2>Payway</h2>
-    </div>
+
+	<Router>
+		<Switch>
+          <Route path="/">
+            <MainPage />
+          </Route>
+        </Switch>
+	</Router>
   );
 }
 
