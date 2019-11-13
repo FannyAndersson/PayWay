@@ -12,6 +12,7 @@ const deleteChild = require("./delete-child");
 const getChildTransactions = require('./get-child-transactions');
 const confirmParent = require("./confirm-parent");
 const rejectParent = require("./reject-parent");
+const adminBoard = require('./admin-board')
 
 const routesList = [];
 
@@ -29,6 +30,7 @@ routesList.push(getChildTransactions);
 routesList.push(confirmParent);
 routesList.push(rejectParent);
 routesList.push(getUserTransactions)
+routesList.push(adminBoard)
 
 function useCustomRoutes(app, db) {
     // tell express server to use routes

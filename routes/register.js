@@ -94,17 +94,8 @@ function register(app) {
 
 	// check if/which user that is logged in
 	app.get('/api/login', async (req, res) => {
-		let user = await req.session.user;
-		console.log(user.role, "user role?");
 		res.json(req.session.user ? req.session.user : { status: "Not logged in" });
 	});
 
-	// app.delete( '/users/:id', async ( req, res ) => {
-	//     let user = await req.session.user
-	//     if(user.role !== "admin"){
-	//         console.log(user, 'admin?')
-	//     return res.status(401).send('For now: only admin allowed')
-	// User.findByIdAndRemove({_id:  req.params.id })
-	// }} )
 }
 module.exports = register;
