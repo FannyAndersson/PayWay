@@ -10,7 +10,7 @@ const app = express();
 const salt = 'lussekatter are the best'; // unique secret
 
 const theRest = require("the.rest");
-const port = 3000;
+const port = 3001;
 const connectionstring = require("./connectionstring.js");
 const useCustomRoutes = require("./routes/index");
 
