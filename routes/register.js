@@ -1,18 +1,6 @@
 const User = require('../mongoose-models/user.model');
-const crypto = require('crypto');
-const salt = 'lussekatter are the best'; // unique secret
 const sendEmail = require('../send-email');
-
-/****
- * Password encryption
- */
-
-function encryptPassword(password) {
-	return crypto
-		.createHmac('sha256', salt)
-		.update(password)
-		.digest('hex');
-}
+const encryptPassword = require('../helpers/encrypt-password');
 
 /****
  * User registration
@@ -70,36 +58,6 @@ function register(app) {
 		} catch (error) {
 			res.status(500).json(error);
 		}
-	});
-
-	/****
-	 * Login
-	 */
-
-	// route to login
-	app.post('/api/login', async (req, res) => {
-		let { email, password } = req.body;
-		password = encryptPassword(password);
-		let user = await User.findOne({ email: email});
-		if(user){
-			if(user.password === password) {
-				req.session.user = user;
-				return res.json(user);
-			}
-			else {
-				return res.json({ error: "Password doesn't match" });
-			}
-		}
-		else {
-			return res.json(user ? user : { error: "User not found" });
-		}		
-	});
-
-	// check if/which user that is logged in
-	app.get('/api/login', async (req, res) => {
-		let user = await req.session.user;
-		console.log(user.role, "user role?");
-		res.json(req.session.user ? req.session.user : { status: "Not logged in" });
 	});
 
 	// app.delete( '/users/:id', async ( req, res ) => {
