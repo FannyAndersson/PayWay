@@ -1,18 +1,6 @@
 const User = require('../mongoose-models/user.model');
-const crypto = require('crypto');
-const salt = 'lussekatter are the best'; // unique secret
 const sendEmail = require('../send-email');
-
-/****
- * Password encryption
- */
-
-function encryptPassword(password) {
-	return crypto
-		.createHmac('sha256', salt)
-		.update(password)
-		.digest('hex');
-}
+const encryptPassword = require('../helpers/encrypt-password');
 
 /****
  * User registration
@@ -20,15 +8,14 @@ function encryptPassword(password) {
 
 function register(app) {
 	app.post('/api/register', async (req, res) => {
-		// const {name, email, password} = req.body
-		let email = req.body.email;
+		const {email, password} = req.body;
 		let user = await User.findOne({ email });
 		if (user) {
 			return res.status(400).send('Email already exists!');
 		} else {
 			user = new User({
 				...req.body,
-				password: encryptPassword(req.body.password)
+				password: encryptPassword(password)
 			});
 		}
 		await user.save();
@@ -71,30 +58,6 @@ function register(app) {
 		} catch (error) {
 			res.status(500).json(error);
 		}
-	});
-
-	/****
-	 * Login
-	 */
-
-	// route to login
-	app.post('/api/login', async (req, res) => {
-		let { email, password } = req.body;
-		password = encryptPassword(password);
-		let user = await User.findOne({ email: email })
-
-			.select("name email role")
-			.exec();
-		if (user) {
-			req.session.user = user;
-			// console.log(user, 'loggedIn user')
-		}
-		res.json(user ? user : { error: "User not found" });
-	});
-
-	// check if/which user that is logged in
-	app.get('/api/login', async (req, res) => {
-		res.json(req.session.user ? req.session.user : { status: "Not logged in" });
 	});
 
 }
