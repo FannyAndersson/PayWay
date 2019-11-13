@@ -23,6 +23,9 @@ function App() {
 						<Route exact path="/login">
 							<LoginPage />
 						</Route>
+						<Route exact path="/send-money">
+							<SendMoney />
+						</Route>
 					</Switch>
 				</Router>
 				</section>
