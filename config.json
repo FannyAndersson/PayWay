@@ -1,14 +1,14 @@
 {
-  "sass": [
-    {
-      "compileAtBootup": true,
-      "watch": true,
-      "arguments": {
-        "watchFolder": "./frontend/sass",
-        "file": "./frontend/sass/style.scss",
-        "outFile": "./frontend/src/css/style.css",
-        "outputStyle": "compressed"
-      }
-    }
-  ]
+    "sass": [
+        {
+            "compileAtBootup": true,
+            "watch": true,
+            "arguments": {
+                "watchFolder": "./frontend/sass",
+                "file": "./frontend/sass/style.scss",
+                "outFile": "./frontend/src/css/style.css",
+                "outputStyle": "compressed"
+            }
+        }
+    ]
 }
