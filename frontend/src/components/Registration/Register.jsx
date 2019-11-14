@@ -1,28 +1,38 @@
 import React, {useState} from 'react'
 
 const Register = () => {
-const [userName, setuserName] = useState('');
+
+const user =   {name: '',  phone: '', email: '', password: ''}
+const [userState, setUserState] = useState(
+  {...user}
+)
+
+const handleInputChange= (e) => setUserState({
+  ...userState, 
+  [e.target.name]: [e.target.value],
+});
+
 const handleSubmit = (e)=>{
-  e.preventDefault()
-// setName('')
-console.log(e.target.value, 'event')
+  e.preventDefault();
+  setUserState(...userState, {...user})
 }
     return (
         <>
-        <div className="container registration-page">
+        <div className="container registration-page center-align">
         <h3>Sign up!</h3>
         <div className="row">
-        <form className="col s12" onClick={handleSubmit}>
+        <form onClick={handleSubmit} className="center-align">
+        <div className="col s12">
           <div className="row">
             <div className="input-field col s6">
-              <input placeholder="Enter your fullname" id="fullname" type="text" className="validate" value={userName} required onChange={(e)=>setuserName(e.target.value)}/>
+              <input placeholder="Enter your fullname" id="fullname" type="text" className="validate" name={user.name} value={userState.user} required onChange={handleInputChange}/>
               <label htmlFor="first_name">Fullname</label>
             </div>
           </div>
           <div className="row">
           <div className="input-field col s6">
-            <input id="phonenumber" placeholder="Enter a valid phonenumber" type="number" className="validate"/>
-            <label htmlFor="phonenumber">Phonenumber</label>
+            <input id="phone" placeholder="Enter a valid phonenumber" type="number" className="validate"/>
+            <label htmlFor="phoneNr">Phonenumber</label>
           </div>
         </div>
           <div className="row">
@@ -41,8 +51,9 @@ console.log(e.target.value, 'event')
           <div className="col s6">
           <button className="submit-btn btn waves-effect waves-light" type="submit" value="submit">Submit</button>
           </div>
-          </div>
-        </form>
+      </div>
+      </div>
+      </form>
       </div>
       </div>
       </>
