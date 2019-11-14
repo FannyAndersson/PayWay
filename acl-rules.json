@@ -13,8 +13,7 @@
             "admin": "all"
         },
         "users": {
-            "admin": "all",
-            "user": "all"
+            "admin": "all"
         },
         "createchild": {
             "admin": "all",
