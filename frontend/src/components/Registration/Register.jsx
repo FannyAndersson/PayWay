@@ -1,49 +1,78 @@
-import React, {useState} from 'react'
+import React from 'react';
+import useRegisterUser from './RegisterUser';
 
-const Register = () => {
-
-const user =   {name: '',  phone: '', email: '', password: ''}
-const [userState, setUserState] = useState(
-  {...user}
-)
-
-const handleInputChange= (e) => setUserState({
-  ...userState, 
-  [e.target.name]: [e.target.value],
-});
-
-const handleSubmit = (e)=>{
-  e.preventDefault();
-  setUserState(...userState, {...user})
+const RegisterForm = () => {
+  const onRegister= async ()=>{
+try {
+  const register = {
+    name: inputs.name, 
+    phone: inputs.phone, 
+    email: inputs.email, 
+    password: inputs.password
+  }
+  const response = await fetch('/api/register', {
+method: 'POST', 
+body: JSON.stringify(register), 
+headers: {
+  'Content-type': 'application/json'
 }
+  });
+  const result = await response.json();
+  console.log('SUCCESS: ', result);
+} catch (error) {
+    console.error('Error:', error);
+
+}
+}
+  const {inputs, handleSubmit, handleInputChange} = useRegisterUser(onRegister)
+
     return (
         <>
         <div className="container registration-page center-align">
         <h3>Sign up!</h3>
         <div className="row">
-        <form onClick={handleSubmit} className="center-align">
+        <form onSubmit={handleSubmit}>
         <div className="col s12">
           <div className="row">
             <div className="input-field col s6">
-              <input placeholder="Enter your fullname" id="fullname" type="text" className="validate" name={user.name} value={userState.user} required onChange={handleInputChange}/>
-              <label htmlFor="first_name">Fullname</label>
+              <input 
+              placeholder="Enter your fullname" type="text" 
+              className="validate" 
+              name="name" 
+              value={inputs.name}
+               onChange={handleInputChange} />
+              <label htmlFor="first_name">Name</label>
             </div>
           </div>
           <div className="row">
           <div className="input-field col s6">
-            <input id="phone" placeholder="Enter a valid phonenumber" type="number" className="validate"/>
+            <input 
+            placeholder="Enter a valid phonenumber" type="text" 
+            className="validate"
+            name="phone" 
+            value={inputs.phone}
+             onChange={handleInputChange} />
             <label htmlFor="phoneNr">Phonenumber</label>
           </div>
         </div>
           <div className="row">
           <div className="input-field col s6">
-            <input id="email" placeholder="Enter a valid email" type="email" className="validate" />
+            <input 
+            placeholder="Enter a valid email" type="email" 
+            className="validate" 
+            name="email" 
+            value={inputs.email} onChange={handleInputChange} />
             <label htmlFor="email">Email</label>
           </div>
         </div>
           <div className="row">
             <div className="input-field col s6">
-              <input id="password" placeholder="Pick a password" type="password" className="validate"/>
+              <input 
+              placeholder="Pick a password" type="password" 
+              className="validate" 
+              name="password" 
+              value={inputs.password} 
+              onChange={handleInputChange}/>
               <label htmlFor="Password">Password</label>
             </div>
           </div>
@@ -60,4 +89,4 @@ const handleSubmit = (e)=>{
     )
 }
 
-export default Register;
+export default RegisterForm;
