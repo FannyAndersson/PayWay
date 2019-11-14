@@ -8,11 +8,13 @@ function App() {
   return (
 	<Router>
 		<Switch>
-          <Route path="/">
+          <Route exact path="/">
             <MainPage />
           </Route>
+          <Route exact path="/register">
+          <Register/>
+          </Route>
         </Switch>
-        <Route path="/register" component={Register}/>
 	</Router>
   );
 }
