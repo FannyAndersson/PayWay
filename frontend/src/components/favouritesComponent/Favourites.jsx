@@ -19,7 +19,8 @@ const Favourites = () => {
                                 Alexandra 333
                             </li>
                         </ul>
-                        <Button className="login-btn" waves="light" style={{ width: '100%' }} type="button">
+                        <TextInput className="form-control" label="Email" email={true} s={12} l={12} required />
+                        <TextInput className="form-control" label="Password" password={true} s={12} l={12} required /><Button className="login-btn" waves="light" style={{ width: '100%' }} type="button">
                             Add
                         </Button></React.Fragment>
 
