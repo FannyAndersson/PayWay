@@ -27,25 +27,15 @@ function App() {
 						</Route>
 						<Route exact path="/login">
 							<LoginPage />
-						</Route>
+            </Route>
+            <Route exact path="/register">
+            <Register/>
+            </Route>
 					</Switch>
 				</Router>
 				</section>
 			</React.Fragment>
 	  </UserContext.Provider>
-	
-	
-	<Router>
-		<Switch>
-          <Route exact path="/">
-            <MainPage />
-          </Route>
-          <Route exact path="/register">
-          <Register/>
-          </Route>
-        </Switch>
-	</Router>
-  );
-}
-
+  
+  )}
 export default App;
