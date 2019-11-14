@@ -13,10 +13,14 @@
             "admin": "all"
         },
         "users": {
-            "admin": "all"
+            "admin": "all",
+            "user": "all"
         },
-
         "createchild": {
+            "admin": "all",
+            "user": "all"
+        },
+        "createFavorite": {
             "admin": "all",
             "user": "all"
         }
