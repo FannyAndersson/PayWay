@@ -25,6 +25,5 @@ const Header = () => {
     );
 }
 
-// Header.contextType = UserContext;
 
 export default Header;

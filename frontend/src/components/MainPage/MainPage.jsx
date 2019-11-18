@@ -1,11 +1,26 @@
 import React from "react";
+import {UserContext} from '../../userContext';
+import { Row, Col } from 'react-materialize';
+
+
 
 const MainPage = () => {
     return (
-        <React.Fragment>
-            <h1>Main Page</h1>
-            <p>Here should be content Start-page-loggedIn if user logged in successfully.</p>
-        </React.Fragment>
+        <UserContext.Consumer>
+            {user => (
+                <React.Fragment>
+                    <Row>
+                        <Col l={3} offset='l4'>
+                            <h1>Main Page</h1>
+                            <p>Hello {user.name}</p>
+                        </Col>
+                    </Row>
+                        
+                </React.Fragment>
+
+            )}
+            </UserContext.Consumer>
+        
     );
 }
 
