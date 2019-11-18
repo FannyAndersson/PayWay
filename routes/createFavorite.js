@@ -32,6 +32,12 @@ function createFavorite(app, db) {
 
         }
 
+        if(currentUser){
+            if(String(favoriteUser._id ===req.params.id)){
+                return res.status(404).send('You can not be a favourite to yourself!')
+            }
+        }
+
     })
 }
 
