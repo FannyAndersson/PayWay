@@ -15,12 +15,7 @@ const TransactionPage = () => {
                 let key = "/api/users/";
                 let url = key + userID + "/transactions"
                 const result = await fetch(url)
-                //     method: 'GET',
-                //     // body: JSON.stringify(userID),
-                //     headers: {
-                //         'Content-Type': 'application/json'
-                //     }
-                // });
+
                 const jsonData = await result.json();
                 setData(jsonData);
                 console.log(data, "state");
