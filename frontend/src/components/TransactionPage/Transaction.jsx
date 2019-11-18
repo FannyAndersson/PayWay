@@ -1,9 +1,11 @@
 import React from "react";
 
 const Transaction = () => {
+
+
     return (
         <div className="transaction">
-            <h2>Transaction</h2>
+            <h4>All</h4>
         </div>
     );
 };
