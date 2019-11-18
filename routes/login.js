@@ -17,7 +17,7 @@ function useLogin(app) {
             if (user.password === password) {
 
                 req.session.user = user;
-                return res.json(user);
+                return res.status(200).json(user);
 
             }
             else {
