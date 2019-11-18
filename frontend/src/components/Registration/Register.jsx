@@ -1,6 +1,8 @@
 import React from 'react';
 import useRegisterUser from './RegisterUser';
-import {Row, Col, TextInput} from 'react-materialize';
+import {Row, Col, TextInput, Modal, Button} from 'react-materialize';
+
+
 const RegisterForm = () => {
   const onRegister= async ()=>{
 try {
@@ -24,7 +26,7 @@ headers: {
 }
 }
 
-const validate=(inputs)=>{
+function validate(inputs){
   let errors = {}
   if(!inputs.name){
     errors.name="Name field cannot be empty"
@@ -43,7 +45,7 @@ const validate=(inputs)=>{
     errors.password = 'Password must be at least 5 or more characters'
   }
   if(!inputs.confirmPassword){
-    errors.confirmPassword="Please repeat your password"
+    errors.confirmPassword="Type in password again"
   } else if(inputs.confirmPassword !== inputs.password){
     errors.inputs.confirmPassword = 'Password does not match'
   }
@@ -51,6 +53,7 @@ const validate=(inputs)=>{
   }
 
   const { errors, inputs, handleSubmit, handleInputChange} = useRegisterUser(onRegister, validate)
+
 
     return (
         <>
@@ -69,7 +72,6 @@ const validate=(inputs)=>{
                onChange={handleInputChange}  
                 />
                {errors.name &&( <p className="help is-danger">{errors.name}</p>)}
-
             <TextInput
             s={12} l={12} 
             label="Phonenumber"
@@ -116,6 +118,12 @@ const validate=(inputs)=>{
           <div className="row">
           <div className="col s12">
           <button className="submit-btn btn waves-effect waves-light" type="submit" value="submit">Submit</button>
+          <button href="#modal1" className="modal-trigger">Modal</button>
+          <div className="register-modal">
+<Modal header="Modal Header" id="modal1">
+Registration completed
+</Modal>
+</div>
           </div>
       </div>
       </form>
