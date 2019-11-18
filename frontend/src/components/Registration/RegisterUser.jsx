@@ -1,13 +1,14 @@
 import  {useState, useEffect} from 'react'
 
 const useRegisterUser = (callback, validate) => {
-const [inputs, setInputs] = useState({name: '', phone: '', email: '', password: ''})
+const [inputs, setInputs] = useState({})
 const [errors, setErrors] = useState({})
 const [isSubmitting, setIsSubmitting] = useState(false)
 
 useEffect(() => {
     if(Object.keys(errors).length === 0 && isSubmitting){
         callback();
+           // eslint-disable-next-line react-hooks/exhaustive-deps
     }
 }, [callback, isSubmitting, errors])
 
