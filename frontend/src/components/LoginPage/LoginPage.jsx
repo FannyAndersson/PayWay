@@ -1,16 +1,18 @@
-import React, {useState} from "react";
+import React, { useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-
 import { Row, Col, TextInput, Button } from 'react-materialize';
 import useLoginForm from "./UseLoginFormHook";
+import{UserContext} from '../../UserContext';
+
 
 
 
 
 const LoginPage = () => {
-    //use state to initiate navigate to main page after successful login
-    const [toMainPage, setToMainPage] = useState(false);
-
+    //use user from UserContext
+    // if user exists in context, app navigates to mainPage
+    const {user, getAuthUser} = useContext(UserContext);
+    
     const onLogin = async () => {
         try {
             const login = {
@@ -28,7 +30,7 @@ const LoginPage = () => {
 
             const result = {user: await response.json(), status: response.status};
             if (result.status === 200) {
-                setToMainPage(true);
+                getAuthUser(result.user);
             }
         } catch (error) {
             console.error('Error:', error);
@@ -36,10 +38,9 @@ const LoginPage = () => {
     }
     const {inputs, handleInputChange, handleSubmit} = useLoginForm(onLogin);
     return (
-        
-        
+
         <React.Fragment>
-            {toMainPage ? <Redirect to='/' /> : null}
+            {user ? <Redirect to='/' /> : null};
             <Row>
                 <Col l={3} offset='l4' className='content'>
                     <h1>Login</h1>
@@ -59,7 +60,6 @@ const LoginPage = () => {
                 </Col>
             </Row>
         </React.Fragment>
-        
     );
 }
 

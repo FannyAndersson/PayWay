@@ -1,26 +1,23 @@
-import React from "react";
-import {UserContext} from '../../userContext';
+import React, {useContext} from "react";
+import {  Redirect } from 'react-router-dom';
+
+import {UserContext} from '../../UserContext';
 import { Row, Col } from 'react-materialize';
 
 
 
 const MainPage = () => {
+    const {user} = useContext(UserContext);
     return (
-        <UserContext.Consumer>
-            {user => (
-                <React.Fragment>
-                    <Row>
-                        <Col l={3} offset='l4'>
-                            <h1>Main Page</h1>
-                            <p>Hello {user.name}</p>
-                        </Col>
-                    </Row>
-                        
-                </React.Fragment>
-
-            )}
-            </UserContext.Consumer>
-        
+        <React.Fragment>
+            {!user ? <Redirect to='/login' /> : null};
+            <Row>
+                <Col l={3} offset='l4'>
+                    <h1>Main Page</h1>
+                    <p>Hello {user.name}</p>
+                </Col>
+            </Row>   
+        </React.Fragment>
     );
 }
 
