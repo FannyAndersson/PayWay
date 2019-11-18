@@ -106,7 +106,7 @@ const validate=(inputs)=>{
             <TextInput 
             s={12} l={12} 
             label="Repeat password" type="password" 
-            className={`input ${errors.confirmPassword && 'is-danger'}`, 'validate'}
+            className={`input ${errors.confirmPassword && 'is-danger'}`}
             name="confirmPassword" 
             value={inputs.confirmPassword || ''} 
             onChange={handleInputChange}
