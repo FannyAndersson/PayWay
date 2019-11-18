@@ -14,8 +14,8 @@ function App() {
 		<ContextKeeper>
 			<React.Fragment>
 				<section className={'container-fluid'}>
-				<Header />
 				<Router>
+				<Header />
 					<Switch>
 						<Route exact path="/">
 						<MainPage />
