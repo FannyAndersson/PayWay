@@ -10,17 +10,42 @@ const ContextKeeper = (props) => {
     const {getAuthUser} = useContext(UserContext);
 
     const [authUser, setAuthUser] = useState(false);
-    const checkLogin =async () => {
+
+    const [ isLoading, setIsLoading ] = useState(true);
+
+    const checkLogin = async () => {
+
         const response = await fetch('/api/login');
         const result = {user: await response.json(), status: response.status};
         if (result.user) {
             getAuthUser(result.user);
             setAuthUser(true);
         }
+
+        setIsLoading(false);
+
     }
     if(!authUser) {
         checkLogin();
     }
+
+    if (isLoading) {
+
+        return (
+            <div className="preloader-wrapper big active">
+                <div className="spinner-layer spinner-blue-only">
+                    <div className="circle-clipper left">
+                        <div className="circle"></div>
+                    </div><div className="gap-patch">
+                        <div className="circle"></div>
+                    </div><div className="circle-clipper right">
+                        <div className="circle"></div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
 	return (
         <div>
             {props.children}
