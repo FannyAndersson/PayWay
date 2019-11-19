@@ -7,6 +7,7 @@ import MainPage from './components/MainPage/MainPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import Header from './components/Header/Header';
 import SendMoney from './components/SendMoney';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 
@@ -24,7 +25,7 @@ function App() {
 						<Route exact path="/login">
 							<LoginPage />
 						</Route>
-						<Route exact path="/send-money" component={ SendMoney } />
+						<PrivateRoute exact path="/send-money" component={ SendMoney } />
 					</Switch>
 				</Router>
 				</section>
