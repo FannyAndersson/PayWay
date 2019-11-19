@@ -11,7 +11,7 @@ import{UserContext} from '../../AuthUserContext';
 const LoginPage = () => {
     //use user from UserContext
     // if user exists in context, app navigates to mainPage
-    const {user, getAuthUser} = useContext(UserContext);
+    const {user, keepAuthUser} = useContext(UserContext);
     
     const onLogin = async () => {
         try {
@@ -30,7 +30,7 @@ const LoginPage = () => {
 
             const result = {user: await response.json(), status: response.status};
             if (result.status === 200) {
-                getAuthUser(result.user);
+                keepAuthUser(result.user);
             }
         } catch (error) {
             console.error('Error:', error);
@@ -40,7 +40,7 @@ const LoginPage = () => {
     return (
 
         <React.Fragment>
-            {user ? <Redirect to='/' /> : null};
+            {user ? <Redirect to='/' /> : null}
             <Row>
                 <Col l={3} offset='l4' className='content'>
                     <h1>Login</h1>
@@ -51,11 +51,7 @@ const LoginPage = () => {
                         <Button className="login-btn" waves="light" style={{width: '100%'}} >
                             login
                         </Button>
-                    </Col>
-                    <Col s={12} l={12} style={{marginTop: '20px'}}>
-                    <Button flat={true} className="register-link-btn raised-btn" style={{width: '100%'}} waves="light" >
-                        <Link to="/register">Register account</Link>
-                    </Button>
+                        <Link to="/register" className="waves-effect waves-light btn-flat register-link-btn raised-btn">Register account</Link>
                     </Col>
                 </Col>
             </Row>
