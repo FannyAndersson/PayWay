@@ -6,6 +6,7 @@ import "./css/style.css";
 import MainPage from "./components/MainPage/MainPage";
 import LoginPage from "./components/LoginPage/LoginPage";
 import Header from "./components/Header/Header";
+import Register from './components/Registration/Register';
 
 function App() {
 	return (
@@ -22,6 +23,9 @@ function App() {
 								<Route exact path="/login">
 									<LoginPage />
 								</Route>
+								<Route exact path="/register">
+									<Register/>
+								</Route>
 							</Switch>
 						</section>
 					</React.Fragment>
@@ -30,5 +34,8 @@ function App() {
 		</UserContextProvider>
 	);
 }
+
+
+
 
 export default App;
