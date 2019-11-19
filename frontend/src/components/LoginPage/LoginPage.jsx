@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Row, Col, TextInput, Button } from 'react-materialize';
 import useLoginForm from "./UseLoginFormHook";
-import{UserContext} from '../../UserContext';
+import{UserContext} from '../../AuthUserContext';
 
 
 
