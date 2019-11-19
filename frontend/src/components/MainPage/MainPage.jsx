@@ -10,7 +10,7 @@ const MainPage = () => {
     const {user} = useContext(UserContext);
     return (
         <React.Fragment>
-            {!user ? <Redirect to='/login' /> : null};
+            {!user ? <Redirect to='/login' /> : null}
             <Row>
                 <Col l={3} offset='l4'>
                     <h1>Main Page</h1>
