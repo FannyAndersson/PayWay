@@ -18,14 +18,7 @@ const FavouritesList = () => {
                             return (<li key={fav._id}>{fav.phone}</li>)
                         })}
                     </ul>
-                    
-                    <TextInput className="form-control" label="Phone" phone={true} required />
-                    <Button type="submit" onclick={addFav} waves='light'>
-                        Subbmit
-                    <Icon right>
-                            send
-                    </Icon>
-                    </Button>
+                                        
                 </Col>
             </Row>
         
