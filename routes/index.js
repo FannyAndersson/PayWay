@@ -1,10 +1,8 @@
 // import custom routes, add your custom routes here ...
-const exampleRoutes = require('./example-routes');
-const logout = require('./logout');
-const createChild = require('./createChild');
-const getUserTransactions= require('./user-transactions');
-const register = require("./register");
-const sendMoney = require("./send-money");
+
+const sendMoney = require('./send-money');
+const exampleRoutes = require("./example-routes");
+const logout = require("./logout");
 const emailRoute = require("./email-route");
 const updateUser = require("./update-user");
 const resetPassword = require("./reset-password");
@@ -15,12 +13,12 @@ const rejectParent = require("./reject-parent");
 const login = require('./login');
 const adminBoard = require('./admin-board')
 
+const activateAccount = require("./activate-account");
 const routesList = [];
 
 // ... and here
 routesList.push(exampleRoutes);
 routesList.push(logout);
-routesList.push(register);
 routesList.push(sendMoney);
 routesList.push(emailRoute);
 routesList.push(updateUser);
@@ -41,4 +39,15 @@ function useCustomRoutes(app, db) {
     });
 }
 
+=======
+routesList.push(activateAccount);
+
+function useCustomRoutes(app, db) {
+  // tell express server to use routes
+  routesList.forEach(useRoute => {
+    useRoute(app, db);
+  });
+}
+
+>>>>>>> Stashed changes
 module.exports = useCustomRoutes;
