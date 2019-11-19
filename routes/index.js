@@ -1,8 +1,10 @@
 // import custom routes, add your custom routes here ...
-
-const sendMoney = require('./send-money');
-const exampleRoutes = require("./example-routes");
-const logout = require("./logout");
+const exampleRoutes = require('./example-routes');
+const logout = require('./logout');
+const createChild = require('./createChild');
+const getUserTransactions = require('./user-transactions');
+const register = require("./register");
+const sendMoney = require("./send-money");
 const emailRoute = require("./email-route");
 const updateUser = require("./update-user");
 const resetPassword = require("./reset-password");
@@ -12,6 +14,7 @@ const confirmParent = require("./confirm-parent");
 const rejectParent = require("./reject-parent");
 const login = require('./login');
 const adminBoard = require('./admin-board')
+const createFavorite = require('./createFavorite');
 
 const activateAccount = require("./activate-account");
 const routesList = [];
@@ -31,6 +34,8 @@ routesList.push(rejectParent);
 routesList.push(login);
 routesList.push(getUserTransactions)
 routesList.push(adminBoard)
+routesList.push(createFavorite)
+
 
 function useCustomRoutes(app, db) {
     // tell express server to use routes
