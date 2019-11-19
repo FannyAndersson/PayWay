@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import { Icon } from "react-materialize";
 import { Link } from "react-router-dom";
-import {UserContext} from '../../UserContext';
+import {UserContext} from '../../AuthUserContext';
 
 const SideMenuItem = (props) => {
     const {user} = useContext(UserContext);

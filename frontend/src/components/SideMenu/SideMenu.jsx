@@ -1,6 +1,7 @@
 import React from "react";
 import { SideNav, SideNavItem, Button, Icon } from "react-materialize";
 import SideMenuItem from './SideMenuItem';
+import LogoutBtn from '../Logout/LogoutBtn';
 
 const SideMenu = props => {
 	const user = props.user;
@@ -34,7 +35,7 @@ const SideMenu = props => {
 				<SideMenuItem to="/profile/favorites/add-favorite" icon="star" text="Add a favorite" />
 				<SideNavItem divider />
 				<SideMenuItem to="/profile/settings" icon="account_box" text="Settings" />
-				<SideMenuItem to="/logout" icon="exit_to_app" text="Log out" />
+				<LogoutBtn />
 			</SideNav>
 		</React.Fragment>
 	);

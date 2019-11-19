@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import { Row, Col } from 'react-materialize';
 import SideMenu from '../SideMenu/SideMenu';
-import {UserContext} from '../../UserContext';
+import {UserContext} from '../../AuthUserContext';
 
 
 
