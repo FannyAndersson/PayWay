@@ -15,8 +15,11 @@
         "users": {
             "admin": "all"
         },
-
         "createchild": {
+            "admin": "all",
+            "user": "all"
+        },
+        "createFavorite": {
             "admin": "all",
             "user": "all"
         }
