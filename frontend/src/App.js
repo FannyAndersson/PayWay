@@ -6,6 +6,7 @@ import './css/style.css';
 import MainPage from './components/MainPage/MainPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import Header from './components/Header/Header';
+import AddChild from './components/AddChildToParent/AddChildForm';
 
 function App() {
 
@@ -22,6 +23,9 @@ function App() {
 						</Route>
 						<Route exact path="/login">
 							<LoginPage />
+						</Route>
+						<Route exact path="/createchild">
+						<AddChild />
 						</Route>
 					</Switch>
 				</Router>
