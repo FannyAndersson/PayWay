@@ -45,16 +45,7 @@ const userSchema = new Schema({
         pending: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     },
 
-    favorites: [{
-        name: {
-            type: String,
-            required: true,
-        },
-        number: {
-            type: String,
-            required: true,
-        },
-    }],
+    favorites: [{ type: Schema.Types.ObjectId, ref: "User" }],
 
     password: {
         type: String,
@@ -84,29 +75,29 @@ userSchema.virtual('outgoingTransactions', {
 
 const checkIfAdmin = (user) => {
     user.isAdmin = user._id;
-    if(user.role === "admin") {
+    if (user.role === "admin") {
         user.isAdmin = "-1";
     }
 }
 
-userSchema.pre('save', function() {
+userSchema.pre('save', function () {
     checkIfAdmin(this);
 });
 
-userSchema.post('save', function(error, doc, next) {
+userSchema.post('save', function (error, doc, next) {
     if (error.name === 'MongoError' && error.code === 11000) {
-      next(new Error('Admin already exists'));
+        next(new Error('Admin already exists'));
     } else {
-      next();
+        next();
     }
-  });
+});
 
-  userSchema.methods.toJSON = function() {
+userSchema.methods.toJSON = function () {
     var obj = this.toObject();
     delete obj.password;
     delete obj.isAdmin;
     return obj;
-   }
+}
 
 const userModel = new model('User', userSchema);
 
