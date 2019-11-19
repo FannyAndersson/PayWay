@@ -24,9 +24,7 @@ function App() {
 						<Route exact path="/login">
 							<LoginPage />
 						</Route>
-						<Route exact path="/send-money">
-							<SendMoney />
-						</Route>
+						<Route exact path="/send-money" component={ SendMoney } />
 					</Switch>
 				</Router>
 				</section>

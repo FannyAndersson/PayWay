@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const SendMoney = () => {
+const SendMoney = (props) => {
 
     const [ recipientPhone, setRecipientPhone ] = useState('');
     const [ transactionAmount, setTransactionAmount ] = useState(0);
@@ -10,6 +10,9 @@ const SendMoney = () => {
     const [ showGenericErrorMessage, setShowGenericErrorMessage ] = useState(false);
 
     const [ transactionStatus, setTransactionStatus ] = useState({ loading: false, loaded: false, error: false, status: null });
+
+
+    const { history } = props;
 
     // function to handle when form is submitted
     const handleSubmit = async (e) => {
@@ -151,7 +154,12 @@ const SendMoney = () => {
 
                 <div className="row">
                     <div className="col s6">
-                        <button disabled={ loading } className="waves-effect waves-light raised-btn btn w100" type="button">
+                        <button
+                            disabled={ loading }
+                            className="waves-effect waves-light raised-btn btn w100"
+                            type="button"
+                            onClick={ () => history.push('./') }
+                        >
                             Cancel
                         </button>
                     </div>
