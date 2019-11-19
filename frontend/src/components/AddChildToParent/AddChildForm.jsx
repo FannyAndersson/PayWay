@@ -17,6 +17,7 @@ const AddChildForm = () => {
                     'Content-Type': 'application/json'
                   }
             })
+                console.log(response)
                 const result = await response.json();
                 console.log('SUCCESS: ', result);
 
