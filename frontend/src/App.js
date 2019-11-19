@@ -11,6 +11,7 @@ import SendMoney from './components/SendMoney';
 import PrivateRoute from './components/PrivateRoute';
 import TransactionPage from "./components/TransactionPage/TransactionPage";
 import CreateFavouriteComponent from './components/addFavourite/CreateFavouriteComponent';
+import FavouritesList from './components/FavouritesList/FavouritesList';
 
 function App() {
 	return (
@@ -26,6 +27,9 @@ function App() {
 								</Route>
 								<Route exact path="/login">
 									<LoginPage />
+								</Route>
+								<Route exact path="/favourites">
+									<FavouritesList />
 								</Route>
 								<Route exact path="/profile/favorites/add-favorite">
 									<CreateFavouriteComponent />
