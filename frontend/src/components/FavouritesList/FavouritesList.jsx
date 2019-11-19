@@ -1,25 +1,21 @@
 import React from 'react';
-import { UserContext } from '../../userContext';
+import { UserContext } from '../../UserContext';
 import { Row, Col, TextInput, Button } from 'react-materialize';
 
 const FavouritesList = () => {
 
-    const { user } = UserContext(UserContext);
-    // const addFav = () => {
-    //    setUser([...favourites, user._id]);
-    // }
-
+    const { user } = useContext(UserContext);
+    
     return (
-
-
+        
         <React.Fragment>
 
             <Row>
                 <Col className='fav-list'>
 
                     <ul>
-                        {favourites.map(user_id => {
-                            return (<li key={user_id}>{Favourites[req.body.phone]}</li>)
+                        {user.favourites.map(fav => {
+                            return (<li key={fav._id}>{fav.phone}</li>)
                         })}
                     </ul>
                     
@@ -32,11 +28,13 @@ const FavouritesList = () => {
                     </Button>
                 </Col>
             </Row>
-
-
-
+        
         </React.Fragment>
     );
 }
 
 export default FavouritesList;
+
+// const addFav = () => {
+    //    setUser([...favourites, user._id]);
+    // }
