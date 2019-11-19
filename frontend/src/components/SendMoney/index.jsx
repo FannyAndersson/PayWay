@@ -103,7 +103,7 @@ const SendMoney = () => {
         onChange: e => {
             setRecipientPhone(e.target.value);
 
-            // when user beings typing, set show invalid user notice to false
+            // when user begins typing, set show invalid user notice to false
             setShowInvalidRecipientNotice(false);
         },
     };
