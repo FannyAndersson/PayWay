@@ -3,9 +3,11 @@ import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import UserContextProvider from './AuthUserContext';
 import ContextKeeper from './components/ContextKeeper';
 import './css/style.css';
+import './css/style.css'
 import MainPage from './components/MainPage/MainPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import Header from './components/Header/Header';
+import Register from './components/Registration/Register';
 
 function App() {
 
@@ -22,11 +24,15 @@ function App() {
 						</Route>
 						<Route exact path="/login">
 							<LoginPage />
-						</Route>
+            </Route>
+            <Route exact path="/register">
+            <Register/>
+            </Route>
 					</Switch>
 				</Router>
 				</section>
 			</React.Fragment>
+
 			</ContextKeeper>
 	</UserContextProvider>
   );
