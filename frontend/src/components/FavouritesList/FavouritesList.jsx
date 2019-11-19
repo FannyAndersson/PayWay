@@ -12,10 +12,10 @@ const FavouritesList = () => {
 
             <Row>
                 <Col className='fav-list'>
-
-                    <ul>
+                    <p className='fav-desc'>List of your favourites</p>
+                    <ul className= 'fav-ul'>
                         {user.favourites.map(fav => {
-                            return (<li key={fav._id}>{fav.phone}</li>)
+                            return (<li className= 'fav-l-item' key={fav._id}>{fav.phone}</li>)
                         })}
                     </ul>
                                         
