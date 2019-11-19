@@ -45,7 +45,7 @@ const validate=(inputs)=>{
   if(!inputs.confirmPassword){
     errors.confirmPassword="Please repeat your password"
   } else if(inputs.confirmPassword !== inputs.password){
-    errors.inputs.confirmPassword = 'Password does not match'
+    errors.confirmPassword = 'Password does not match'
   }
   return errors 
   }
