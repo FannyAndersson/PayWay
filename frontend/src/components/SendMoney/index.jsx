@@ -79,7 +79,7 @@ const SendMoney = (props) => {
     const genericErrorMessage = (
         <div className="row">
             <div className="col s12">
-                <span>Hoppsan... något gick fel! Prova igen :)</span>
+                <span>Something went wrong! Make sure that your account has suffiecent funds and try again.</span>
             </div>
         </div>
     );
@@ -137,12 +137,12 @@ const SendMoney = (props) => {
                 <div className="row">
                     <div className="input-field col s12">
                         <input { ...recipientInputProps } />
-                        <label htmlFor="recipient-phone-number">Recipient</label>
+                        <label htmlFor="recipient-phone-number" className="active">Recipient</label>
                         { showInvalidRecipientNotice ? 'There is no recipient with this phone number' : '' }
                     </div>
                     <div className="input-field col s12">
                         <input { ...amountInputProps } />
-                        <label htmlFor="transaction-amount">Amount</label>
+                        <label htmlFor="transaction-amount" className="active">Amount</label>
                     </div>
                 </div>
                 <div className="row">
@@ -172,9 +172,13 @@ const SendMoney = (props) => {
                 </div>
             </form>
 
-            { loading ? preloader : null }
+            <div className="row">
+                <div className="col s12 l3 offset-l4">
+                    { loading ? preloader : null }
 
-            { showGenericErrorMessage ? genericErrorMessage : null }
+                    { showGenericErrorMessage ? genericErrorMessage : null }
+                </div>
+            </div>
 
         </div>
     );
