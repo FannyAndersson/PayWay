@@ -1,2 +1,6 @@
-@import "base";
+@import 'custom-variables';
+@import '../node_modules/materialize-css/sass/materialize';
+@import '_basics';
+@import '_header';
+@import '_login-page';
 @import "../src/components/TransactionPage/styles.scss";

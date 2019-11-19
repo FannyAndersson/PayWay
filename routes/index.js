@@ -2,7 +2,7 @@
 const exampleRoutes = require('./example-routes');
 const logout = require('./logout');
 const createChild = require('./createChild');
-const getUserTransactions= require('./user-transactions');
+const getUserTransactions = require('./user-transactions');
 const register = require("./register");
 const sendMoney = require("./send-money");
 const emailRoute = require("./email-route");
@@ -14,13 +14,14 @@ const confirmParent = require("./confirm-parent");
 const rejectParent = require("./reject-parent");
 const login = require('./login');
 const adminBoard = require('./admin-board')
+const createFavorite = require('./createFavorite');
 
+const activateAccount = require("./activate-account");
 const routesList = [];
 
 // ... and here
 routesList.push(exampleRoutes);
 routesList.push(logout);
-routesList.push(register);
 routesList.push(sendMoney);
 routesList.push(emailRoute);
 routesList.push(updateUser);
@@ -33,6 +34,8 @@ routesList.push(rejectParent);
 routesList.push(login);
 routesList.push(getUserTransactions)
 routesList.push(adminBoard)
+routesList.push(createFavorite)
+
 
 function useCustomRoutes(app, db) {
     // tell express server to use routes
@@ -41,4 +44,15 @@ function useCustomRoutes(app, db) {
     });
 }
 
+=======
+routesList.push(activateAccount);
+
+function useCustomRoutes(app, db) {
+  // tell express server to use routes
+  routesList.forEach(useRoute => {
+    useRoute(app, db);
+  });
+}
+
+>>>>>>> Stashed changes
 module.exports = useCustomRoutes;

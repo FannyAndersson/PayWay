@@ -17,7 +17,7 @@ function useLogin(app) {
             if (user.password === password) {
 
                 req.session.user = user;
-                return res.json(user);
+                return res.status(200).json(user);
 
             }
             else {
@@ -32,7 +32,7 @@ function useLogin(app) {
 
     // check if/which user that is logged in
     app.get('/api/login', async (req, res) => {
-        res.json(req.session.user ? req.session.user : { status: "Not logged in" });
+        res.json(req.session.user ? req.session.user : false);
     });
 
 }
