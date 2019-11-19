@@ -6,6 +6,7 @@ import './css/style.css';
 import MainPage from './components/MainPage/MainPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import Header from './components/Header/Header';
+import SendMoney from './components/SendMoney';
 
 function App() {
 
