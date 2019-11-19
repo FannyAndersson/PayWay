@@ -6,11 +6,15 @@ const UserContextProvider = (props) => {
 
     const [user, setUser] = useState('');
 
-    const getAuthUser = (user) => {
+    const keepAuthUser = (user) => {
         setUser(user);
     }
+
+    const destroyAuthUser = () => {
+        setUser('');
+    }
     return (
-        <UserContext.Provider value={{user, getAuthUser: getAuthUser}}>
+        <UserContext.Provider value={{user, keepAuthUser: keepAuthUser, destroyAuthUser: destroyAuthUser}}>
             {props.children}
         </UserContext.Provider>
     );
@@ -18,4 +22,5 @@ const UserContextProvider = (props) => {
 
 
 export default UserContextProvider;
+
 
