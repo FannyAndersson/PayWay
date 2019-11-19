@@ -9,13 +9,15 @@ const addFavFavouriteComponent= () => {
 
 
 
-
+const {inputs, handleInputChange, handleSubmit} = useAddFavourites();
 
     return (
             <React.Fragment>
 
             <Row>
                 <Col>
+                <h1>Add your favourite</h1>
+                <TextInput/>
                 
                 
                 </Col>
