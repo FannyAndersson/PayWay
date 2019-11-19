@@ -105,8 +105,8 @@ const SendMoney = () => {
 
             // when user beings typing, set show invalid user notice to false
             setShowInvalidRecipientNotice(false);
-        }
-    }
+        },
+    };
 
     const amountInputProps = {
         disabled: loading,
@@ -125,7 +125,7 @@ const SendMoney = () => {
         className: 'materialize-textarea',
         value: transactionMessage,
         onChange: e => setTransactionMessage(e.target.value),
-        maxLength: 50
+        maxLength: 50,
     }
 
     return (
@@ -151,7 +151,9 @@ const SendMoney = () => {
 
                 <div className="row">
                     <div className="col s6">
-                        <a disabled={ loading } className="waves-effect waves-light raised-btn btn w100">Cancel</a>
+                        <button disabled={ loading } className="waves-effect waves-light raised-btn btn w100" type="button">
+                            Cancel
+                        </button>
                     </div>
 
                     <div className="col s6">
