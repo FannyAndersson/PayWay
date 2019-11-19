@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../UserContext";
 
 
@@ -7,25 +7,25 @@ import { UserContext } from "../UserContext";
 //and saves it as user to UserContext
 //All components are located inside of ContextKeeper and consume to UserContext
 const ContextKeeper = (props) => {
-    const {getAuthUser} = useContext(UserContext);
+    const { getAuthUser } = useContext(UserContext);
 
     const [authUser, setAuthUser] = useState(false);
-    const checkLogin =async () => {
+    const checkLogin = async () => {
         const response = await fetch('/api/login');
-        const result = {user: await response.json(), status: response.status};
+        const result = { user: await response.json(), status: response.status };
         if (result.user) {
             getAuthUser(result.user);
             setAuthUser(true);
         }
     }
-    if(!authUser) {
+    if (!authUser) {
         checkLogin();
     }
-	return (
+    return (
         <div>
             {props.children}
         </div>
-	);
+    );
 };
 
 export default ContextKeeper;

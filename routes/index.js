@@ -38,13 +38,12 @@ routesList.push(createFavorite)
 
 
 function useCustomRoutes(app, db) {
-    // tell express server to use routes
-    routesList.forEach(useRoute => {
-        useRoute(app, db);
-    });
+  // tell express server to use routes
+  routesList.forEach(useRoute => {
+    useRoute(app, db);
+  });
 }
 
-=======
 routesList.push(activateAccount);
 
 function useCustomRoutes(app, db) {
@@ -54,5 +53,5 @@ function useCustomRoutes(app, db) {
   });
 }
 
->>>>>>> Stashed changes
+
 module.exports = useCustomRoutes;
