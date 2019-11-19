@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import { Row, Col, Button, Icon } from 'react-materialize';
-import {UserContext} from '../../UserContext';
+import {UserContext} from '../../AuthUserContext';
 
 
 

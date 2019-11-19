@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import UserContextProvider from './UserContext';
+import UserContextProvider from './AuthUserContext';
 import ContextKeeper from './components/ContextKeeper';
 import './css/style.css';
 import './css/style.css'
@@ -37,5 +37,7 @@ function App() {
 	</UserContextProvider>
   );
 }
+
+
 
 export default App;
