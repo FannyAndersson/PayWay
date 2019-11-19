@@ -64,3 +64,6 @@ typings/
 
 config
 config
+
+# output from sass compiler
+frontend/src/css/style.css
