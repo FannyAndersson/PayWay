@@ -11,7 +11,7 @@ function register(app) {
 		const {email, password} = req.body;
 		let user = await User.findOne({ email });
 		if (user) {
-			return res.status(400).send('Email already exists!');
+			return res.status(400).json({message: 'Email already exists!'});
 		} else {
 			user = new User({
 				...req.body,

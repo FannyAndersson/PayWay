@@ -1,6 +1,8 @@
 import React from 'react';
+import {Redirect} from 'react-router-dom'
 import useRegisterUser from './RegisterUser';
 import {Row, Col, TextInput} from 'react-materialize';
+
 const RegisterForm = () => {
   const onRegister= async ()=>{
 try {
@@ -17,10 +19,14 @@ headers: {
   'Content-type': 'application/json'
 }
   })
-  const result = await response.json();
-  console.log('SUCCESS: ', result);
+  if(response.ok){
+    console.log('response succeeded')
+}  else {
+  let errorMssg = "Email already exists! Try loggin in"
+  alert(errorMssg)
+ }
 } catch (error) {
-    console.error('Error:', error);
+console.log(error, 'Error')
 }
 }
 
@@ -45,22 +51,21 @@ const validate=(inputs)=>{
   if(!inputs.confirmPassword){
     errors.confirmPassword="Please repeat your password"
   } else if(inputs.confirmPassword !== inputs.password){
-    errors.inputs.confirmPassword = 'Password does not match'
+    errors.confirmPassword = 'Password does not match'
   }
   return errors 
   }
 
   const { errors, inputs, handleSubmit, handleInputChange} = useRegisterUser(onRegister, validate)
-
     return (
         <>
         <div className="registration-page container center-align">
         <Row>
-        <Col l={4} offset='l4' className='content'>
+        <Col l={3} offset='l2' className='content'>
         <h3>Sign up!</h3>
+
         <form onSubmit={handleSubmit}>
-              <TextInput 
-              s={12} l={12} 
+              <TextInput s={12} l={12}
               label="Name"
                type="text" 
               className={`input ${errors.name && 'is-danger'}` }
@@ -68,7 +73,7 @@ const validate=(inputs)=>{
               value={inputs.name || ''}
                onChange={handleInputChange}  
                 />
-               {errors.name &&( <p className="help is-danger">{errors.name}</p>)}
+               {errors.name &&( <p className="help is-danger col s12">{errors.name}</p>)}
 
             <TextInput
             s={12} l={12} 
