@@ -5,10 +5,11 @@ const [inputs, setInputs] = useState({})
 const [errors, setErrors] = useState({})
 const [isSubmitting, setIsSubmitting] = useState(false)
 
+
 useEffect(() => {
-    if(Object.keys(errors).length === 0 && isSubmitting){
+    if(Object.keys(errors).length === 0 && isSubmitting ){
         callback();
-    }
+    } 
     // eslint-disable-next-line react-hooks/exhaustive-deps
 });
 
@@ -16,10 +17,7 @@ const handleSubmit = (e)=>{
     if(e){
         e.preventDefault();
         setErrors(validate(inputs))
-        setIsSubmitting(true);
-        } else {
-            setInputs({name: '', phone: '', email: '', password: ''})
-
+        setIsSubmitting(true)
         }
 }
 
@@ -29,11 +27,14 @@ const handleInputChange = (e)=>{
         [e.target.name]: e.target.value}));
 }
 
+
+
 return {
     handleSubmit,
     handleInputChange, 
     inputs, 
     errors,
+
 }
 }
 

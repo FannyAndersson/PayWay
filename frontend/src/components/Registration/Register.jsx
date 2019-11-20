@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom'
-import useRegisterUser from './RegisterUser';
-import { Row, Col, TextInput } from 'react-materialize';
+import { Redirect, Link } from 'react-router-dom';
+import { Row, Col, TextInput, Modal, Button } from 'react-materialize';
+import useRegisterUser from './useRegisterUser';
 
 
 const RegisterForm = () => {
   const [okToRedirect, setOkToRedirect] = useState(false);
+//   const [isShowing, setIsShowing] = useState(false);
   const onRegister = async () => {
     try {
       const register = {
@@ -21,19 +22,22 @@ const RegisterForm = () => {
           'Content-type': 'application/json'
         }
       } )
-      if ( response.ok ) {
+      if ( response.ok) {
         console.log( response, 'response succeeded' )
         setOkToRedirect(true);
+
       } else if(!okToRedirect){
-        let errorMssg = "Email already exists! Try loggin in"
-        alert( errorMssg )
+        let errorMssg = `Email already exists! Try logging in`
+        alert( errorMssg)
+        return; 
       }
+
     } catch ( error ) {
       console.log( error, 'Error' )
     }
   }
 
-  function validate( inputs ) {
+  function validate( inputs) {
     let errors = {}
     if ( !inputs.name ) {
       errors.name = "Name field cannot be empty"
@@ -52,23 +56,25 @@ const RegisterForm = () => {
       errors.password = 'Password must be at least 5 or more characters'
     }
     if ( !inputs.confirmPassword ) {
-      errors.confirmPassword = "Type in password again"
+      errors.confirmPassword = "Type in the password again"
     } else if ( inputs.confirmPassword !== inputs.password ) {
       errors.confirmPassword = 'Password does not match'
     }
     return errors
   }
 
-  const { errors, inputs, handleSubmit, handleInputChange } = useRegisterUser( onRegister, validate )
+
+  const {handleSubmit, handleInputChange, inputs,  errors} = useRegisterUser( onRegister, validate );
+
   return (
     <>
       {okToRedirect && <Redirect to="/login" />}
       <div className="registration-page container center-align">
         <Row>
-          <Col l={3} offset='l2' className='content'>
-            <h3>Sign up!</h3>
+          <Col l={6} offset='l2' className='content'>
 
-            <form onSubmit={handleSubmit}>
+            <h3>Sign up!</h3> 
+                <form onSubmit={handleSubmit}>
               <TextInput s={12} l={12}
                 label="Name"
                 type="text"
@@ -100,7 +106,7 @@ const RegisterForm = () => {
                 onChange={handleInputChange}
               />
               {errors.email && ( <p className="help is-danger">{errors.email}</p> )}
-
+         
               <TextInput
                 s={12} l={12}
                 label="Password"
@@ -122,11 +128,21 @@ const RegisterForm = () => {
               />
               {errors.confirmPassword && ( <p className="help is-danger">{errors.confirmPassword}</p> )}
 
-              <div className="row">
-                <div className="col s12">
-                  <button className="submit-btn btn waves-effect waves-light" type="submit" value="submit">Submit</button>
-                </div>
-              </div>
+                <Button flat={true} className="cancel-register-btn raised-btn" style={{ width: '48%' }} waves="light">
+                  <Link to="/login">Cancel</Link>
+                </Button>
+                <Button className="submit-btn btn waves-effect waves-light" waves="light" style={{ width: '48%', marginLeft: '10px' }} type="submit" value="submit">
+                Submit
+                </Button>
+
+     {    /*       <Modal
+                     open={false}
+                    header="You're all signed up now"
+                    trigger= {}
+                    >
+                    <p>Registration Completed</p>
+     </Modal> */ }
+
             </form>
           </Col>
         </Row>
@@ -136,3 +152,5 @@ const RegisterForm = () => {
 }
 
 export default RegisterForm;
+
+
