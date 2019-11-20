@@ -19,11 +19,11 @@ const addFavFavouriteComponent = () => {
 
         });
     }
-    catch(error){
-        console.error('Error:',error)
+    catch (error) {
+        console.error('Error:', error)
     }
-    
-    
+
+
 
 
     const { inputs, handleInputChange, handleSubmit } = useAddFavourites();
@@ -35,10 +35,11 @@ const addFavFavouriteComponent = () => {
                     <Col>
                         <h1>Add your favourite</h1>
 
-                        <TextInput type='text' lable='Phone' name='phone' onChange={handleInputChange} value={inputs.phone} phone={true} required />
-                        <Button >
-                            Send
-                    </Button>
+                        <TextInput className="form-control" type="text" lable="Phone" name="phone" onChange={handleInputChange} value={inputs.phone} phone={true} required />
+                        <Button className= "submit-btn">
+                            
+                            <link to="/favourites">Submit</link>
+                        </Button>
 
                     </Col>
 
