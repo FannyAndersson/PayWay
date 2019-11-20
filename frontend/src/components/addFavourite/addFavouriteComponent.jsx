@@ -5,12 +5,13 @@ import useAddFavourite from './useAddFavouriteHook';
 
 
 const addFavFavouriteComponent = () => {
-
-    try {
+    const {user, getAuthUser} = useContext(UserContext);
+    const addFav = () => {
+         try {
         const input = {
             phone: inputs.phone
         }
-        const resp = await fetch('/api/favourites', {
+        const response = await fetch('/api/favourites', {
             method: 'POST',
             body: JSON.stringify(input),
             headers: {
@@ -18,15 +19,17 @@ const addFavFavouriteComponent = () => {
             }
 
         });
+        const result ={user:await response.json(), status:response.status}
+        if(result.status ===200){
+            getAuthUser(result.user);
+        }
     }
     catch (error) {
         console.error('Error:', error)
     }
-
-
-
-
-    const { inputs, handleInputChange, handleSubmit } = useAddFavourite();
+}
+   
+    const { inputs, handleInputChange, handleSubmit } = useAddFavourite(addFav);
 
     return (
         <React.Fragment>
