@@ -5,13 +5,22 @@ const Transaction = (props) => {
     console.log(props, "props");
 
     const { contact, className, transaction } = props;
-    console.log(className, "class");
-    console.log(transaction, "tr");
 
+    console.log(transaction.date);
+    let date = transaction.date;
+    let newdate = date.slice(0, 10)
+    console.log(newdate, "news");
     return (
         <div className={className}>
-            <p>{contact}</p>
-            <p>{transaction.amount}</p>
+            <div className="symbol-transaction">{className === "incoming" ? `+` : `-`}</div>
+            <div className="contacts">
+                <p>{contact} </p>
+                <p>{newdate}</p>
+            </div>
+            <div>
+                {transaction.amount}
+            </div>
+
         </div>
     );
 };
