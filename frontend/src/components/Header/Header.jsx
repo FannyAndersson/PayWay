@@ -11,7 +11,7 @@ const Header = () => {
     return (
         <React.Fragment>
             <Row>
-                <Col node='header' l={3} offset='l4' className='header'>
+                <Col node='header' className='header'>
                     <SideMenu user={user} />
                     <p className="logo">PayWay</p>
                 </Col>

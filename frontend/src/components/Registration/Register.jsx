@@ -54,9 +54,9 @@ const validate=(inputs)=>{
 
     return (
         <>
-        <div className="registration-page container center-align">
+        {/* <div className="registration-page container center-align"> */}
         <Row>
-        <Col l={4} offset='l4' className='content'>
+        <Col className='content'>
         <h3>Sign up!</h3>
         <form onSubmit={handleSubmit}>
               <TextInput 
@@ -121,7 +121,7 @@ const validate=(inputs)=>{
       </form>
         </Col>
         </Row>    
-</div>
+{/* </div> */}
       </>
     )
 }

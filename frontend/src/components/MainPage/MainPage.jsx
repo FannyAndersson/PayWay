@@ -10,7 +10,7 @@ const MainPage = () => {
     return (
         <React.Fragment>
             <Row>
-                <Col l={3} offset='l4'>
+                <Col>
                     <h1>Main Page</h1>
                     <p>Hello {user.name}</p>
                 </Col>

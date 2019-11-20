@@ -42,7 +42,7 @@ const LoginPage = () => {
         <React.Fragment>
             {user ? <Redirect to='/' /> : null}
             <Row>
-                <Col l={3} offset='l4' className='content'>
+                <Col className='content'>
                     <h1>Login</h1>
                     <Col node="form" onSubmit={handleSubmit} l={12} className="form">
                         <TextInput className="form-control" name="email" onChange={handleInputChange} value={inputs.email} label="Email" email={true} s={12} l={12} required/>

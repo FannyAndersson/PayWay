@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { UserContext } from "../AuthUserContext";
+import { Row, Col } from 'react-materialize';
+
 
 //ContextKeeper is a holder of UserContext. It checks if there is session (authenticated user)
 //and saves it as user to UserContext
@@ -48,7 +50,11 @@ const ContextKeeper = props => {
 	return (
 		<div>
 			{!user ? <Redirect to="/login" /> : null}
-			{props.children}
+			<Row>
+                <Col l={3} offset='l4'>
+					{props.children}
+                </Col>
+            </Row>
 		</div>
 	);
 };
