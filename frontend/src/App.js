@@ -7,6 +7,8 @@ import MainPage from "./components/MainPage/MainPage";
 import LoginPage from "./components/LoginPage/LoginPage";
 import Header from "./components/Header/Header";
 import Register from './components/Registration/Register';
+import SendMoney from './components/SendMoney';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 	return (
@@ -26,6 +28,7 @@ function App() {
 								<Route exact path="/register">
 									<Register/>
 								</Route>
+								<PrivateRoute exact path="/send-money" component={ SendMoney } />
 							</Switch>
 						</section>
 					</React.Fragment>
@@ -34,6 +37,7 @@ function App() {
 		</UserContextProvider>
 	);
 }
+
 
 
 
