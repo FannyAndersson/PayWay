@@ -9,6 +9,7 @@ import Header from "./components/Header/Header";
 import Register from './components/Registration/Register';
 import SendMoney from './components/SendMoney';
 import PrivateRoute from './components/PrivateRoute';
+import UserProfile from "./components/UserProfile/UserProfile";
 
 function App() {
 	return (
@@ -29,6 +30,9 @@ function App() {
 									<Register/>
 								</Route>
 								<PrivateRoute exact path="/send-money" component={ SendMoney } />
+								<Route exact path="/profile/settings">
+									<UserProfile/>
+								</Route>
 							</Switch>
 						</section>
 					</React.Fragment>
