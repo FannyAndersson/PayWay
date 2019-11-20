@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Row, Column, TextInput, Button } from 'react';
 import { UserContext } from '../../AuthUserContext';
-import useAddFavourites from './useAddFavouriteHook';
+import useAddFavourite from './useAddFavouriteHook';
 
 
 const addFavFavouriteComponent = () => {
@@ -26,7 +26,7 @@ const addFavFavouriteComponent = () => {
 
 
 
-    const { inputs, handleInputChange, handleSubmit } = useAddFavourites();
+    const { inputs, handleInputChange, handleSubmit } = useAddFavourite();
 
     return (
         <React.Fragment>
