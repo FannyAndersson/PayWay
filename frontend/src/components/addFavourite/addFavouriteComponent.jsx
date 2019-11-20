@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
-import { Row, Column, TextInput, Button } from 'react';
+import { Row, Col, TextInput, Button } from 'react';
 import { UserContext } from '../../AuthUserContext';
 import useAddFavourite from './useAddFavouriteHook';
+import { Link} from 'react-router-dom';
 
 
 const addFavFavouriteComponent = () => {
@@ -41,7 +42,7 @@ const addFavFavouriteComponent = () => {
                         <TextInput className="form-control" type="text" lable="Phone" name="phone" onChange={handleInputChange} value={inputs.phone} phone={true} required />
                         <Button className= "submit-btn">
                             
-                            <link to="/favourites">Submit</link>
+                            <Link to="/favourites">Submit</Link>
                         </Button>
 
                     </Col>
