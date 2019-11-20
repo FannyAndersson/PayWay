@@ -1,4 +1,5 @@
 // import custom routes, add your custom routes here ...
+const sendMoney = require('./send-money');
 const exampleRoutes = require('./example-routes');
 const logout = require('./logout');
 const createChild = require('./createChild');
@@ -22,6 +23,7 @@ const routesList = [];
 // ... and here
 routesList.push(exampleRoutes);
 routesList.push(logout);
+<<<<<<< Updated upstream
 routesList.push(sendMoney);
 routesList.push(emailRoute);
 routesList.push(updateUser);

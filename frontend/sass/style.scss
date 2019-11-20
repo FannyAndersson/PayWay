@@ -1,8 +1,11 @@
-@import "custom-variables";
-@import "../node_modules/materialize-css/sass/materialize";
-@import "_basics";
-@import "_header";
-@import "_login-page";
-@import "_transaction";
+@import 'custom-variables';
+@import '../node_modules/materialize-css/sass/materialize';
+@import '_basics';
+@import '_header';
+@import '_login-page';
+@import '_side-menu.scss';
+@import 'side-menu-item';
+@import 'logout-btn';
+@import '_registration-page'
 
-@import "../src/components/TransactionPage/styles.scss";
+@import "_transaction";
