@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import Transaction from "./Transaction";
-import { UserContext } from '../../UserContext';
+import { UserContext } from '../../AuthUserContext';
 import { Tabs, Tab } from 'react-materialize';
 import { Row, Col, TextInput, Button } from 'react-materialize';
 
