@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const AddChild = (callback) => {
+const useAddChild = (callback) => {
 
     const[ inputs, setInputs ] = useState({ phone: '' })
 
@@ -26,4 +26,4 @@ const AddChild = (callback) => {
     }
 }
 
-export default AddChild;
+export default useAddChild;

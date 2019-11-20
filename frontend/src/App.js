@@ -28,7 +28,7 @@ function App() {
 								<Route exact path="/register">
 									<Register/>
 								</Route>
-								<Route exact path="/createchild">
+								<Route exact path="/profile/children/add-child">
 									<AddChild />
 								</Route>
 							</Switch>

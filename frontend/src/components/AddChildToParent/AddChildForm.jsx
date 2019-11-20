@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, TextInput, Button } from 'react-materialize';
-import AddChild from './AddChild';
+import useAddChild from './useAddChild';
 
 const AddChildForm = () => {
 
@@ -17,16 +17,16 @@ const AddChildForm = () => {
                     'Content-Type': 'application/json'
                   }
             })
-                console.log(response)
-                const result = await response.json();
-                console.log('SUCCESS: ', result);
+                 if (response.ok) {
+                   console.log(response, 'SUCCESS');
+                 }
 
             }   catch (error) {
             console.error('Error:', error);
         }
         }
 
-        const { inputs, handleInputChange, handleSubmit } = AddChild(addChild);
+        const { inputs, handleInputChange, handleSubmit } = useAddChild(addChild);
 
 
     return <React.Fragment>
@@ -34,13 +34,11 @@ const AddChildForm = () => {
           <Col l={3} offset="l4" className="content">
             <h1>Add a child</h1>
             <Col node="form" onSubmit={handleSubmit} l={12} className="form">
-              <TextInput className="form-control" name="phone" onChange={handleInputChange} value={inputs.phone} label="Phone number" s={12} l={12} required />
-              <Button className="cancel-add-child-btn" waves="light" style={{ width: '100%' }}>
+              <TextInput className="form-control" name="phone" onChange={handleInputChange} style={{ marginBottom: '40px' }} value={inputs.phone} label="Phone number" s={12} l={12} required />
+              <Button flat={true} className="cancel-add-child-btn raised-btn" style={{ width: '48%' }} waves="light">
                 <Link to="/mainpage">CANCEL</Link>
               </Button>
-            </Col>
-            <Col s={12} l={12} style={{ marginTop: '20px' }}>
-              <Button flat={true} className="send-add-child-btn raised-btn" style={{ width: '100%' }} waves="light">
+              <Button className="send-add-child-btn" waves="light" style={{ width: '48%', marginLeft: '11px' }}>
                 SEND
               </Button>
             </Col>
