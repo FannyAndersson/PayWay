@@ -10,7 +10,7 @@ const handleSubmit = (event) => {
     }
     }
     const handleInputChange = (event) => {
-        evvent.persist();
+        event.persist();
         setInputs(inputs => ({...inputs, [event.target.name]: event.target.value}));
 
     }
