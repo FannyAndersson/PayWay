@@ -22,7 +22,7 @@ function useWebHook(app) {
                     }
                 });
 
-                console.log('---- AUTOMATIC DEPLOY ATTEMPTED -----');
+                console.log('---- AUTOMATIC DEPL0Y ATTEMPTED -----');
 
                 return res.status(200).end('Push to master, automatic deploy started.');
 
