@@ -6,9 +6,9 @@ function useWebHook(app) {
 
         console.log('webhook hit! starting script! hold your horses!');
 
-        console.log('request', req.body);
-
+        
         try {
+            console.log('request ref', req.body.ref);
 
             if (req.body.ref === 'refs/heads/master') {
 
