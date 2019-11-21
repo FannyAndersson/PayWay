@@ -22,7 +22,7 @@ const TransactionPage = () => {
                 const result = await fetch(url);
                 const jsonData = await result.json();
                 const allTransactions = [...jsonData.incomingTransactions, ...jsonData.outgoingTransactions].sort((a, b) => {
-                    return a.date > b.date ? 1 : -1
+                    return a.date > b.date ? -1 : 1
                 });
                 if (mounted) {
                     setData([...allTransactions
@@ -44,7 +44,6 @@ const TransactionPage = () => {
 
     // const [all, incomingTransactions, outgoingTransactions] = data;
 
-    console.log(data, "data");
 
     return data.length !== 0 ? (
         <React.Fragment>
