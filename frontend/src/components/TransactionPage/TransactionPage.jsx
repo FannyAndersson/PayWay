@@ -23,16 +23,11 @@ const TransactionPage = () => {
                 const jsonData = await result.json();
                 const allTransactions = [...jsonData.incomingTransactions, ...jsonData.outgoingTransactions].sort((a, b) => {
                     return a.date > b.date ? 1 : -1
-                })
-                // console.log(allTransactions, "all");
+                });
                 if (mounted) {
-                    setData([[...allTransactions],
-                    [...jsonData.incomingTransactions],
-                    [...jsonData.outgoingTransactions]
+                    setData([...allTransactions
                     ]);
                 }
-
-
 
             } catch (error) {
                 console.error('Error:', error);
@@ -41,26 +36,21 @@ const TransactionPage = () => {
 
         getTransaction();
 
-        // return clean up function / willUnmount
         return () => {
             mounted = false;
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-
-    const [all, incomingTransactions, outgoingTransactions] = data;
+    // const [all, incomingTransactions, outgoingTransactions] = data;
 
     console.log(data, "data");
-
 
     return data.length !== 0 ? (
         <React.Fragment>
             <Tabs className="tab-demo z-depth-1">
-
                 <Tab title="All" active>
-
-                    {all.map(transaction => {
+                    {data.map(transaction => {
                         if (transaction.recipient === user._id) {
                             return (
                                 <Transaction className={"incoming"} contact={transaction.sender.name} transaction={transaction} key={transaction._id} />
@@ -68,28 +58,32 @@ const TransactionPage = () => {
                         } else {
                             return (<Transaction className={"outgoing"} contact={transaction.recipient.name} transaction={transaction} key={transaction._id} />)
                         }
-                    })
-                    }
+                    })}
                 </Tab>
                 <Tab title="Incoming" >
-                    {incomingTransactions.map(transaction => {
-                        return (
-                            <Transaction className={"incoming"} contact={transaction.sender.name} transaction={transaction} key={transaction._id} />
-                        )
-                    })}
+                    {data.filter(transaction => transaction.recipient === user._id)
+                        .map(transaction => {
+                            return (
+                                <Transaction className={"incoming"} contact={transaction.sender.name} transaction={transaction} key={transaction._id} />
+                            )
+                        })
+                    }
                 </Tab>
                 <Tab title="Outgoing">
-                    {outgoingTransactions.map(transaction => {
-                        return (
-                            <Transaction className={"outgoing"} contact={transaction.recipient.name} transaction={transaction} key={transaction._id} />
-                        )
-                    })}
+                    {data.filter(transaction => transaction.recipient !== user._id)
+                        .map(transaction => {
+                            return (
+                                <Transaction className={"outgoing"} contact={transaction.recipient.name} transaction={transaction} key={transaction._id} />
+                            )
+                        })
+                    }
                 </Tab>
             </Tabs>
         </React.Fragment>
-    ) : (<Tabs>
-        <Tab title="You don't have any transactions yet" active> </Tab>
-    </Tabs>
+    ) : (
+            <Tabs>
+                <Tab title="You don't have any transactions yet" active> </Tab>
+            </Tabs>
         )
 }
 

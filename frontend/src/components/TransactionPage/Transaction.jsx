@@ -2,8 +2,6 @@ import React from "react";
 
 const Transaction = (props) => {
 
-    // console.log(props, "props");
-
     const { contact, className, transaction } = props;
 
     let date = transaction.date;
@@ -18,7 +16,6 @@ const Transaction = (props) => {
             <div>
                 {transaction.amount}
             </div>
-
         </div>
     );
 };
