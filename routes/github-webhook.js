@@ -4,7 +4,7 @@ function useWebHook(app) {
 
     app.post('/api/github-webhook', (req, res) => {
 
-        console.log('webhook hit! starting script');
+        console.log('webhook hit! starting script! hold your horses!');
 
         console.log('request', req.body);
 
