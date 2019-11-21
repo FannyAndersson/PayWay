@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
-import { Row, Col, TextInput, Modal, Button } from 'react-materialize';
+import { Row, Col, TextInput, Button } from 'react-materialize';
 import useRegisterUser from './useRegisterUser';
 
 
 const RegisterForm = () => {
   const [okToRedirect, setOkToRedirect] = useState(false);
-//   const [isShowing, setIsShowing] = useState(false);
   const onRegister = async () => {
     try {
       const register = {
@@ -22,16 +21,24 @@ const RegisterForm = () => {
           'Content-type': 'application/json'
         }
       } )
-      if ( response.ok) {
-        console.log( response, 'response succeeded' )
-        setOkToRedirect(true);
 
-      } else if(!okToRedirect){
-        let errorMssg = `Email already exists! Try logging in`
-        alert( errorMssg)
-        return; 
-      }
-
+if(response){
+// let result = await response.json()
+  console.log( response, response.status, 'response' )
+      if (response.status === 200) {
+        setOkToRedirect(true)
+        return 
+      } 
+      else if(!okToRedirect && response.status === 400){
+          let errorMssg = "Email already exists!"
+          return errorMssg
+        } 
+        else if(response.status === 500){
+          let errorMssg = "User already exists"
+          console.log(response.statusText, 'ERRRRROR')
+          return errorMssg
+        }
+}
     } catch ( error ) {
       console.log( error, 'Error' )
     }
