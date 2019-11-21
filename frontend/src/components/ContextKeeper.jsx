@@ -28,7 +28,8 @@ const ContextKeeper = props => {
     }
     if(!authUser) {
         checkLogin();
-    }
+	}
+	
 
     if (isLoading) {
 
@@ -51,7 +52,7 @@ const ContextKeeper = props => {
 		<div>
 			{!user ? <Redirect to="/login" /> : null}
 			<Row>
-                <Col l={3} offset='l4'>
+                <Col s={12} l={3} offset='l4'>
 					{props.children}
                 </Col>
             </Row>

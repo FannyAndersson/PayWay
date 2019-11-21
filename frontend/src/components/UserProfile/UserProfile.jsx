@@ -3,17 +3,18 @@ import { UserContext } from "../../AuthUserContext";
 import { Row, Col, TextInput, Button } from "react-materialize";
 
 const UserProfile = () => {
-    const { user } = useContext(UserContext);
+    const { user, keepAuthUser } = useContext(UserContext);
     const [touched, setTouched] = useState(false);
     const [inputs, setInputs] = useState(
         {
             phone: user.phone,
-            userName: user.name,
+            name: user.name,
             email: user.email,
-            limit: user.limit, 
-            password: '',
+            limit: user.limit 
         }
     );
+
+    const [touchedInputs, setTouchedInputs] = useState({});
 
     const handleSubmit =(event) => {
         if(event) {
@@ -25,35 +26,35 @@ const UserProfile = () => {
     const handleInputChange = (event) => {
         event.persist();
         setTouched(true);
+        setTouchedInputs(touchedInputs => ({...touchedInputs, [event.target.name]: event.target.value}));
         setInputs(inputs => (
             {...inputs, [event.target.name]: event.target.value}
         ));
     }
-	const onUpdateProfile = () => {
-        console.log(inputs)
-        // try {
-        //     const userInfo = {
-        //         ...inputs
-        //     }
 
-        //     const response = await fetch('/api/login', {
-        //         method: 'POST',
-        //         body: JSON.stringify(login),
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //           }
-        //     });
 
-        //     const result = {user: await response.json(), status: response.status};
-        //     if (result.status === 200) {
-        //         keepAuthUser(result.user);
-        //         setTouched(false);
+	const onUpdateProfile = async () => {
+        try {
+            const body = {
+                ...touchedInputs
+            }
 
-        //     }
-        // } catch (error) {
-        //     console.error('Error:', error);
-        // }
-		return console.log("updated");
+            const response = await fetch('/api/profile/' + user._id, {
+                method: 'PUT',
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json'
+                  }
+            });
+            const result = {user: await response.json(), status: response.status}
+
+            if (result.status === 200) {
+                setTouched(false);
+                keepAuthUser(result.user);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
 	};
 
 	return (
@@ -74,9 +75,9 @@ const UserProfile = () => {
 					/>
 					<TextInput
 						className="form-control"
-						name="userName"
+						name="name"
 						onChange={handleInputChange}
-						value={inputs.userName}
+						value={inputs.name}
 						label="Name"
 						type="text"
 						s={12}
@@ -106,24 +107,13 @@ const UserProfile = () => {
 					/>
                     <Col s={12}
 						l={12} className="btn-group">
-                    <Button type="button" flat className="raised-btn" style={{width: '49%'}} waves="light">
+                    <Button type="button" flat className="btn raised-btn" style={{width: '49%'}} waves="light">
                         Cancel
                     </Button>
                     <Button disabled={!touched ? true : false} type="submit" waves="light" style={{width: '49%'}}>
                         Save
                     </Button>
                     </Col>
-					{/* <TextInput
-						className="form-control"
-						name="password"
-						onChange={handleInputChange}
-						value={inputs.password}
-						label="Password"
-						password={true}
-						s={12}
-						l={12}
-						required
-					/> */}
 				</Col>
 			</Row>
 		</React.Fragment>
