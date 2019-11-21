@@ -95,6 +95,7 @@ userSchema.post('save', function (error, doc, next) {
     }
 });
 
+
 userSchema.methods.toJSON = function () {
     var obj = this.toObject();
     delete obj.password;

@@ -7,7 +7,12 @@ function updateUser(app) {
 			(user && String(user._id) === req.session.user._id) ||
 			req.session.user.role === "admin"
 		) {
-			await User.updateOne({ _id: req.params.id }, req.body);
+			try {
+				await User.updateOne({ _id: req.params.id }, req.body);
+			} catch (error) {
+				return res.status(400).send(error);
+			}
+			
 			const updatedUser = await User.findOne({ _id: req.params.id });
 			res.status(200).json(updatedUser);
 			req.session.user = updatedUser;

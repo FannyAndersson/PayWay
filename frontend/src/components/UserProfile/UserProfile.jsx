@@ -4,14 +4,18 @@ import { Row, Col, TextInput, Button } from "react-materialize";
 
 const UserProfile = () => {
     const { user, keepAuthUser } = useContext(UserContext);
-    const [touched, setTouched] = useState(false);
-    const [inputs, setInputs] = useState(
-        {
+    let initialState = {};
+    if(user) {
+        initialState = {
             phone: user.phone,
             name: user.name,
             email: user.email,
             limit: user.limit 
         }
+    }
+    const [touched, setTouched] = useState(false);
+    const [inputs, setInputs] = useState(
+        initialState
     );
 
     const [touchedInputs, setTouchedInputs] = useState({});
@@ -32,6 +36,10 @@ const UserProfile = () => {
         ));
     }
 
+    const handleReset = () => {
+        setInputs(initialState);
+        setTouched(false);
+    }
 
 	const onUpdateProfile = async () => {
         try {
@@ -46,15 +54,25 @@ const UserProfile = () => {
                     'Content-Type': 'application/json'
                   }
             });
-            const result = {user: await response.json(), status: response.status}
+            const result = {response: await response.json(), status: response.status}
 
             if (result.status === 200) {
                 setTouched(false);
-                keepAuthUser(result.user);
+                keepAuthUser(result.response);
             }
+
+            if(result.status === 400) {
+                console.log(result, 'result');
+                let errDetails = {key: ''};
+                const msg = result.response.errmsg.slice(result.response.errmsg.search('\"(.*?)\"'));
+                errDetails = {msg};
+                console.log(errDetails)
+            }
+
         } catch (error) {
             console.error('Error:', error);
         }
+
 	};
 
 	return (
@@ -107,7 +125,7 @@ const UserProfile = () => {
 					/>
                     <Col s={12}
 						l={12} className="btn-group">
-                    <Button type="button" flat className="btn raised-btn" style={{width: '49%'}} waves="light">
+                    <Button type="button" onClick={handleReset} disabled={!touched ? true : false} flat className="btn raised-btn" style={{width: '49%'}} waves="light">
                         Cancel
                     </Button>
                     <Button disabled={!touched ? true : false} type="submit" waves="light" style={{width: '49%'}}>
