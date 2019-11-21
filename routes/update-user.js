@@ -10,7 +10,13 @@ function updateUser(app) {
 			try {
 				await User.updateOne({ _id: req.params.id }, req.body);
 			} catch (error) {
-				return res.status(400).send(error);
+				if(error.errmsg.includes('phone')) {
+					return res.status(500).send({error: 'phone'});
+				}
+				if(error.errmsg.includes('email')) {
+					return res.status(500).send({error: 'email'});
+				}
+				return res.status(500).send(error);
 			}
 			
 			const updatedUser = await User.findOne({ _id: req.params.id });
