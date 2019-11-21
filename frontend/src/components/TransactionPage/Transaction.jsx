@@ -2,14 +2,12 @@ import React from "react";
 
 const Transaction = (props) => {
 
-    console.log(props, "props");
+    // console.log(props, "props");
 
     const { contact, className, transaction } = props;
 
-    console.log(transaction.date);
     let date = transaction.date;
     let newdate = date.slice(0, 10)
-    console.log(newdate, "news");
     return (
         <div className={className}>
             <div className="symbol-transaction">{className === "incoming" ? `+` : `-`}</div>
