@@ -6,7 +6,7 @@ function useWebHook(app) {
 
         console.log('webhook hit! starting script');
 
-        console.log('request', req);
+        console.log('request', req.body);
 
         // exec('sh deploy.sh', (error, stdout, stderr) => {
 
