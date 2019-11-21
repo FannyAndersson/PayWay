@@ -1,0 +1,87 @@
+[{
+        "children": {
+            "confirmed": [],
+            "pending": []
+        },
+        "balance": 1000,
+        "activated": false,
+        "name": "User",
+        "username": "payAdmin",
+        "email": "admin@payway.com",
+        "password": "1234"
+    },
+    {
+        "children": {
+            "confirmed": [],
+            "pending": []
+        },
+        "balance": 1000,
+        "name": "Alice",
+        "role": "admin",
+        "activated": true,
+        "email": "alice@wonderland.se",
+        "phone": "0737693153"
+    },
+    {
+        "email": "Rabbit",
+        "name": "Rabbit",
+        "phone": "0737693159",
+        "password": "112112"
+    },
+    {
+        "email": "Mouse",
+        "name": "Mouse",
+        "phone": "0737693169",
+        "password": "112112"
+    },
+    {
+        "email": "Dormouse",
+        "name": "Dormouse",
+        "phone": "0737693170",
+        "password": "112112"
+    },
+    {
+        "children": {
+            "confirmed": [],
+            "pending": []
+        },
+        "activated": false,
+        "name": "Musse",
+        "email": "musse@mail.se",
+        "phone": "0737693120",
+        "password": "23456"
+    },
+    {
+        "children": {
+            "confirmed": [],
+            "pending": []
+        },
+        "role": "user",
+        "balance": 1000,
+        "activated": false,
+        "name": "Pele",
+        "email": "pele@mail.se",
+        "phone": "0737693121",
+        "password": "23456"
+    },
+    {
+        "children": {
+            "confirmed": [],
+            "pending": []
+        },
+        "name": "Musse",
+        "email": "Musse",
+        "phone": "0737293120",
+        "password": "23456"
+    },
+    {
+        "children": {
+            "confirmed": [],
+            "pending": []
+        },
+        "name": "Anka",
+        "email": "anka@mail.se",
+        "phone": "0732293150",
+        "password": "23456"
+    }
+]

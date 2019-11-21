@@ -1,0 +1,17 @@
+.forgot-your-pwd {
+    cursor: pointer;
+    color: $secondary-color;
+    text-decoration: underline;
+    margin-bottom: 20px;
+    &:hover {
+        color: darken($secondary-color, 14%);
+    }
+}
+
+.register-link-btn {
+        color: $secondary-color;
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
+}

@@ -1,0 +1,27 @@
+{
+    "apiPath": "/api",
+    "rules": {
+        "login": {
+            "user": "all",
+            "admin": "all"
+        },
+        "transactions": {
+            "admin": "all"
+        },
+        "profile": {
+            "user": "post put get",
+            "admin": "all"
+        },
+        "users": {
+            "admin": "all"
+        },
+        "createchild": {
+            "admin": "all",
+            "user": "all"
+        },
+        "createFavorite": {
+            "admin": "all",
+            "user": "all"
+        }
+    }
+}

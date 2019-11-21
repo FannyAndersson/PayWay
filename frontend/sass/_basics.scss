@@ -1,0 +1,26 @@
+.row {
+    margin-bottom: 0;
+}
+
+h1 {
+    font-size: 2.125rem;
+    text-align: center;
+}
+
+.raised-btn {
+    background-color: #fff;
+    color: $secondary-color;
+    border: 1px solid transparentize($secondary-color, 0.7);
+    &:hover {
+        background-color: #fff;
+        border-color: $secondary-color;
+    }
+}
+
+.logo {
+    font-size: 2rem;
+}
+
+.w100 {
+    width: 100%;
+}
