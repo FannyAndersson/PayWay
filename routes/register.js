@@ -8,11 +8,14 @@ const encryptPassword = require('../helpers/encrypt-password');
 
 function register(app) {
 	app.post('/api/register', async (req, res) => {
-		const {email, password} = req.body;
-		let user = await User.findOne({ email });
+		const {email, password, err} = req.body;
+		let user = await User.findOne({ email })
 		if (user) {
-			return res.status(400).json({message: 'Email already exists!'});
-		} else {
+			let errorMssg = "Email already exists"
+		 res.status(400).json({errorMssg, err});
+		 return 
+		}
+		else {
 			user = new User({
 				...req.body,
 				password: encryptPassword(password)
@@ -21,10 +24,10 @@ function register(app) {
 		try {
 			await user.save();
 		} catch (error) {
-			res.status(500).json(error.message);
+			res.status(500).send(error);
 			return;
 		}
-		res.json({
+		 res.json({
 			message: 'User successfully registered',
 			user: user,
 			email: user.email
