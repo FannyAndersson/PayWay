@@ -16,6 +16,7 @@ const rejectParent = require("./reject-parent");
 const login = require('./login');
 const adminBoard = require('./admin-board')
 const createFavorite = require('./createFavorite');
+const githubWebhook = require('./github-webhook');
 
 const activateAccount = require("./activate-account");
 const routesList = [];
@@ -37,6 +38,7 @@ routesList.push(login);
 routesList.push(getUserTransactions)
 routesList.push(adminBoard)
 routesList.push(createFavorite)
+routesList.push(githubWebhook);
 
 
 function useCustomRoutes(app, db) {
