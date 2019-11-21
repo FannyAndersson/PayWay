@@ -40,7 +40,7 @@ const LoginPage = () => {
     return (
 
         <React.Fragment>
-            {user ? <Redirect to='/' /> : null};
+            {user ? <Redirect to='/' /> : null}
             <Row>
                 <Col l={3} offset='l4' className='content'>
                     <h1>Login</h1>

@@ -19,7 +19,7 @@ const Header = () => {
                 </Col>
             </Row>
         </React.Fragment>
-    );
+    )
 }
 
 export default Header;
