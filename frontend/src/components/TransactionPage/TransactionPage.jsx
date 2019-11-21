@@ -10,22 +10,18 @@ const TransactionPage = () => {
     const { user } = useContext(UserContext);
 
     useEffect(() => {
-
-
         const getTransaction = async () => {
             try {
 
                 const userID = user._id;
-
-                // const userID = "5dcea6d8a51e1b38d0c53e45";
                 let key = "/api/users/";
                 let url = key + userID + "/transactions"
-                // console.log(url, "URL");
                 const result = await fetch(url)
                 const jsonData = await result.json();
-                // console.log(jsonData.incomingTransactions, "json");
-                const allTransactions = [...jsonData.incomingTransactions, ...jsonData.outgoingTransactions];
-                // console.log(allTransactions, "all");
+                const allTransactions = [...jsonData.incomingTransactions, ...jsonData.outgoingTransactions].sort((a, b) => {
+                    return a.date > b.date ? 1 : -1
+                })
+                console.log(allTransactions, "all");
                 setData([[...allTransactions],
                 [...jsonData.incomingTransactions],
                 [...jsonData.outgoingTransactions]
@@ -38,13 +34,13 @@ const TransactionPage = () => {
 
         getTransaction();
 
-
     }, [user])
 
 
     const [all, incomingTransactions, outgoingTransactions] = data;
-
-
+    // all.sort((a, b) => {
+    //     return a.date > b.date ? 1 : -1
+    // }
 
     return data.length !== 0 ? (
         <React.Fragment>
@@ -59,7 +55,8 @@ const TransactionPage = () => {
                             return (<Transaction className={"outgoing"} contact={transaction.recipient.name} transaction={transaction} key={transaction._id} />)
                         }
 
-                    })}
+                    })
+                    }
                 </Tab>
                 <Tab title="Incoming" >
                     {incomingTransactions.map(transaction => {
