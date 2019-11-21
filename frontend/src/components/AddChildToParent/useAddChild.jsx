@@ -2,11 +2,15 @@ import { useState } from 'react';
 
 const useAddChild = (callback) => {
 
+
     const[ inputs, setInputs ] = useState({ phone: '' })
+
+
 
     const handleSubmit = (event) => {
         if(event){
             event.preventDefault()
+
         }
         callback()
     }
@@ -22,7 +26,7 @@ const useAddChild = (callback) => {
     return {
         inputs,
         handleSubmit,
-        handleInputChange
+        handleInputChange,
     }
 }
 
