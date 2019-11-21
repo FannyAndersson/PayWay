@@ -20,12 +20,8 @@
     ],
     "rules": {
         "indent": [
-            "error",
+            "warn",
             4
-        ],
-        "quotes": [
-            "error",
-            "single"
         ]
     }
 }
