@@ -9,3 +9,5 @@ git checkout master
 git pull
 
 echo "Automatic deploy finished! Let's crack open a cold beer and enjoy this moment!"
+
+pm2 restart paywayapp
