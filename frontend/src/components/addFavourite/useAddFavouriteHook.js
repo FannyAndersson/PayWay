@@ -8,6 +8,7 @@ const handleSubmit = (event) => {
     if (event){
         event.preventDefault();
     }
+    callback()
     }
     const handleInputChange = (event) => {
         event.persist();
