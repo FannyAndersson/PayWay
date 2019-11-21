@@ -15,7 +15,7 @@ const ContextKeeper = props => {
     const checkLogin = async () => {
 
         const response = await fetch('/api/login');
-        const result = { user: await response.json(), status: response.status };
+        const result = {user: await response.json(), status: response.status};
         if (result.user) {
             keepAuthUser(result.user);
             setAuthUser(true);
@@ -24,7 +24,7 @@ const ContextKeeper = props => {
         setIsLoading(false);
 
     }
-    if (!authUser) {
+    if(!authUser) {
         checkLogin();
     }
 
