@@ -8,18 +8,39 @@ function useWebHook(app) {
 
         console.log('request', req.body);
 
-        // exec('sh deploy.sh', (error, stdout, stderr) => {
+        try {
 
-        //     console.log(stdout);
-        //     console.log(stderr);
+            if (req.body.ref === 'refs/heads/master') {
 
-        //     if (error !== null) {
-        //         console.log(`exec error: ${error}`);
-        //     }
-        // });
+                exec('sh deploy.sh', (error, stdout, stderr) => {
 
-        res.status(200).end();
+                    console.log(stdout);
+                    console.log(stderr);
 
+                    if (error !== null) {
+                        console.log(`exec error: ${error}`);
+                    }
+                });
+
+                console.log('---- AUTOMATIC DEPLOY ATTEMPTED -----');
+
+                return res.status(200).end('Push to master, automatic deploy started.');
+
+            } else {
+
+                console.log(`---- PUSH TO ${req.body.ref} ---- NOT DEPLOYING ----`);
+
+                return res.status(200).send('Not pushing to master, ignoring.');
+
+            }
+
+        } catch (e) {
+
+            console.error('//// ERROR WITH DEPLOYMENT SCRIPT \\\\\\\\\\', e);
+
+            res.status(500).json(e);
+
+        }
 
     });
 }
