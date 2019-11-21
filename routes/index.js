@@ -1,5 +1,4 @@
 // import custom routes, add your custom routes here ...
-const sendMoney = require('./send-money');
 const exampleRoutes = require('./example-routes');
 const logout = require('./logout');
 const createChild = require('./createChild');
@@ -24,7 +23,7 @@ const routesList = [];
 // ... and here
 routesList.push(exampleRoutes);
 routesList.push(logout);
-<<<<<<< Updated upstream
+
 routesList.push(sendMoney);
 routesList.push(emailRoute);
 routesList.push(updateUser);
@@ -42,13 +41,13 @@ routesList.push(githubWebhook);
 
 
 function useCustomRoutes(app, db) {
-    // tell express server to use routes
-    routesList.forEach(useRoute => {
-        useRoute(app, db);
-    });
+  // tell express server to use routes
+  routesList.forEach(useRoute => {
+    useRoute(app, db);
+  });
 }
 
-=======
+
 routesList.push(activateAccount);
 
 function useCustomRoutes(app, db) {
@@ -58,5 +57,4 @@ function useCustomRoutes(app, db) {
   });
 }
 
->>>>>>> Stashed changes
 module.exports = useCustomRoutes;
