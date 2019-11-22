@@ -1,24 +1,24 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import UserContextProvider from './AuthUserContext';
-import ContextKeeper from './components/ContextKeeper';
-import './css/style.css';
-import './css/style.css'
-import MainPage from './components/MainPage/MainPage';
-import LoginPage from './components/LoginPage/LoginPage';
-import Header from './components/Header/Header';
-import FavouritesList from './components/FavouritesList/FavouritesList';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import UserContextProvider from "./AuthUserContext";
+import ContextKeeper from "./components/ContextKeeper";
+import "./css/style.css";
+import MainPage from "./components/MainPage/MainPage";
+import LoginPage from "./components/LoginPage/LoginPage";
+import Header from "./components/Header/Header";
 import Register from './components/Registration/Register';
+import SendMoney from './components/SendMoney';
+import PrivateRoute from './components/PrivateRoute';
+import TransactionPage from "./components/TransactionPage/TransactionPage";
 import CreateFavouriteComponent from './components/addFavourite/CreateFavouriteComponent';
 
 function App() {
-
 	return (
 		<UserContextProvider>
-			<ContextKeeper>
-				<React.Fragment>
-					<section className={'container-fluid'}>
-						<Router>
+			<Router>
+				<ContextKeeper>
+					<React.Fragment>
+						<section className={"container-fluid"}>
 							<Header />
 							<Switch>
 								<Route exact path="/">
@@ -27,24 +27,23 @@ function App() {
 								<Route exact path="/login">
 									<LoginPage />
 								</Route>
-								<Route exact path="/profile/favorites/add-favorite">
-									<CreateFavouriteComponent />
-								</Route>
-								<Route exact path="/profile/favorites">
-									<FavouritesList />
-								</Route>
 								<Route exact path="/register">
 									<Register />
 								</Route>
+								<Route exact path="/profile/transactions">
+									<TransactionPage />
+								</Route>
+								<PrivateRoute exact path="/send-money" component={SendMoney} />
 							</Switch>
-						</Router>
-					</section>
-				</React.Fragment>
-
-			</ContextKeeper>
+						</section>
+					</React.Fragment>
+				</ContextKeeper>
+			</Router>
 		</UserContextProvider>
 	);
 }
+
+
 
 
 
