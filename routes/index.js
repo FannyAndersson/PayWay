@@ -16,6 +16,7 @@ const login = require('./login');
 const adminBoard = require('./admin-board')
 const createFavorite = require('./createFavorite');
 const githubWebhook = require('./github-webhook');
+const getChildren = require('./get-children');
 
 const routesList = [];
 
@@ -37,6 +38,8 @@ routesList.push(adminBoard)
 routesList.push(createFavorite)
 
 routesList.push(githubWebhook);
+routesList.push(getChildren);
+
 
 
 function useCustomRoutes(app, db) {

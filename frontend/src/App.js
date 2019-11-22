@@ -10,6 +10,7 @@ import Register from './components/Registration/Register';
 import SendMoney from './components/SendMoney';
 import PrivateRoute from './components/PrivateRoute';
 import TransactionPage from "./components/TransactionPage/TransactionPage";
+import Children from "./components/Children/Children";
 
 function App() {
 	return (
@@ -31,6 +32,12 @@ function App() {
 								</Route>
 								<Route exact path="/profile/transactions">
 									<TransactionPage />
+								</Route>
+								<Route exact path="/profile/transactions">
+									<TransactionPage />
+								</Route>
+								<Route exact path="/profile/children">
+									<Children />
 								</Route>
 								<PrivateRoute exact path="/send-money" component={SendMoney} />
 							</Switch>
