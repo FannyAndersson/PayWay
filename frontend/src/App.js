@@ -10,7 +10,7 @@ import Register from './components/Registration/Register';
 import SendMoney from './components/SendMoney';
 import PrivateRoute from './components/PrivateRoute';
 import TransactionPage from "./components/TransactionPage/TransactionPage";
-import addFavFavouriteComponent from './components/addFavourite/addFavouriteComponent';
+import CreateFavouriteComponent from './components/addFavourite/CreateFavouriteComponent';
 
 function App() {
 	return (
@@ -28,7 +28,7 @@ function App() {
 									<LoginPage />
 								</Route>
 								<Route exact path="/addfavourites">
-									<AddFavFavouriteComponent />
+									<CreateFavouriteComponent />
 								</Route>
 								<Route exact path="/register">
 									<Register />
