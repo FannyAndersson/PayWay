@@ -55,8 +55,8 @@ function useCustomRoutes(app, db) {
   });
 }
 
-=======
-routesList.push(activateAccount);
+
+
 
 function useCustomRoutes(app, db) {
   // tell express server to use routes
@@ -65,5 +65,4 @@ function useCustomRoutes(app, db) {
   });
 }
 
->>>>>>> Stashed changes
 module.exports = useCustomRoutes;
