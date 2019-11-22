@@ -8,12 +8,11 @@ const handleSubmit = (event) => {
     if (event){
         event.preventDefault();
     }
-    callback()
+    callback();
     }
     const handleInputChange = (event) => {
         event.persist();
         setInputs(inputs => ({...inputs, [event.target.name]: event.target.value}));
-
     }
     return {
         handleSubmit,

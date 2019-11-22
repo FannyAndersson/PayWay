@@ -10,14 +10,14 @@ function createFavorite(app, db) {
         }
 
         const currentUser = await User.findById(user._id);
-        const favoriteUser = await User.findOne({ phone: req.body.phone })
+        const favoriteUser = await User.findOne(req.body)
 
         if (!currentUser) {
-            return res.status(404).json({ error: "User not found" });
+            return res.status(400).json({ error: "User not found" });
         }
 
         if (!favoriteUser) {
-            return res.status(404).json({ error: "No such user with this phone number" });
+            return res.status(500).json({ error: "No such user with this phone number" });
         }
         
         if(String(favoriteUser._id) === user._id){
@@ -29,7 +29,7 @@ function createFavorite(app, db) {
         } else {
             currentUser.favorites.push(favoriteUser);
             currentUser.save();
-            res.send("sent");
+            res.status(200).json(currentUser);
 
             res.status(200).end();
 
