@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Row, Col, TextInput, Button } from 'react';
 import { UserContext } from '../../AuthUserContext';
-import UseAddFavourite from './UseAddFavouriteHook';
+import UseAddFavourite from './UseCreateFavoriteHook';
 import { Link} from 'react-router-dom';
 
 
-const AddFavFavouriteComponent = () => {
+const CreateFavouriteComponent = () => {
 
     const { getAuthUser } = useContext(UserContext);
 
@@ -58,5 +58,5 @@ const AddFavFavouriteComponent = () => {
     );
 }
 
-export default AddFavFavouriteComponent;
+export default CreateFavouriteComponent;
 
