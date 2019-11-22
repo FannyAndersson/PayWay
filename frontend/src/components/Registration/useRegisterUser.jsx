@@ -1,42 +1,29 @@
-import  {useState, useEffect} from 'react'
+import { useState } from "react";
 
 const useRegisterUser = (callback, validate) => {
-const [inputs, setInputs] = useState({})
-const [errors, setErrors] = useState({})
-const [isSubmitting, setIsSubmitting] = useState(false)
+	const [inputs, setInputs] = useState({});
+	const [errors, setErrors] = useState({});
 
+	const handleSubmit = e => {
+		if (e) {
+			e.preventDefault();
+			callback();
+		}
+		
+	};
 
-useEffect(() => {
-    if(Object.keys(errors).length === 0 && isSubmitting ){
-        callback();
-    } 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-});
+	const handleInputChange = e => {
+		e.persist();
+		setInputs(inputs => ({ ...inputs, [e.target.name]: e.target.value }));
+	};
 
-const handleSubmit = (e)=>{
-    if(e){
-        e.preventDefault();
-        setErrors(validate(inputs))
-        setIsSubmitting(true)
-        }
-}
+	return {
+		handleSubmit,
+		handleInputChange,
+		inputs,
+		errors,
+		setErrors
+	};
+};
 
-const handleInputChange = (e)=>{
-    e.persist();
-    setInputs(inputs =>({...inputs, 
-        [e.target.name]: e.target.value}));
-}
-
-
-
-return {
-    handleSubmit,
-    handleInputChange, 
-    inputs, 
-    errors,
-
-}
-}
-
-  
 export default useRegisterUser;

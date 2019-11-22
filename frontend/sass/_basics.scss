@@ -24,3 +24,13 @@ h1 {
 .w100 {
     width: 100%;
 }
+.input-field {
+    .error-helper {
+        color: #ff0000;
+        opacity: 0;
+        transition: opacity .5s;
+        &.on {
+            opacity: 1;
+        }
+    }
+}

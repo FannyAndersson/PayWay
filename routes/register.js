@@ -8,22 +8,20 @@ const encryptPassword = require('../helpers/encrypt-password');
 
 function register(app) {
 	app.post('/api/register', async (req, res) => {
-		const {email, password, err} = req.body;
-		let user = await User.findOne({ email })
-		if (user) {
-			let errorMssg = "Email already exists"
-		 res.status(400).json({errorMssg, err});
-		 return 
-		}
-		else {
-			user = new User({
-				...req.body,
-				password: encryptPassword(password)
-			});
-		}
+		const {password} = req.body;
+		const user = new User({
+			...req.body,
+			password: encryptPassword(password)
+		});
 		try {
 			await user.save();
 		} catch (error) {
+			if(error.errmsg.includes('phone')) {
+				return res.status(500).json({error: 'phone'});
+			}
+			if(error.errmsg.includes('email')) {
+				return res.status(500).json({error: 'email'});
+			}
 			res.status(500).send(error);
 			return;
 		}
@@ -36,11 +34,11 @@ function register(app) {
 		const link = `http://localhost:3000/api/register/${user._id}`;
 
 		//send email for activation
-		sendEmail({
-			to: user.email,
-			html: `<body><p>Click this link to activate your PayWay account - ${link}</p></body>`,
-			subject: "PayWay -Email activation NO REPLY"
-		});
+		// sendEmail({
+		// 	to: user.email,
+		// 	html: `<body><p>Click this link to activate your PayWay account - ${link}</p></body>`,
+		// 	subject: "PayWay -Email activation NO REPLY"
+		// });
 
 		res.status(200).end();
 	});
