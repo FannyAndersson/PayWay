@@ -17,7 +17,6 @@ const adminBoard = require('./admin-board')
 const createFavorite = require('./createFavorite');
 const githubWebhook = require('./github-webhook');
 
-const activateAccount = require("./activate-account");
 const routesList = [];
 
 // ... and here
@@ -36,7 +35,6 @@ routesList.push(login);
 routesList.push(getUserTransactions)
 routesList.push(adminBoard)
 routesList.push(createFavorite)
-routesList.push(activateAccount);
 
 routesList.push(githubWebhook);
 
@@ -49,7 +47,6 @@ function useCustomRoutes(app, db) {
 }
 
 
-routesList.push(activateAccount);
 
 function useCustomRoutes(app, db) {
   // tell express server to use routes
