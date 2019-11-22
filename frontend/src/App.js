@@ -9,6 +9,9 @@ import LoginPage from "./components/LoginPage/LoginPage";
 import Header from "./components/Header/Header";
 import Register from './components/Registration/Register';
 import AddChild from './components/AddChildToParent/AddChildForm';
+import SendMoney from './components/SendMoney';
+import PrivateRoute from './components/PrivateRoute';
+import TransactionPage from "./components/TransactionPage/TransactionPage";
 
 function App() {
 	return (
@@ -26,11 +29,15 @@ function App() {
 									<LoginPage />
 								</Route>
 								<Route exact path="/register">
-									<Register/>
+									<Register />
 								</Route>
 								<Route exact path="/profile/children/add-child">
 									<AddChild />
 								</Route>
+								<Route exact path="/profile/transactions">
+									<TransactionPage />
+								</Route>
+								<PrivateRoute exact path="/send-money" component={SendMoney} />
 							</Switch>
 						</section>
 					</React.Fragment>
@@ -39,4 +46,6 @@ function App() {
 		</UserContextProvider>
 	);
 }
+
 export default App;
+

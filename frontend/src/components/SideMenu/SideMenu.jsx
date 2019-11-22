@@ -27,7 +27,7 @@ const SideMenu = props => {
 					</dl>
 				</li>
 				{/* We used Handmade component SideMenuItem to improve interaction with Router */}
-				<SideMenuItem to="/profile/send-money" icon="send" text="Send money" />
+				<SideMenuItem to="/send-money" icon="send" text="Send money" />
 				<SideMenuItem to="/profile/transactions" icon="account_balance_wallet" text="Transactions" />
 				<SideMenuItem to="/profile/children/" icon="favorite" text="Children" />
 				<SideMenuItem to="/profile/children/add-child" icon="face" text="Add a child" />
