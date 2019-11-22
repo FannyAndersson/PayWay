@@ -8,22 +8,29 @@ function getChildren(app) {
         }
 
         try {
-            const currentUser = await User.findById(user._id).populate({
-                path: 'children',
-                populate: {
-                    path: "pending",
+            const currentUser = await User.findById(user._id).populate("children", "name phone")
+            // .populate({
+            //     path: 'children',
+            //     populate: {
+            //         path: "confirmed",
+            //         model: "User"
+            //     }
+            // })
+            // .populate({
+            //     path: "children",
+            //     populate: {
+            //         path: "pending",
+            //         model: "User"
 
-                    model: "User",
-                    select: 'name phone',
-
-                }
-            });
+            //     }
+            // })
             console.log(currentUser, "current");
             res.json(
-                currentUser
+                currentUser.children
+
             )
         } catch (error) {
-            res.status(500).send(error)
+            res.status(500).send(error, "errs")
         }
     })
 }
