@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,} from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, TextInput, Button, Modal } from 'react-materialize';
 import useAddChild from './useAddChild';
@@ -49,7 +49,7 @@ const AddChildForm = () => {
                name="phone"
                onChange={handleInputChange}
                 style={{ marginBottom: '40px' }}
-                 value={inputs.phone}
+                 value={inputs.phone || ''}
                  className={ `validate${showInvalidChild ? 'invalid' : ''}`}
                   label="Phone number"
                    s={12} l={12}
@@ -59,10 +59,17 @@ const AddChildForm = () => {
             ) : (
               ''
             )}
-              <Button flat={true} className="cancel-add-child-btn raised-btn" style={{ width: '48%' }} waves="light">
+              <Button
+              flat={true}
+              className="cancel-add-child-btn raised-btn"
+               style={{ width: '48%' }} waves="light">
                 <Link to="/mainpage">CANCEL</Link>
               </Button>
-                <Button flat={true} onClick={handleSubmit} className="send-add-child-btn" style={{ width: '48%', backgroundColor: '#6200EE', color: 'white', marginLeft:'11px' }} waves="light">
+                <Button
+                flat={true}
+                 onClick={handleSubmit}
+                 className="send-add-child-btn"
+                  style={{ width: '48%', backgroundColor: '#6200EE', color: 'white', marginLeft:'11px' }} waves="light">
                       ADD CHILD
                     </Button>
             </Col>
