@@ -30,6 +30,9 @@ function App() {
 								<Route exact path="/profile/favorites/add-favorite">
 									<CreateFavouriteComponent />
 								</Route>
+								<Route exact path="/profile/favorites">
+									<FavouritesList />
+								</Route>
 								<Route exact path="/register">
 									<Register />
 								</Route>
