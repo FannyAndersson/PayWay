@@ -28,7 +28,7 @@ function App() {
 									<LoginPage />
 								</Route>
 								<Route exact path="/addfavourites">
-									<addFavFavouriteComponent />
+									<AddFavFavouriteComponent />
 								</Route>
 								<Route exact path="/register">
 									<Register />

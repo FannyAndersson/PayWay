@@ -1,13 +1,15 @@
 import React, { useContext } from 'react';
 import { Row, Col, TextInput, Button } from 'react';
 import { UserContext } from '../../AuthUserContext';
-import useAddFavourite from './useAddFavouriteHook';
+import UseAddFavourite from './UseAddFavouriteHook';
 import { Link} from 'react-router-dom';
 
 
-const addFavFavouriteComponent = () => {
-    const {user, getAuthUser} = useContext(UserContext);
-    const addFav = () => {
+const AddFavFavouriteComponent = () => {
+
+    const { getAuthUser } = useContext(UserContext);
+
+    const addFav = async () => {
          try {
         const input = {
             phone: inputs.phone
@@ -30,7 +32,7 @@ const addFavFavouriteComponent = () => {
     }
 }
    
-    const { inputs, handleInputChange, handleSubmit } = useAddFavourite(addFav);
+    const { inputs, handleInputChange, handleSubmit } = UseAddFavourite(addFav);
 
     return (
         <React.Fragment>
@@ -56,5 +58,5 @@ const addFavFavouriteComponent = () => {
     );
 }
 
-export default addFavFavouriteComponent;
+export default AddFavFavouriteComponent;
 

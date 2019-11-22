@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-const useAddFavourite = (callback) => {
+const UseAddFavourite = (callback) => {
 
 const [inputs, setInputs] = useState({phone:''})
 
@@ -23,4 +23,4 @@ const handleSubmit = (event) => {
 
 }
 
-export default useAddFavourite;
+export default UseAddFavourite;
