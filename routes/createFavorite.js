@@ -4,21 +4,20 @@ function createFavorite(app, db) {
     app.post('/api/createFavorite', async (req, res) => {
 
         const { user } = req.session;
-        let {phone} = req.body;
+        let { phone } = req.body;
 
-        if(!user){
-            return res.status(404).send({error:"you are not logged in"})
+        if (!user) {
+            return res.status(404).send({ error: "you are not logged in" })
         }
 
         const currentUser = await User.findById(user._id);
-        const favoriteUser = await User.findOne({phone: phone});
+        const favoriteUser = await User.findOne({ phone: phone });
 
         if (!currentUser) {
             return res.status(400).json({ error: "User not found" });
         }
 
         if (!favoriteUser) {
-            console.log(phone, 'phone')
             return res.status(500).json({ error: "No such user with this phone number" });
         }
         

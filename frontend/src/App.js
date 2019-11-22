@@ -43,6 +43,12 @@ function App() {
 								<Route exact path="/profile/transactions">
 									<TransactionPage />
 								</Route>
+								<Route exact path="/profile/favorites/add-favorite">
+									<CreateFavouriteComponent />
+								</Route>
+								<Route exact path="/profile/favorites">
+									<FavouritesList />
+								</Route>
 								<PrivateRoute exact path="/send-money" component={SendMoney} />
 							</Switch>
 						</section>

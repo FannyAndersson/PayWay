@@ -6,11 +6,11 @@ import { UserContext } from "../AuthUserContext";
 //and saves it as user to UserContext
 //All components are located inside of ContextKeeper and consume to UserContext
 const ContextKeeper = props => {
-	const { user, keepAuthUser } = useContext(UserContext);
+    const { user, keepAuthUser } = useContext(UserContext);
 
     const [authUser, setAuthUser] = useState(false);
 
-    const [ isLoading, setIsLoading ] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
     const checkLogin = async () => {
 
@@ -45,12 +45,12 @@ const ContextKeeper = props => {
         );
     }
 
-	return (
-		<div>
-			{!user ? <Redirect to="/login" /> : null}
-			{props.children}
-		</div>
-	);
+    return (
+        <div>
+            {!user ? <Redirect to="/login" /> : null}
+            {props.children}
+        </div>
+    );
 };
 
 export default ContextKeeper;
