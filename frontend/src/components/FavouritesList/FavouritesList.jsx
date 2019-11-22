@@ -1,13 +1,18 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../../AuthUserContext';
-import { Row, Col, TextInput, Button } from 'react-materialize';
+
+import {
+    Row,
+    Col,
+    Collection
+} from 'react-materialize';
+import Contact from '../Contact/Contact';
+
 
 const FavouritesList = () => {
 
     const { user } = useContext(UserContext);
     const [favorites, setFavorites] = useState([]);
-    console.log(user._id);
-
 
     useEffect(() => {
         let mounted = true;
@@ -19,7 +24,6 @@ const FavouritesList = () => {
                 let url = key + userID + '/favorites';
                 const data = await fetch(url);
                 const result = await data.json();
-                console.log(result);
                 if (mounted) {
                     setFavorites([...result])
                 }
@@ -32,35 +36,30 @@ const FavouritesList = () => {
         return () => {
             mounted = false;
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
-    console.log(favorites, "favs");
     return favorites.length !== 0 ? (
-
-        <React.Fragment>
-
+        <Row>
+            <Col m={6} s={12}>
+                <h5>Your favorites:</h5>
+                <Collection>
+                    {favorites.map(favorite => {
+                        return (
+                            <Contact key={favorite._id} favorite={favorite} />
+                        )
+                    })}
+                </Collection>
+            </Col>
+        </Row>
+    ) : (
             <Row>
-                <Col className='fav-list'>
-                    <p className='fav-desc'>List of your favourites</p>
-                    <ul className='fav-ul'>
-                        {favorites.map(favorite => {
-                            return <li key={favorite._id}>
-                                <p>{favorite.name}</p>
-                                <p>{favorite.phone}</p>
-
-                            </li>
-                        })}
-                    </ul>
+                <Col m={6} s={12}>
+                    <p> You have not added any contacts to favorites</p>
                 </Col>
-            </Row>
-
-        </React.Fragment>
-    ) : (<div>no</div>);
+            </Row>);
 }
 
 export default FavouritesList;
 
-// const addFav = () => {
-    //    setUser([...favourites, user._id]);
-    // }
