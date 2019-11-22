@@ -8,7 +8,7 @@ import MainPage from './components/MainPage/MainPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import Header from './components/Header/Header';
 import Register from './components/Registration/Register';
-import addFavFavouriteComponent from './components/addFavourite/addFavouriteComponent';
+import AddFavFavouriteComponent from './components/addFavourite/AddFavFavouriteComponent';
 
 function App() {
 
@@ -27,7 +27,7 @@ function App() {
 									<LoginPage />
 								</Route>
 								<Route exact path="/addfavourites">
-									<addFavFavouriteComponent />
+									<AddFavFavouriteComponent />
 								</Route>
 								<Route exact path="/register">
 									<Register />
