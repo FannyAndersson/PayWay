@@ -16,6 +16,7 @@ const login = require('./login');
 const adminBoard = require('./admin-board')
 const createFavorite = require('./createFavorite');
 const githubWebhook = require('./github-webhook');
+const getFavorites = require('./getFavorites');
 
 const routesList = [];
 
@@ -37,14 +38,7 @@ routesList.push(adminBoard)
 routesList.push(createFavorite)
 
 routesList.push(githubWebhook);
-
-
-function useCustomRoutes(app, db) {
-  // tell express server to use routes
-  routesList.forEach(useRoute => {
-    useRoute(app, db);
-  });
-}
+routesList.push(getFavorites);
 
 
 
@@ -58,11 +52,7 @@ function useCustomRoutes(app, db) {
 
 
 
-function useCustomRoutes(app, db) {
-  // tell express server to use routes
-  routesList.forEach(useRoute => {
-    useRoute(app, db);
-  });
-}
+
+
 
 module.exports = useCustomRoutes;
