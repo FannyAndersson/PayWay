@@ -1,6 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react'
-import { UserContext } from '../../AuthUserContext'
-import { Tabs, Tab } from 'react-materialize'
+import React, { useState, useContext, useEffect } from 'react';
+import { UserContext } from '../../AuthUserContext';
+import { Tabs, Tab, Collection } from 'react-materialize';
+import Contact from './Contact';
+
+import { Link, } from 'react-router-dom';
 
 const Children = () => {
     const [children, setChildren] = useState([]);
@@ -32,6 +35,8 @@ const Children = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+
+
     console.log(children[1], "data");
     if (children[1] === undefined) return <div>no</div>
     else {
@@ -40,17 +45,18 @@ const Children = () => {
             <Tabs className="tab-demo z-depth-1">
                 <Tab title="Confirmed" active>
                     <p>confirmed</p>
+                    <Collection></Collection>
                 </Tab>
 
                 <Tab title="Pending" >
                     <p>pending</p>
-                    <ul>
+                    <Collection >
                         {children[1].map(child => {
                             return (
-                                <li key={child._id}>{child.name}</li>
+                                <Link to="/" key={child._id + 1}> <Contact key={child._id} contact={child} /></Link>
                             )
                         })}
-                    </ul>
+                    </Collection>
                 </Tab>
             </Tabs>
 

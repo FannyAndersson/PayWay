@@ -11,6 +11,7 @@ import SendMoney from './components/SendMoney';
 import PrivateRoute from './components/PrivateRoute';
 import TransactionPage from "./components/TransactionPage/TransactionPage";
 import Children from "./components/Children/Children";
+import ChildrenTransactions from "./components/Children/ChildrenTransaction";
 
 function App() {
 	return (
@@ -38,6 +39,9 @@ function App() {
 								</Route>
 								<Route exact path="/profile/children">
 									<Children />
+								</Route>
+								<Route path="/profile/children/transactions/:childID">
+									<ChildrenTransactions />
 								</Route>
 								<PrivateRoute exact path="/send-money" component={SendMoney} />
 							</Switch>
