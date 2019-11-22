@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Row, Col, TextInput, Button } from 'react';
+import { Row, Col, TextInput, Button } from 'react-materialize';
 import { UserContext } from '../../AuthUserContext';
 import UseAddFavourite from './UseCreateFavoriteHook';
 import { Link} from 'react-router-dom';
@@ -7,14 +7,15 @@ import { Link} from 'react-router-dom';
 
 const CreateFavouriteComponent = () => {
 
-    const { getAuthUser } = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
     const addFav = async () => {
          try {
         const input = {
             phone: inputs.phone
         }
-        const response = await fetch('/api/favourites', {
+        console.log(input)
+        const response = await fetch('/api/createFavorite', {
             method: 'POST',
             body: JSON.stringify(input),
             headers: {
@@ -24,7 +25,7 @@ const CreateFavouriteComponent = () => {
         });
         const result ={user:await response.json(), status:response.status}
         if(result.status ===200){
-            getAuthUser(result.user);
+            console.log(result, 'result');
         }
     }
     catch (error) {
@@ -36,22 +37,26 @@ const CreateFavouriteComponent = () => {
 
     return (
         <React.Fragment>
-            <form onSubmit={handleSubmit}>
                 <Row>
-                    <Col>
+                    <Col node="form" onSubmit={handleSubmit} s={12} m={4} offset="m4">
                         <h1>Add your favourite</h1>
 
-                        <TextInput className="form-control" type="text" lable="Phone" name="phone" onChange={handleInputChange} value={inputs.phone} phone={true} required />
-                        <Button className= "submit-btn">
-                            
-                            <Link to="/favourites">Submit</Link>
+                        <TextInput 
+                            className="form-control" 
+                            type="text" 
+                            label="Phone" 
+                            name="phone" 
+                            s={12} 
+                            l={12}
+                            onChange={handleInputChange} 
+                            value={inputs.phone} 
+                            required />
+                        
+                        <Button className="submit-btn w100">
+                            Submit
                         </Button>
-
                     </Col>
-
-
                 </Row>
-            </form>
 
         </React.Fragment>
 
