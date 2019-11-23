@@ -25,7 +25,7 @@ function register(app) {
 			res.status(500).send(error);
 			return;
 		}
-		 res.json({
+		res.json({
 			message: 'User successfully registered',
 			user: user,
 			email: user.email

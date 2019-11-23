@@ -29,7 +29,6 @@ const RegisterForm = () => {
 						"Content-type": "application/json"
 					}
 				});
-	
 				let result = {response: await response.json(), status: response.status}
 				if (result) {
 					if (result.status === 200) {
@@ -38,10 +37,11 @@ const RegisterForm = () => {
 					}
 					if (result.status === 500) {
 						catchError(result.response);
+						return;
 					}
 				}
 			} catch (error) {
-				console.log(error, "Error");
+				console.log("Error: ", error);
 			}
 		}
 	};
@@ -105,7 +105,7 @@ const RegisterForm = () => {
 									required
 									onKeyUp={handleOnKeyUp}
 								/>
-								<label htmlFor="namef" className="active label">
+								<label htmlFor="namef" className="label">
 									Name
 								</label>
 								<span
@@ -133,7 +133,7 @@ const RegisterForm = () => {
 								/>
 								<label
 									htmlFor="phonef"
-									className="active label"
+									className="label"
 								>
 									Phone number
 								</label>
@@ -163,7 +163,7 @@ const RegisterForm = () => {
 								/>
 								<label
 									htmlFor="emailf"
-									className="active label"
+									className="label"
 								>
 									Email
 								</label>
@@ -193,7 +193,7 @@ const RegisterForm = () => {
 								/>
 								<label
 									htmlFor="passwordf"
-									className="active label"
+									className="label"
 								>
 									Password
 								</label>
@@ -222,7 +222,7 @@ const RegisterForm = () => {
 								/>
 								<label
 									htmlFor="confpasswordf"
-									className="active label"
+									className="label"
 								>
 									Confirm password
 								</label>

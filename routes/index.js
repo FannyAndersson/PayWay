@@ -35,7 +35,7 @@ routesList.push(login);
 routesList.push(getUserTransactions)
 routesList.push(adminBoard)
 routesList.push(createFavorite)
-
+routesList.push(register);
 routesList.push(githubWebhook);
 
 
