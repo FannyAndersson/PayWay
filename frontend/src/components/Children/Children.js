@@ -38,14 +38,23 @@ const Children = () => {
 
 
     console.log(children[1], "data");
+    if (children[0] === undefined) return <div>no</div>
+
     if (children[1] === undefined) return <div>no</div>
+
     else {
         return (
 
             <Tabs className="tab-demo z-depth-1">
                 <Tab title="Confirmed" active>
                     <p>confirmed</p>
-                    <Collection></Collection>
+                    <Collection >
+                        {children[0].map(child => {
+                            return (
+                                <Link to={`/profile/children/transactions/${child._id}`} key={child._id + 1}> <Contact key={child._id} contact={child} /></Link>
+                            )
+                        })}
+                    </Collection>
                 </Tab>
 
                 <Tab title="Pending" >
@@ -53,7 +62,7 @@ const Children = () => {
                     <Collection >
                         {children[1].map(child => {
                             return (
-                                <Link to="/" key={child._id + 1}> <Contact key={child._id} contact={child} /></Link>
+                                <Contact key={child._id} contact={child} />
                             )
                         })}
                     </Collection>

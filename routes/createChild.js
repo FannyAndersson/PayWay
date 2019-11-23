@@ -3,7 +3,7 @@ const sendMailToChild = require('../send-email.js');
 
 function createChild(app, db) {
 
-    app.post('/api/createchild', async(req, res) => {
+    app.post('/api/createchild', async (req, res) => {
 
         const { user } = req.session;
 
@@ -21,11 +21,11 @@ function createChild(app, db) {
 
         //check if request has been already sent to child
         //return message that request has been already sent
-        if(parent.children.pending.indexOf(child._id) !== -1) {
+        if (parent.children.confirmed.indexOf(child._id) !== -1) {
             return res.send(`You have already sent request to add ${child.name} as your child. Wait for confirmation. This link is invalid.`)
         }
 
-        parent.children.pending.includes(child._id) ? res.send('You have already send a rquest to this user') : parent.children.pending.push(child);
+        parent.children.confirmed.includes(child._id) ? res.send('You have already send a rquest to this user') : parent.children.confirmed.push(child);
 
         parent.save();
 

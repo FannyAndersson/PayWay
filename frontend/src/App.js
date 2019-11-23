@@ -40,9 +40,18 @@ function App() {
 								<Route exact path="/profile/children">
 									<Children />
 								</Route>
-								<Route path="/profile/children/transactions/:childID">
-									<ChildrenTransactions />
-								</Route>
+								{/* <Route exact path="/profile/children/transactions/:id" ><ChildrenTransactions /></Route> */}
+								<Route
+									exact path="/profile/children/transactions/:_id"
+									render={props => (
+										<ChildrenTransactions
+											{...props}
+
+										/>
+									)}
+								/>
+
+
 								<PrivateRoute exact path="/send-money" component={SendMoney} />
 							</Switch>
 						</section>

@@ -13,7 +13,19 @@ function getChildReansactions(app) {
         try {
             const parent = await User.findById(user._id);
             //find child populated with transactions
-            const child = await User.findById(req.params.id).populate('incomingTransactions').populate('outgoingTransactions');
+            const child = await User.findById(req.params.id).populate({
+                path: 'incomingTransactions',
+                populate: {
+                    path: "sender",
+                    model: "User"
+                }
+            }).populate({
+                path: 'outgoingTransactions',
+                populate: {
+                    path: "recipient",
+                    model: "User"
+                }
+            });
             //check if parent has no child with such id
             if (user._id === req.params.id) {
                 return res.status(404).send('It is your id, you can\'t be your child!');
@@ -22,7 +34,11 @@ function getChildReansactions(app) {
                 return res.status(404).send('You have no child with such id');
             }
             //return object with transactions
-            res.json({ incomingTransactions: child.incomingTransactions, outgoingTransactions: child.outgoingTransactions });
+            res.json({
+                childName: child.name,
+                childPhone: child.phone,
+                incomingTransactions: child.incomingTransactions, outgoingTransactions: child.outgoingTransactions
+            });
         } catch (error) {
             res.status(500).send(error);
         }
