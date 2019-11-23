@@ -8,6 +8,9 @@ const useAddChild = (callback) => {
 
     const [showInvalidChild, setShowInvalidChild] = useState(false);
 
+    const[generateSuccessMessage, setSuccesMessage] = useState(false);
+
+    const [generateChildAlreadyExistInPendingMessage, setChildAlreadyExistInPending] = useState(false);
 
     const handleSubmit = (event) => {
         if(event){
@@ -17,16 +20,6 @@ const useAddChild = (callback) => {
 
 
         callback()
-        return <modal>
-            <div className="row">
-              <div className="col s12">
-                <span>
-                  Something went wrong! Make sure that your account has
-                  suffiecent funds and try again.
-                </span>
-              </div>
-            </div>
-        </modal>;
 
     }
 
@@ -39,12 +32,14 @@ const useAddChild = (callback) => {
         ))
 
         setShowInvalidChild(false);
+        setSuccesMessage(false);
+        setChildAlreadyExistInPending(false);
 
     }
 
 
     return {
-             inputs, handleSubmit, handleInputChange, setShowInvalidChild, showInvalidChild
+             inputs, handleSubmit, handleInputChange, setShowInvalidChild, showInvalidChild, setSuccesMessage, generateSuccessMessage, generateChildAlreadyExistInPendingMessage, setChildAlreadyExistInPending
            }
 }
 
