@@ -21,19 +21,22 @@ const CreateFavouriteComponent = () => {
             body: JSON.stringify(input),
             headers: {
                 'Content-Type': 'application/json'
-            }   
+            }
     });
         const result ={user:await response.json(), status:response.status}
         if(result.status ===200){
             console.log(result, 'result');
+        } else if(result.status === 500){
+            setFavoriteAlreadyExistsMsg(true);
+            console.log('exist')
         }
     }
     catch (error) {
         console.error('Error:', error)
     }
 }
-   
-    const { inputs, handleInputChange, handleSubmit } = UseAddFavourite(addFav);
+
+    const { inputs, handleInputChange, handleSubmit, favoriteAlreadyExistsMsg, setFavoriteAlreadyExistsMsg } = UseAddFavourite(addFav);
 
     return (
         <React.Fragment>
@@ -42,17 +45,24 @@ const CreateFavouriteComponent = () => {
                     <Col node="form" onSubmit={handleSubmit} s={12} m={4} offset="m4">
                         <h1>Add your favourite</h1>
 
-                        <TextInput 
-                            className="form-control" 
-                            type="text" 
-                            label="Phone" 
-                            name="phone" 
-                            s={12} 
+                        <TextInput
+                            className="form-control"
+                            className={ `validate${favoriteAlreadyExistsMsg ? 'invalid' : ''}`}
+                            type="text"
+                            label="Phone"
+                            name="phone"
+                            s={12}
                             l={12}
-                            onChange={handleInputChange} 
-                            value={inputs.phone} 
+                            onChange={handleInputChange}
+                            value={inputs.phone}
                             required />
-                        
+
+                            {favoriteAlreadyExistsMsg ? (
+              <p style={{ color: 'orange' }}>This user is already a favorite</p>
+            ) : (
+              ''
+            )}
+
                         <Button className="submit-btn w100">
                             Submit
                         </Button>
