@@ -38,6 +38,17 @@ const FavouritesList = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+    const onClickHandler = () => {
+        const favToDele = favourites[favourite._id];
+        const response = await fetch('api/delete-favourite', {
+            method: 'DELETE',
+            body: JSON.stringify(favToDele),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+            
+        });
+    }
 
 
     return favorites.length !== 0 ? (
@@ -47,7 +58,7 @@ const FavouritesList = () => {
                 <Collection>
                     {favorites.map(favorite => {
                         return (
-                            <Contact key={favorite._id} favorite={favorite} />
+                            <Contact key={favorite._id} favorite={favorite} onClick={onClickHandler} />
                         )
                     })}
                 </Collection>
