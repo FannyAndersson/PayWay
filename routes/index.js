@@ -16,6 +16,7 @@ const login = require('./login');
 const adminBoard = require('./admin-board')
 const createFavorite = require('./createFavorite');
 const githubWebhook = require('./github-webhook');
+const deleteFavourite = require('./delete-favourite');
 
 const routesList = [];
 
@@ -35,6 +36,7 @@ routesList.push(login);
 routesList.push(getUserTransactions)
 routesList.push(adminBoard)
 routesList.push(createFavorite)
+routesList.push(deleteFavourite);
 
 routesList.push(githubWebhook);
 
