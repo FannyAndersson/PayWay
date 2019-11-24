@@ -32,8 +32,6 @@ const SideMenu = props => {
 				<SideMenuItem to="/profile/children/" icon="favorite" text="Children" />
 				<SideMenuItem to="/profile/children/add-child" icon="face" text="Add a child" />
 				<SideMenuItem to="/profile/favorites" icon="stars" text="Favorites" />
-				<SideMenuItem to="/profile/children/transactions/:_id" icon="star" text="child" />
-
 				<SideMenuItem to="/profile/favorites/add-favorite" icon="star" text="Add a favorite" />
 				<SideNavItem divider />
 				<SideMenuItem to="/profile/settings" icon="account_box" text="Settings" />

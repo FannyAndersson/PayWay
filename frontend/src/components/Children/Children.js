@@ -18,7 +18,6 @@ const Children = () => {
                 let url = key + userID + "/children";
                 const data = await fetch(url);
                 const result = await data.json();
-                console.log(result, "children");
                 if (mounted) {
                     setChildren({ ...result });
                 }
@@ -37,28 +36,26 @@ const Children = () => {
 
 
 
-    console.log(children[1], "data");
-    if (children[0] === undefined) return <div>no</div>
+    if (children[0] === undefined) return <div>Loading...</div>
 
-    if (children[1] === undefined) return <div>no</div>
+    if (children[1] === undefined) return <div>Loading...</div>
 
     else {
         return (
 
             <Tabs className="tab-demo z-depth-1">
                 <Tab title="Confirmed" active>
-                    <p>confirmed</p>
                     <Collection >
                         {children[0].map(child => {
                             return (
                                 <Link to={`/profile/children/transactions/${child._id}`} key={child._id + 1}> <Contact key={child._id} contact={child} /></Link>
+
                             )
                         })}
                     </Collection>
                 </Tab>
 
                 <Tab title="Pending" >
-                    <p>pending</p>
                     <Collection >
                         {children[1].map(child => {
                             return (

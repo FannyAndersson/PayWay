@@ -90,7 +90,6 @@ const ChildrenTransactions = (props) => {
         <h4>{name}</h4>
         <h5>{phone}</h5>
         <Tabs>
-
             <Tab title={`${name} doesn't have any transactions yet`} active> </Tab>
         </Tabs >
     </React.Fragment>
