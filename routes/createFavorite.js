@@ -1,7 +1,7 @@
 const User = require('../mongoose-models/user.model')
 
 function createFavorite(app, db) {
-    app.post('/api/createFavorite', async (req, res) => {
+    app.post('/api/createFavorite', async(req, res) => {
 
         const { user } = req.session;
         let { phone } = req.body;
@@ -26,7 +26,7 @@ function createFavorite(app, db) {
         }
         //checking if user exists in favorites
         if (currentUser.favorites.includes(favoriteUser._id)) {
-            return res.status(500).json("Request has already been sent to this user");
+            return res.status(505).json("Request has already been sent to this user");
         } else {
             currentUser.favorites.push(favoriteUser);
             await currentUser.save();
