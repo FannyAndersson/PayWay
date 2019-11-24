@@ -26,9 +26,13 @@ const CreateFavouriteComponent = () => {
         if(result.status ===200){
             setFavoriteSuccessMsg(true);
             console.log(result, 'result');
-        } else if(result.status === 500){
+        } else if(result.status === 505){
             setFavoriteAlreadyExistsMsg(true);
             console.log('exist')
+        } else{
+            if(result.status === 500){
+                setUserDontExistMsg(true);
+            }
         }
     }
     catch (error) {
@@ -36,7 +40,7 @@ const CreateFavouriteComponent = () => {
     }
 }
 
-    const { inputs, handleInputChange, handleSubmit, favoriteAlreadyExistsMsg, setFavoriteAlreadyExistsMsg, favoriteSuccessMsg, setFavoriteSuccessMsg } = UseAddFavourite(addFav);
+    const { inputs, handleInputChange, handleSubmit, favoriteAlreadyExistsMsg, setFavoriteAlreadyExistsMsg, favoriteSuccessMsg, setFavoriteSuccessMsg, userDontExistMsg, setUserDontExistMsg } = UseAddFavourite(addFav);
 
     return (
         <React.Fragment>
@@ -49,6 +53,7 @@ const CreateFavouriteComponent = () => {
                             className="form-control"
                             className={ `validate${favoriteAlreadyExistsMsg ? 'invalid' : ''}`}
                             className={ `validate${favoriteSuccessMsg ? 'invalid' : ''}`}
+                            className={ `validate${userDontExistMsg ? 'invalid' : ''}`}
                             type="text"
                             label="Phone"
                             name="phone"
@@ -66,6 +71,11 @@ const CreateFavouriteComponent = () => {
 
                             {favoriteAlreadyExistsMsg ? (
               <p style={{ color: 'orange' }}>This user is already a favorite</p>
+            ) : (
+              ''
+            )}
+            {userDontExistMsg ? (
+              <p style={{ color: 'red' }}>Theres is no such user with this phone number</p>
             ) : (
               ''
             )}
