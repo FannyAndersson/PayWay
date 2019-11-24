@@ -10,6 +10,8 @@ import Register from './components/Registration/Register';
 import SendMoney from './components/SendMoney';
 import PrivateRoute from './components/PrivateRoute';
 import TransactionPage from "./components/TransactionPage/TransactionPage";
+import CreateFavouriteComponent from './components/addFavourite/CreateFavouriteComponent';
+import FavouritesList from "./components/FavouritesList/FavouritesList";
 
 function App() {
 	return (
@@ -31,6 +33,12 @@ function App() {
 								</Route>
 								<Route exact path="/profile/transactions">
 									<TransactionPage />
+								</Route>
+								<Route exact path="/profile/favorites/add-favorite">
+									<CreateFavouriteComponent />
+								</Route>
+								<Route exact path="/profile/favorites">
+									<FavouritesList />
 								</Route>
 								<PrivateRoute exact path="/send-money" component={SendMoney} />
 							</Switch>
