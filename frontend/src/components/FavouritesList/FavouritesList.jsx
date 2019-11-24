@@ -38,6 +38,7 @@ const FavouritesList = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+    
     const onClickHandler = () => {
         const favToDele = favourites[favourite._id];
         const response = await fetch('api/delete-favourite', {
@@ -48,7 +49,23 @@ const FavouritesList = () => {
             }
             
         });
-    }
+        const result = {
+            user: 
+            await response.json(),
+            status:response.status
+            }
+
+            if(result.status==200){
+                console.log(result,'result success')
+            }
+                else {if(result.status==400){
+                    console.log(result,'no such favourite')
+                }
+            }
+                 
+               
+        }
+    
 
 
     return favorites.length !== 0 ? (
