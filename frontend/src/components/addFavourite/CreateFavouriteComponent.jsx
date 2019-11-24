@@ -15,7 +15,6 @@ const CreateFavouriteComponent = () => {
         const input = {
             phone: inputs.phone
         }
-        console.log(input)
         const response = await fetch('/api/createFavorite', {
             method: 'POST',
             body: JSON.stringify(input),
@@ -25,6 +24,7 @@ const CreateFavouriteComponent = () => {
     });
         const result ={user:await response.json(), status:response.status}
         if(result.status ===200){
+            setFavoriteSuccessMsg(true);
             console.log(result, 'result');
         } else if(result.status === 500){
             setFavoriteAlreadyExistsMsg(true);
@@ -36,7 +36,7 @@ const CreateFavouriteComponent = () => {
     }
 }
 
-    const { inputs, handleInputChange, handleSubmit, favoriteAlreadyExistsMsg, setFavoriteAlreadyExistsMsg } = UseAddFavourite(addFav);
+    const { inputs, handleInputChange, handleSubmit, favoriteAlreadyExistsMsg, setFavoriteAlreadyExistsMsg, favoriteSuccessMsg, setFavoriteSuccessMsg } = UseAddFavourite(addFav);
 
     return (
         <React.Fragment>
@@ -48,6 +48,7 @@ const CreateFavouriteComponent = () => {
                         <TextInput
                             className="form-control"
                             className={ `validate${favoriteAlreadyExistsMsg ? 'invalid' : ''}`}
+                            className={ `validate${favoriteSuccessMsg ? 'invalid' : ''}`}
                             type="text"
                             label="Phone"
                             name="phone"
@@ -56,6 +57,12 @@ const CreateFavouriteComponent = () => {
                             onChange={handleInputChange}
                             value={inputs.phone}
                             required />
+
+                             {favoriteSuccessMsg ? (
+              <p style={{ color: 'green' }}>This user just been added to your favorite list</p>
+            ) : (
+              ''
+            )}
 
                             {favoriteAlreadyExistsMsg ? (
               <p style={{ color: 'orange' }}>This user is already a favorite</p>
