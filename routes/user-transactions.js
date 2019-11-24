@@ -4,9 +4,6 @@ const User = require('../mongoose-models/user.model');
 function getUserTransactions(app) {
     app.get('/api/users/:id/transactions', async (req, res) => {
         const { user } = await req.session;
-        // const user = await User.findById("5dcea6d8a51e1b38d0c53e45")
-        console.log(user);
-        console.log(req.params.id, "id");
         if (!user) {
             return res.status(400).json('Make sure to login, please');
         }
@@ -25,13 +22,7 @@ function getUserTransactions(app) {
                 }
             });
 
-            // })
-            // console.log(myMonies, 'making money move')
-            // console.log(myMonies.balance, 'my balance')
-            //req.params.id in findbyid
-            console.log(myMonies);
 
-            // if (user._id != "5dcea6d8a51e1b38d0c53e45") {
             if (user._id !== req.params.id) {
                 return res.status(400).json('Are you sure you are logged in?')
             } else {
