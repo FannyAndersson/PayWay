@@ -35,7 +35,6 @@ const MainPage = () => {
                                 unmountMe={handleMessageUnmount} 
                             />
                             : null}   
-            </Row>
 
         </React.Fragment>
     );

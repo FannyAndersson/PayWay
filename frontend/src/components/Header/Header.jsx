@@ -2,6 +2,7 @@ import React, {useContext} from "react";
 import SideMenu from '../SideMenu/SideMenu';
 import {UserContext} from '../../AuthUserContext';
 import { Link } from 'react-router-dom';
+import { Row, Col } from 'react-materialize';
 
 
 
