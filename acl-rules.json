@@ -22,6 +22,10 @@
         "createFavorite": {
             "admin": "all",
             "user": "all"
+        },
+        "register": {
+            "admin": "all",
+            "user": "all"
         }
     }
 }

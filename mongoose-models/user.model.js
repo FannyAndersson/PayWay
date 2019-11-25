@@ -88,7 +88,7 @@ userSchema.pre('save', function () {
 });
 
 userSchema.post('save', function (error, doc, next) {
-    if (error.name === 'MongoError' && error.code === 11000) {
+    if (error.name === 'MongoError' && error.code === 11000 && error.errmsg.includes('isAdmin')) {
         next(new Error('Admin already exists'));
     } else {
         next();

@@ -14,7 +14,7 @@ const Header = () => {
                     <p className="logo">PayWay</p>
            </header>
         </React.Fragment>
-    );
+    )
 }
 
 export default Header;
