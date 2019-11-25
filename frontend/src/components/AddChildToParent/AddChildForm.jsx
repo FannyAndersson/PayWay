@@ -33,7 +33,7 @@ const AddChildForm = () => {
                  }
                  if(response.status === 405){
                    return setChildAlreadyExistInPending(true);
-                 } 
+                 }
                   setShowInvalidChild(true);
                   setSuccesMessage(false);
 
@@ -54,7 +54,7 @@ const AddChildForm = () => {
               <TextInput
                name="phone"
                onChange={handleInputChange}
-                 value={inputs.phone}
+                 value={inputs.phone || ''}
                  className={ `validate ${showInvalidChild || generateSuccessMessage || generateChildAlreadyExistInPendingMessage || selfMomMsg ? 'invalid' : ''}`}
                   label="Phone number"
                    s={12} l={12}
