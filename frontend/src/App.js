@@ -10,6 +10,7 @@ import Register from './components/Registration/Register';
 import SendMoney from './components/SendMoney';
 import PrivateRoute from './components/PrivateRoute';
 import TransactionPage from "./components/TransactionPage/TransactionPage";
+import CreateFavouriteComponent from './components/addFavourite/CreateFavouriteComponent';
 
 function App() {
 	return (
@@ -26,6 +27,9 @@ function App() {
 								<Route exact path="/login">
 									<LoginPage />
 								</Route>
+								<Route exact path="/profile/favorites/add-favorite">
+									<CreateFavouriteComponent />
+								</Route>
 								<Route exact path="/register">
 									<Register />
 								</Route>
@@ -41,8 +45,6 @@ function App() {
 		</UserContextProvider>
 	);
 }
-
-
 
 
 
