@@ -15,7 +15,8 @@ const MainPage = () => {
                     <h1>Main Page</h1>
                     <p>Hello {user.name}</p>
                 </Col>
-            </Row>   
+
+            </Row>
         </React.Fragment>
     );
 }

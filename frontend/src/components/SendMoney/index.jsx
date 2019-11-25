@@ -133,7 +133,7 @@ const SendMoney = (props) => {
 
     return (
         <div className="row">
-            <form className="col s12 l3 offset-l4" onSubmit={ handleSubmit }>
+            <form className="col" onSubmit={ handleSubmit }>
                 <div className="row">
                     <div className="input-field col s12">
                         <input { ...recipientInputProps } />
