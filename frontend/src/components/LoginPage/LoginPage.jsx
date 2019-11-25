@@ -6,8 +6,6 @@ import { UserContext } from '../../AuthUserContext';
 
 
 
-
-
 const LoginPage = () => {
     //use user from UserContext
     // if user exists in context, app navigates to mainPage
@@ -19,7 +17,6 @@ const LoginPage = () => {
                 email: inputs.email,
                 password: inputs.password
             }
-
             const response = await fetch('/api/login', {
                 method: 'POST',
                 body: JSON.stringify(login),

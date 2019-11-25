@@ -13,6 +13,7 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import TransactionPage from "./components/TransactionPage/TransactionPage";
 import CreateFavouriteComponent from './components/addFavourite/CreateFavouriteComponent';
 import FavouritesList from './components/FavouritesList/FavouritesList';
+import AddChild from './components/AddChildToParent/AddChildForm';
 
 function App() {
 	return (
@@ -47,6 +48,9 @@ function App() {
 								</Route>
 								<Route exact path="/profile/transactions">
 									<TransactionPage />
+								</Route>
+								<Route exact path="/profile/children/add-child">
+									<AddChild />
 								</Route>
 								<Route exact path="/profile/favorites/add-favorite">
 									<CreateFavouriteComponent />
