@@ -9,6 +9,7 @@ import Header from "./components/Header/Header";
 import Register from './components/Registration/Register';
 import SendMoney from './components/SendMoney';
 import PrivateRoute from './components/PrivateRoute';
+import UserProfile from "./components/UserProfile/UserProfile";
 import TransactionPage from "./components/TransactionPage/TransactionPage";
 import CreateFavouriteComponent from './components/addFavourite/CreateFavouriteComponent';
 import FavouritesList from './components/FavouritesList/FavouritesList';
@@ -39,6 +40,10 @@ function App() {
 								</Route>
 								<Route exact path="/register">
 									<Register />
+								</Route>
+								<PrivateRoute exact path="/send-money" component={ SendMoney } />
+								<Route exact path="/profile/settings">
+									<UserProfile/>
 								</Route>
 								<Route exact path="/profile/transactions">
 									<TransactionPage />

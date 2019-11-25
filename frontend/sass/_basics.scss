@@ -13,7 +13,6 @@ h1 {
     border: 1px solid transparentize($secondary-color, 0.7);
     &:hover {
         background-color: #fff;
-        border-color: $secondary-color;
     }
 }
 
@@ -24,3 +23,21 @@ h1 {
 .w100 {
     width: 100%;
 }
+
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-field {
+    .error-helper {
+        color: #ff0000;
+        opacity: 0;
+        transition: opacity .5s;
+        &.on {
+            opacity: 1;
+        }
+    }
+}
+
+
