@@ -1,5 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../../AuthUserContext';
+import { Link } from "react-router-dom";
+
 
 import {
     Row,
@@ -74,7 +76,11 @@ const FavouritesList = () => {
                             })}
                         </Collection>
                     </React.Fragment>
-                    : <p> You have not added any contacts to favorites</p>}
+                    :   <React.Fragment>
+                        <p> You have not added any contacts to favorites</p>
+                        <Link to="/profile/favorites/add-favorite" title="Add a contact to Favorites">Add a contact to Favorites</Link>
+                    </React.Fragment> 
+                    }
             </Col>
         </Row>
     );
