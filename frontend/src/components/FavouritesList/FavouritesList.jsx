@@ -40,9 +40,11 @@ const FavouritesList = () => {
     }, [])
 
 
-    return favorites.length !== 0 ? (
+    return (
         <Row>
             <Col m={6} s={12}>
+            {favorites.length ? 
+            <React.Fragment>
                 <h5>Your favorites:</h5>
                 <Collection>
                     {favorites.map(favorite => {
@@ -51,14 +53,11 @@ const FavouritesList = () => {
                         )
                     })}
                 </Collection>
+            </React.Fragment>
+                 : <p> You have not added any contacts to favorites</p>}
             </Col>
         </Row>
-    ) : (
-            <Row>
-                <Col m={6} s={12}>
-                    <p> You have not added any contacts to favorites</p>
-                </Col>
-            </Row>);
+    );
 }
 
 export default FavouritesList;

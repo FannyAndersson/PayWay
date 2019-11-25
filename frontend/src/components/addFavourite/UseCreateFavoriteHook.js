@@ -10,6 +10,8 @@ const UseAddFavourite = (callback) => {
 
     const [userDontExistMsg, setUserDontExistMsg] = useState(false);
 
+    const [selfFavouriteMsg, setselfFavouriteMsg] = useState(false);
+
     const handleSubmit = (event) => {
         if (event) {
             event.preventDefault();
@@ -23,6 +25,7 @@ const UseAddFavourite = (callback) => {
         setFavoriteAlreadyExistsMsg(false);
         setFavoriteSuccessMsg(false);
         setUserDontExistMsg(false);
+        setselfFavouriteMsg(false);
     }
     return {
         handleSubmit,
@@ -33,7 +36,9 @@ const UseAddFavourite = (callback) => {
         setFavoriteSuccessMsg,
         favoriteSuccessMsg,
         setUserDontExistMsg,
-        userDontExistMsg
+        userDontExistMsg,
+        selfFavouriteMsg,
+        setselfFavouriteMsg
     };
 
 }
