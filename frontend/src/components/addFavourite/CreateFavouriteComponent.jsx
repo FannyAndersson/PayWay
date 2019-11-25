@@ -22,9 +22,23 @@ const CreateFavouriteComponent = () => {
                 'Content-Type': 'application/json'
             }
     });
+<<<<<<< HEAD
         const result ={response:await response.json(), status:response.status}
         if(result.status === 200){
             setFavoriteSuccessMsg(true);
+=======
+        const result ={user:await response.json(), status:response.status}
+        if(result.status ===200){
+            setFavoriteSuccessMsg(true);
+            console.log(result, 'result');
+        } else if(result.status === 505){
+            setFavoriteAlreadyExistsMsg(true);
+            console.log('exist')
+        } else{
+            if(result.status === 500){
+                setUserDontExistMsg(true);
+            }
+>>>>>>> 104055869af2e83bbd8ab05951aa866e79e40bb4
         }
         if(result.status === 500) {
             if (result.response.errorCode === "noUser") {
@@ -44,7 +58,11 @@ const CreateFavouriteComponent = () => {
     }
 }
 
+<<<<<<< HEAD
     const { inputs, handleInputChange, handleSubmit, favoriteAlreadyExistsMsg, setFavoriteAlreadyExistsMsg, favoriteSuccessMsg, setFavoriteSuccessMsg, userDontExistMsg, setUserDontExistMsg, selfFavouriteMsg, setselfFavouriteMsg } = UseAddFavourite(addFav);
+=======
+    const { inputs, handleInputChange, handleSubmit, favoriteAlreadyExistsMsg, setFavoriteAlreadyExistsMsg, favoriteSuccessMsg, setFavoriteSuccessMsg, userDontExistMsg, setUserDontExistMsg } = UseAddFavourite(addFav);
+>>>>>>> 104055869af2e83bbd8ab05951aa866e79e40bb4
 
     return (
         <React.Fragment>
@@ -54,7 +72,14 @@ const CreateFavouriteComponent = () => {
                         <h1>Add your favourite</h1>
 
                         <TextInput
+<<<<<<< HEAD
                             className={ `validate ${favoriteAlreadyExistsMsg || favoriteSuccessMsg || userDontExistMsg || selfFavouriteMsg ? 'invalid' : ' form-control'}`}
+=======
+                            className="form-control"
+                            className={ `validate${favoriteAlreadyExistsMsg ? 'invalid' : ''}`}
+                            className={ `validate${favoriteSuccessMsg ? 'invalid' : ''}`}
+                            className={ `validate${userDontExistMsg ? 'invalid' : ''}`}
+>>>>>>> 104055869af2e83bbd8ab05951aa866e79e40bb4
                             type="text"
                             label="Phone"
                             name="phone"
@@ -76,6 +101,7 @@ const CreateFavouriteComponent = () => {
               ''
             )}
             {userDontExistMsg ? (
+<<<<<<< HEAD
               <p style={{ color: 'red' }}>There is no such user with this phone number</p>
             ) : (
               ''
@@ -85,6 +111,12 @@ const CreateFavouriteComponent = () => {
                         ) : (
                         ''
                         )}
+=======
+              <p style={{ color: 'red' }}>Theres is no such user with this phone number</p>
+            ) : (
+              ''
+            )}
+>>>>>>> 104055869af2e83bbd8ab05951aa866e79e40bb4
 
                         <Button className="submit-btn w100">
                             Submit
