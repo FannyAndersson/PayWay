@@ -1,6 +1,9 @@
 import React, {useContext} from "react";
 import SideMenu from '../SideMenu/SideMenu';
 import {UserContext} from '../../AuthUserContext';
+import { Link } from 'react-router-dom';
+import { Row, Col } from 'react-materialize';
+
 
 
 
@@ -9,10 +12,12 @@ const Header = () => {
 
     return (
         <React.Fragment>
-           <header className="header">
-           <SideMenu user={user} />
-                    <p className="logo">PayWay</p>
-           </header>
+            <Row>
+                <Col node='header' l={3} offset='l4' className='header'>
+                    <SideMenu user={user} />
+                    <Link to="/" title="PayWay | Navigate to main-page" className="logo">PayWay</Link>
+                </Col>
+            </Row>
         </React.Fragment>
     )
 }

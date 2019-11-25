@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import MessageComponent from '../Message/MessageComponent';
 
 const SendMoney = (props) => {
 
@@ -10,7 +11,12 @@ const SendMoney = (props) => {
     const [ showGenericErrorMessage, setShowGenericErrorMessage ] = useState(false);
 
     const [ transactionStatus, setTransactionStatus ] = useState({ loading: false, loaded: false, error: false, status: null });
-
+    
+    //showMessage state and handleMessageUnmount are added to show and dismiss message
+    const [showMMessage, setShowMessage] = useState(false);
+    const handleMessageUnmount = () => {
+        setShowMessage(false);
+    }
 
     const { history } = props;
 
@@ -52,6 +58,8 @@ const SendMoney = (props) => {
             } else if (response.ok) {
 
                 // REDIRECT TO OR SHOW SUCCESS PAGE HERE
+                setShowMessage(true);
+
             } else {
 
                 setShowGenericErrorMessage(true);
@@ -179,7 +187,13 @@ const SendMoney = (props) => {
                     { showGenericErrorMessage ? genericErrorMessage : null }
                 </div>
             </div>
-
+            {showMMessage ? <MessageComponent 
+                                success
+                                redirectTo="/" 
+                                text={[`Congrats! You've just sent ${transactionAmount} coins`, `to recipient with phone number ${recipientPhone}`]} 
+                                unmountMe={handleMessageUnmount} 
+                            />
+                            : null}
         </div>
     );
 }
