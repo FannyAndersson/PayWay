@@ -1,13 +1,16 @@
 {
   "name": "rep-html",
-  "version": "1.0.0",
+  "version": "0.0.6",
   "description": "",
   "main": "app.js",
   "scripts": {
     "test": "node test-runner",
     "frontend": "cd frontend && npm start",
-    "backend": "nodemon --ignore 'frontend/' index",
-    "start": "concurrently \"npm:backend\" \"npm:frontend\""
+    "backend-dev": "nodemon --ignore 'frontend/' index",
+    "backend": "node index",
+    "start": "concurrently \"npm:backend-dev\" \"npm:frontend\"",
+    "start-server": "concurrently \"npm:backend\" \"npm:frontend\"",
+    "lint": "./node_modules/.bin/eslint routes/ && cd frontend && ../node_modules/.bin/eslint src/"
   },
   "author": "",
   "license": "ISC",
@@ -26,5 +29,8 @@
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
     "the.rest": "^1.0.29"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0"
   }
 }
