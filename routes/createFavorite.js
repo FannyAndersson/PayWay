@@ -23,7 +23,7 @@ function createFavorite(app, db) {
         }
         
         if(String(favoriteUser._id) === user._id){
-            return res.status(404).json('You can not be a favourite to yourself!')
+            return res.status(500).json('You can not be a favourite to yourself!')
         }
         //checking if user exists in favorites
         if (currentUser.favorites.includes(favoriteUser._id)) {
