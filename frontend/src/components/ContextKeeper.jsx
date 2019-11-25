@@ -1,16 +1,18 @@
 import React, { useContext, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { UserContext } from "../AuthUserContext";
+import { Row, Col } from 'react-materialize';
+
 
 //ContextKeeper is a holder of UserContext. It checks if there is session (authenticated user)
 //and saves it as user to UserContext
 //All components are located inside of ContextKeeper and consume to UserContext
 const ContextKeeper = props => {
-	const { user, keepAuthUser } = useContext(UserContext);
+    const { user, keepAuthUser } = useContext(UserContext);
 
     const [authUser, setAuthUser] = useState(false);
 
-    const [ isLoading, setIsLoading ] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
     const checkLogin = async () => {
 
@@ -26,7 +28,8 @@ const ContextKeeper = props => {
     }
     if (!authUser) {
         checkLogin();
-    }
+	}
+	
 
     if (isLoading) {
 
@@ -48,7 +51,11 @@ const ContextKeeper = props => {
 	return (
 		<div>
 			{!user ? <Redirect to="/login" /> : null}
-			{props.children}
+			<Row>
+                <Col s={12} l={3} offset='l4'>
+					{props.children}
+                </Col>
+            </Row>
 		</div>
 	);
 };

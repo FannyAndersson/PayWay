@@ -1,5 +1,4 @@
 import React, {useContext} from "react";
-import { Row, Col } from 'react-materialize';
 import SideMenu from '../SideMenu/SideMenu';
 import {UserContext} from '../../AuthUserContext';
 import { Link } from 'react-router-dom';
@@ -19,7 +18,7 @@ const Header = () => {
                 </Col>
             </Row>
         </React.Fragment>
-    );
+    )
 }
 
 export default Header;

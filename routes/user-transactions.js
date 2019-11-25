@@ -22,7 +22,6 @@ function getUserTransactions(app) {
                 }
             });
 
-
             if (user._id !== req.params.id) {
                 return res.status(400).json('Are you sure you are logged in?')
             } else {

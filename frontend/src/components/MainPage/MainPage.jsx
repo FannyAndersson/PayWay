@@ -1,4 +1,8 @@
+
 import React, {useContext, useState} from "react";
+
+import { Redirect} from "react-router-dom";
+
 import {UserContext} from '../../AuthUserContext';
 import { Row, Col, Button } from 'react-materialize';
 import MessageComponent from '../Message/MessageComponent';
@@ -16,8 +20,9 @@ const MainPage = () => {
     }
     return (
         <React.Fragment>
+            {!user ? <Redirect to='/login' /> : null}
             <Row>
-                <Col l={3} offset='l4'>
+                <Col>
                     <h1>Main Page</h1>
                     <p>Hello {user.name}</p>
                     <Button type="button" onClick={onMessage}>Bad Message</Button>
@@ -30,6 +35,8 @@ const MainPage = () => {
                                 unmountMe={handleMessageUnmount} 
                             />
                             : null}   
+            </Row>
+
         </React.Fragment>
     );
 }
