@@ -18,7 +18,6 @@ function createFavorite(app, db) {
         }
 
         if (!favoriteUser) {
-<<<<<<< HEAD
             return res.status(500).json({ error: "No such user with this phone number", errorCode: 'noUser'});
         }
 
@@ -28,17 +27,6 @@ function createFavorite(app, db) {
         //checking if user exists in favorites
         if (currentUser.favorites.includes(favoriteUser._id)) {
             return res.status(500).json({error: "This user is already in your favourite list!", errorCode: 'alreadyFav'});
-=======
-            return res.status(500).json({ error: "No such user with this phone number" });
-        }
-
-        if (String(favoriteUser._id) === user._id) {
-            return res.status(404).json('You can not be a favourite to yourself!')
-        }
-        //checking if user exists in favorites
-        if (currentUser.favorites.includes(favoriteUser._id)) {
-            return res.status(505).json("Request has already been sent to this user");
->>>>>>> 104055869af2e83bbd8ab05951aa866e79e40bb4
         } else {
             currentUser.favorites.push(favoriteUser);
             await currentUser.save();
