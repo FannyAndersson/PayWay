@@ -1,13 +1,17 @@
-import React, { useState, useEffect, useContext } from "react";
-import Transaction from "./Transaction";
-import { UserContext } from '../../AuthUserContext';
+import React, { useEffect, useState } from 'react';
 import { Tabs, Tab } from 'react-materialize';
+import Transaction from '../TransactionPage/Transaction';
 
 
-const TransactionPage = () => {
+
+const ChildrenTransactions = (props) => {
     const [data, setData] = useState([]);
+    const [name, setName] = useState("");
+    const [phone, setPhone] = useState("");
 
-    const { user } = useContext(UserContext);
+    const { match } = props;
+    const { params: { _id } } = match
+    const id = _id;
 
     useEffect(() => {
 
@@ -16,9 +20,9 @@ const TransactionPage = () => {
         const getTransaction = async () => {
 
             try {
-                const userID = user._id;
-                let key = "/api/users/";
-                let url = key + userID + "/transactions";
+                const childID = _id;
+                let key = "/api/child-transactions/";
+                let url = key + childID;
                 const result = await fetch(url);
                 const jsonData = await result.json();
                 const allTransactions = [...jsonData.incomingTransactions, ...jsonData.outgoingTransactions].sort((a, b) => {
@@ -27,6 +31,8 @@ const TransactionPage = () => {
                 if (mounted) {
                     setData([...allTransactions
                     ]);
+                    setName(jsonData.childName);
+                    setPhone(jsonData.childPhone)
                 }
 
             } catch (error) {
@@ -40,9 +46,9 @@ const TransactionPage = () => {
             mounted = false;
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
 
-    const incomingTransactions = data ? data.filter(transaction => transaction.recipient === user._id)
+    const incomingTransactions = data ? data.filter(transaction => transaction.recipient === id)
                                 .map(transaction => {
                                 return (
                                     <Transaction
@@ -53,7 +59,7 @@ const TransactionPage = () => {
                                     />
                                 )}) : null;
 
-    const outgoingTransactions = data ? data.filter(transaction => transaction.recipient !== user._id)
+    const outgoingTransactions = data ? data.filter(transaction => transaction.recipient !== id)
                                 .map(transaction => {
                                 return (
                                 <Transaction 
@@ -66,15 +72,19 @@ const TransactionPage = () => {
 
     return data.length !== 0 ? (
         <React.Fragment>
+            <div className="child-transaction-info">
+                <h4>{name}</h4>
+                <h5>{phone}</h5>
+            </div>
             <Tabs className="tab-demo z-depth-1">
                 <Tab title="All" active>
                     {data.map(transaction => {
-                        if (transaction.recipient === user._id) {
-                            return (
-                                <Transaction className={"incoming"} contact={transaction.sender.name} transaction={transaction} key={transaction._id} />
-                            )
+                        if (transaction.recipient === id) {
+                            return (<Transaction className={"incoming"} contact={transaction.sender.name} transaction={transaction} key={transaction._id} />)
                         } else {
-                            return (<Transaction className={"outgoing"} contact={transaction.recipient.name} transaction={transaction} key={transaction._id} />)
+                            return (
+                                <Transaction className={"outgoing"} contact={transaction.recipient.name} transaction={transaction} key={transaction._id} />
+                            )
                         }
                     })}
                 </Tab>
@@ -86,12 +96,12 @@ const TransactionPage = () => {
                 </Tab>
             </Tabs>
         </React.Fragment>
-    ) : (
-        <p>{`You doesn't have any transactions yet`}</p>
+    ) : (<React.Fragment>
+        <h4>{name}</h4>
+        <h5>{phone}</h5>
+        <p>{`${name} doesn't have any transactions yet`}</p>
+    </React.Fragment>
         )
 }
 
-export default TransactionPage;
-
-
-
+export default ChildrenTransactions;
