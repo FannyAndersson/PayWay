@@ -16,6 +16,9 @@ const UseAddFavourite = (callback) => {
         if (event) {
             event.preventDefault();
         }
+
+        setInputs('');
+
         callback();
     }
     const handleInputChange = (event) => {
