@@ -38,51 +38,43 @@ const FavouritesList = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    
-    const onClickHandler = () => {
-        const favToDele = favourites[favourite._id];
-        const response = await fetch('api/delete-favourite', {
-            method: 'DELETE',
-            body: JSON.stringify(favToDele),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-            
-        });
-        const result = {
-            user: 
-            await response.json(),
-            status:response.status
-            }
 
-            if(result.status==200){
-                console.log(result,'result success')
-            }
-                else {if(result.status==400){
-                    console.log(result,'no such favourite')
+    const deleteFavorite = async (id) => {
+        try {
+            const newFavorites = favorites.filter(favorite => favorite._id !== id);
+            const favoriteToDelete = favorites.find(favorite => favorite._id === id);
+            setFavorites([...newFavorites])
+            let path = "/api/delete-favourite/";
+            let key = path + favoriteToDelete._id
+            await fetch(key, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
                 }
-            }
-                 
-               
-        }
-    
 
+            });
+
+        }
+        catch (error) {
+            console.error('Error:', error)
+        }
+    }
 
     return (
         <Row>
             <Col m={6} s={12}>
-            {favorites.length ? 
-            <React.Fragment>
-                <h5>Your favorites:</h5>
-                <Collection>
-                    {favorites.map(favorite => {
-                        return (
-                            <Contact key={favorite._id} favorite={favorite} onClick={onClickHandler} />
-                        )
-                    })}
-                </Collection>
-            </React.Fragment>
-                 : <p> You have not added any contacts to favorites</p>}
+                {favorites.length ?
+                    <React.Fragment>
+                        <h5 className="mb">My favorite contacts:</h5>
+                        <Collection>
+                            {favorites.map(favorite => {
+                                return (
+                                    <Contact key={favorite._id} favorite={favorite} deleteFavorite={deleteFavorite} />
+                                )
+                            })}
+                        </Collection>
+                    </React.Fragment>
+                    : <p> You have not added any contacts to favorites</p>}
             </Col>
         </Row>
     );
