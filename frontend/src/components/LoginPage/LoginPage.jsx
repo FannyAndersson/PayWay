@@ -1,15 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Row, Col, TextInput, Button } from 'react-materialize';
 import useLoginForm from "./UseLoginFormHook";
 import { UserContext } from '../../AuthUserContext';
 
+import MessageComponent from '../Message/MessageComponent';
 
 
 const LoginPage = () => {
     //use user from UserContext
     // if user exists in context, app navigates to mainPage
     const { user, keepAuthUser } = useContext(UserContext);
+    const [showMMessage, setShowMessage] = useState(false);
+    const handleMessageUnmount = () => {
+        setShowMessage(false);
+    }
 
     const onLogin = async () => {
         try {
@@ -28,6 +33,9 @@ const LoginPage = () => {
             const result = { user: await response.json(), status: response.status };
             if (result.status === 200) {
                 keepAuthUser(result.user);
+            }
+            else {
+                setShowMessage(true);
             }
         } catch (error) {
             console.error('Error:', error);
@@ -56,6 +64,12 @@ const LoginPage = () => {
                     </Col>
                 </Col>
             </Row>
+            {showMMessage ? <MessageComponent 
+                                success={false}
+                                text={[`Email or password is wrong!`, `Try another  login credentials.`]} 
+                                unmountMe={handleMessageUnmount} 
+                            />
+                            : null}
         </React.Fragment>
     );
 }
