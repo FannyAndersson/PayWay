@@ -42,8 +42,27 @@ const TransactionPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    // const [all, incomingTransactions, outgoingTransactions] = data;
+    const incomingTransactions = data ? data.filter(transaction => transaction.recipient === user._id)
+                                .map(transaction => {
+                                return (
+                                    <Transaction
+                                        className={"incoming"} 
+                                        contact={transaction.sender.name} 
+                                        transaction={transaction} 
+                                        key={transaction._id} 
+                                    />
+                                )}) : null;
 
+    const outgoingTransactions = data ? data.filter(transaction => transaction.recipient !== user._id)
+                                .map(transaction => {
+                                return (
+                                <Transaction 
+                                    className={"outgoing"} 
+                                    contact={transaction.recipient.name} 
+                                    transaction={transaction} 
+                                    key={transaction._id} 
+                                />
+                                )}) : null;
 
     return data.length !== 0 ? (
         <React.Fragment>
@@ -59,30 +78,16 @@ const TransactionPage = () => {
                         }
                     })}
                 </Tab>
-                <Tab title="Incoming" >
-                    {data.filter(transaction => transaction.recipient === user._id)
-                        .map(transaction => {
-                            return (
-                                <Transaction className={"incoming"} contact={transaction.sender.name} transaction={transaction} key={transaction._id} />
-                            )
-                        })
-                    }
+                <Tab title="Incoming" > 
+                    {incomingTransactions.length ? incomingTransactions : (<p>You have no incoming transactions.</p>)}
                 </Tab>
                 <Tab title="Outgoing">
-                    {data.filter(transaction => transaction.recipient !== user._id)
-                        .map(transaction => {
-                            return (
-                                <Transaction className={"outgoing"} contact={transaction.recipient.name} transaction={transaction} key={transaction._id} />
-                            )
-                        })
-                    }
+                    {outgoingTransactions.length ? outgoingTransactions : (<p>You have no outgoing transactions.</p>)}
                 </Tab>
             </Tabs>
         </React.Fragment>
     ) : (
-            <Tabs>
-                <Tab title="You don't have any transactions yet" active> </Tab>
-            </Tabs>
+        <p>{`You doesn't have any transactions yet`}</p>
         )
 }
 

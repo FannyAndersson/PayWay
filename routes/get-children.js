@@ -9,22 +9,6 @@ function getChildren(app) {
 
         try {
             const currentUser = await User.findById(user._id).populate("children", "name phone")
-            // .populate({
-            //     path: 'children',
-            //     populate: {
-            //         path: "confirmed",
-            //         model: "User"
-            //     }
-            // })
-            // .populate({
-            //     path: "children",
-            //     populate: {
-            //         path: "pending",
-            //         model: "User"
-
-            //     }
-            // })
-            console.log(currentUser, "current");
             res.json(
                 currentUser.children
 
