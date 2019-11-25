@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Modal } from 'react-materialize';
+import { useState } from 'react';
 
 const useAddChild = (callback) => {
 
@@ -12,14 +11,13 @@ const useAddChild = (callback) => {
 
     const [generateChildAlreadyExistInPendingMessage, setChildAlreadyExistInPending] = useState(false);
 
+    const [selfMomMsg, setSelfMomMsg] = useState(false);
+
     const handleSubmit = (event) => {
         if(event){
             event.preventDefault()
         }
-            setInputs('');
-
-
-        callback()
+        callback();
 
     }
 
@@ -34,12 +32,13 @@ const useAddChild = (callback) => {
         setShowInvalidChild(false);
         setSuccesMessage(false);
         setChildAlreadyExistInPending(false);
+        setSelfMomMsg(false);
 
     }
 
 
     return {
-             inputs, handleSubmit, handleInputChange, setShowInvalidChild, showInvalidChild, setSuccesMessage, generateSuccessMessage, generateChildAlreadyExistInPendingMessage, setChildAlreadyExistInPending
+             inputs, handleSubmit, handleInputChange, setShowInvalidChild, showInvalidChild, setSuccesMessage, generateSuccessMessage, generateChildAlreadyExistInPendingMessage, setChildAlreadyExistInPending, selfMomMsg, setSelfMomMsg
            }
 }
 

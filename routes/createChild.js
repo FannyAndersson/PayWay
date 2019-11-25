@@ -19,6 +19,10 @@ function createChild(app, db) {
             return res.status(404).send('Parent is not found');
         }
 
+        if(String(child._id) === user._id){
+            return res.status(500).send({error: 'You can not be a child to yourself!', errorCode: 'selfMom'})
+        }
+
         //check if request has been already sent to child
         //return message that request has been already sent
         if (parent.children.pending.indexOf(child._id) !== -1) {
