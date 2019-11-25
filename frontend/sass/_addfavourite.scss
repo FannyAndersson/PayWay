@@ -4,10 +4,13 @@
 }
 
 h1 {
-    color:$secondary-color;
+    color: $secondary-color;
 }
 
-// .form-control {
-
-
-// }
+.btn-contact-delete {
+    border: none;
+    background-color: #fff;
+    color: #eb4034;
+    font-size: 1.3rem;
+    cursor: pointer;
+}

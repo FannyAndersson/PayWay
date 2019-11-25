@@ -6,7 +6,7 @@ import Contact from './Contact';
 import { Link, } from 'react-router-dom';
 
 const Children = () => {
-    const [children, setChildren] = useState([]);
+    const [children, setChildren] = useState({});
     const { user } = useContext(UserContext);
 
     useEffect(() => {
