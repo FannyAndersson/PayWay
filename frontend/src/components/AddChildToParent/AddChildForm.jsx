@@ -48,9 +48,9 @@ const AddChildForm = () => {
 
     return <React.Fragment>
         <Row>
-          <Col l={3} offset="l4" className="content">
+          <Col className="content">
             <h1>Add a child</h1>
-            <Col node="form" onSubmit={handleSubmit} l={12} className="form">
+            <form onSubmit={handleSubmit}>
               <TextInput
                name="phone"
                onChange={handleInputChange}
@@ -91,7 +91,7 @@ const AddChildForm = () => {
                   style={{ width: '47%', backgroundColor: '#6200EE', color: 'white', marginLeft:'11px' }} waves="light">
                       ADD CHILD
                     </Button>
-            </Col>
+            </form>
           </Col>
         </Row>
       </React.Fragment>;
