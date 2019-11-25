@@ -1,0 +1,26 @@
+.incoming,
+.outgoing {
+    border-bottom: 1px solid #444;
+    display: flex;
+    align-items: center;
+    div {
+        width: 15%;
+        margin-left: 3%;
+    }
+}
+
+.incoming {
+    color: green;
+}
+
+.outgoing {
+    color: red;
+}
+
+.contacts {
+    flex-grow: 1;
+}
+
+.symbol-transaction {
+    font-size: 1.8rem;
+}

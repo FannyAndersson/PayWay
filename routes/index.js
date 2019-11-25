@@ -15,13 +15,14 @@ const rejectParent = require("./reject-parent");
 const login = require('./login');
 const adminBoard = require('./admin-board')
 const createFavorite = require('./createFavorite');
+const githubWebhook = require('./github-webhook');
+const getFavorites = require('./getFavorites');
 
 const routesList = [];
 
 // ... and here
 routesList.push(exampleRoutes);
 routesList.push(logout);
-routesList.push(register);
 routesList.push(sendMoney);
 routesList.push(emailRoute);
 routesList.push(updateUser);
@@ -35,13 +36,23 @@ routesList.push(login);
 routesList.push(getUserTransactions)
 routesList.push(adminBoard)
 routesList.push(createFavorite)
+routesList.push(register);
+routesList.push(githubWebhook);
+routesList.push(getFavorites);
+
 
 
 function useCustomRoutes(app, db) {
-    // tell express server to use routes
-    routesList.forEach(useRoute => {
-        useRoute(app, db);
-    });
+  // tell express server to use routes
+  routesList.forEach(useRoute => {
+    useRoute(app, db);
+  });
 }
+
+
+
+
+
+
 
 module.exports = useCustomRoutes;

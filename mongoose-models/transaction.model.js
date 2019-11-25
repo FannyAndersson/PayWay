@@ -27,7 +27,6 @@ const transactionSchema =  new Schema({
 
     message: {
         type: String,
-        required: true,
         maxlength: 50,
     },
 
