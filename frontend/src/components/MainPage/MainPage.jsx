@@ -7,7 +7,7 @@ import MessageComponent from '../Message/MessageComponent';
 
 const MainPage = () => {
     const {user} = useContext(UserContext);
-    const [showMMessage, setShowMessage] = useState(false);
+    const [showMessage, setShowMessage] = useState(false);
     const onMessage = () => {
         setShowMessage(true);
     }
@@ -23,7 +23,7 @@ const MainPage = () => {
                     <Button type="button" onClick={onMessage}>Bad Message</Button>
                 </Col>
             </Row>
-            {showMMessage ? <MessageComponent 
+            {showMessage ? <MessageComponent 
                                 success={false}
                                 redirectTo="/profile/transactions" 
                                 text={[`Hello ${user.name}! I have bad news for you!`,`Sprint review is about 2 days!`, `Redirect to your transactions!`]} 
