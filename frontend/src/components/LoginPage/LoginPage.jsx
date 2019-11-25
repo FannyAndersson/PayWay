@@ -3,7 +3,9 @@ import { Link, Redirect } from 'react-router-dom';
 import { Row, Col, TextInput, Button } from 'react-materialize';
 import useLoginForm from "./UseLoginFormHook";
 import { UserContext } from '../../AuthUserContext';
+
 import MessageComponent from '../Message/MessageComponent';
+
 
 const LoginPage = () => {
     //use user from UserContext
@@ -20,7 +22,6 @@ const LoginPage = () => {
                 email: inputs.email,
                 password: inputs.password
             }
-
             const response = await fetch('/api/login', {
                 method: 'POST',
                 body: JSON.stringify(login),
@@ -46,7 +47,7 @@ const LoginPage = () => {
         <React.Fragment>
             {user ? <Redirect to='/' /> : null}
             <Row>
-                <Col l={3} offset='l4' className='content'>
+                <Col className='content'>
                     <h1>Login</h1>
                     <Col node="form" onSubmit={handleSubmit} l={12} className="form">
                         <TextInput className="form-control" name="email" onChange={handleInputChange} value={inputs.email} label="Email" email={true} s={12} l={12} required />

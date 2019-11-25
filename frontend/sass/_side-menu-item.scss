@@ -1,11 +1,10 @@
 li.active {
     a {
         color: $secondary-color;
-        & > i {
+        &>i {
             &.material-icons {
-            color: $secondary-color;
+                color: $secondary-color;
             }
         }
     }
-    
 }
