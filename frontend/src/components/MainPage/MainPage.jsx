@@ -11,7 +11,7 @@ const MainPage = () => {
         <React.Fragment>
             {!user ? <Redirect to='/login' /> : null}
             <Row>
-                <Col l={3} offset='l4'>
+                <Col>
                     <h1>Main Page</h1>
                     <p>Hello {user.name}</p>
                 </Col>

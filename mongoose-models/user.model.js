@@ -56,7 +56,10 @@ const userSchema = new Schema({
         type: Boolean,
         default: false,
     },
-
+    limit: {
+        type: Number,
+        default: 1000
+    }
 }, {
     toJSON: { virtuals: true },
 });
