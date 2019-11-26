@@ -6,7 +6,7 @@ import Contact from './Contact';
 import { Link, } from 'react-router-dom';
 
 const Children = () => {
-    const [children, setChildren] = useState([]);
+    const [children, setChildren] = useState({});
     const { user } = useContext(UserContext);
 
     useEffect(() => {
@@ -18,9 +18,11 @@ const Children = () => {
                 let url = key + userID + "/children";
                 const data = await fetch(url);
                 const result = await data.json();
+                const allChildren = result ? {confirmed: result[0], pending: result[1]} : null;
                 if (mounted) {
-                    setChildren({ ...result });
+                    setChildren({...allChildren});
                 }
+
             } catch (error) {
                 console.error(error);
             }
@@ -32,43 +34,47 @@ const Children = () => {
             mounted = false;
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
 
+    let confirmedChildren = [];
+    let pendingChildren = [];
 
+    if(Object.keys(children).length) {
+        confirmedChildren = children.confirmed ? children.confirmed.map(child => {
+            return (
+                <Link to={`/profile/children/transactions/${child._id}`} key={child._id + 1}> <Contact key={child._id} contact={child} /></Link>
+            )
+        }) : null;
 
-    if (children[0] === undefined) return <div>Loading...</div>
+        pendingChildren = children.pending ? children.pending.map(child => {
+            return (
+                <Link to={`/profile/children/transactions/${child._id}`} key={child._id + 1}> <Contact key={child._id} contact={child} /></Link>
+    
+            )
+        }) : null;
+    }
 
-    if (children[1] === undefined) return <div>Loading...</div>
-
-    else {
-        return (
+    return Object.keys(children).length ? 
+         (
 
             <Tabs className="tab-demo z-depth-1">
                 <Tab title="Confirmed" active>
                     <Collection >
-                        {children[0].map(child => {
-                            return (
-                                <Link to={`/profile/children/transactions/${child._id}`} key={child._id + 1}> <Contact key={child._id} contact={child} /></Link>
-
-                            )
-                        })}
+                        {confirmedChildren ? confirmedChildren : (<p>You have no confirmed children</p>)}
                     </Collection>
                 </Tab>
 
                 <Tab title="Pending" >
                     <Collection >
-                        {children[1].map(child => {
-                            return (
-                                <Contact key={child._id} contact={child} />
-                            )
-                        })}
+                    {pendingChildren ? pendingChildren : (<p>You have no parent's requests.</p>)}
                     </Collection>
                 </Tab>
             </Tabs>
 
 
-        )
-    }
+        ) : (
+            <p>{`Loading`}</p>
+            )
 }
 
 export default Children;
