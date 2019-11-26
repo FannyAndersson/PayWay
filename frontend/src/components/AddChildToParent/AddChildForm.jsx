@@ -62,7 +62,7 @@ const AddChildForm = () => {
               <TextInput
                name="phone"
                onChange={handleInputChange}
-                 value={inputs.phone}
+                 value={inputs.phone || ''}
                  className={ `validate ${showInvalidChild || generateChildAlreadyExistInPendingMessage || selfMomMsg ? 'invalid' : ''}`}
                   label="Phone number"
                    s={12} l={12}
