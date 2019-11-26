@@ -26,7 +26,7 @@ const AddChildForm = () => {
                     'Content-Type': 'application/json'
                   }
             })
-            
+
                  if (response.ok) {
                    setShowInvalidChild(false);
                    setShowMessage(true);
@@ -62,7 +62,7 @@ const AddChildForm = () => {
               <TextInput
                name="phone"
                onChange={handleInputChange}
-                 value={inputs.phone}
+                 value={inputs.phone || ''}
                  className={ `validate ${showInvalidChild || generateChildAlreadyExistInPendingMessage || selfMomMsg ? 'invalid' : ''}`}
                   label="Phone number"
                    s={12} l={12}
@@ -87,7 +87,7 @@ const AddChildForm = () => {
               flat={true} type="button"
               className="cancel-add-child-btn raised-btn"
                style={{ width: '48%' }} waves="light">
-                <Link to="/mainpage">CANCEL</Link>
+                <Link to="/">CANCEL</Link>
               </Button>
                 <Button
                 flat={true}
@@ -96,11 +96,11 @@ const AddChildForm = () => {
                       ADD CHILD
                     </Button>
             </form>
-        {showMessage ? <MessageComponent 
+        {showMessage ? <MessageComponent
                                 success
-                                redirectTo="/profile/children/" 
-                                text={[`A mail has been sent to ${inputs.phone} who has to confirm you as a parent`]} 
-                                unmountMe={handleMessageUnmount} 
+                                redirectTo="/profile/children/"
+                                text={[`A mail has been sent to ${inputs.phone} who has to confirm you as a parent`]}
+                                unmountMe={handleMessageUnmount}
                             />
                             : null}
       </React.Fragment>;

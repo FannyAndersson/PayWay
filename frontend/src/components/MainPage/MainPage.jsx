@@ -1,11 +1,10 @@
 
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 
 import { Redirect, Link} from "react-router-dom";
 
 import {UserContext} from '../../AuthUserContext';
 import { Row, Col, Button } from 'react-materialize';
-import MessageComponent from '../Message/MessageComponent';
 
 
 
