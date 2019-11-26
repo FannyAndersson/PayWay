@@ -1,10 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Col, TextInput, Button } from 'react-materialize';
+import { TextInput, Button } from 'react-materialize';
 import useAddChild from './useAddChild';
+import MessageComponent from '../Message/MessageComponent';
+
 
 
 const AddChildForm = () => {
+      //showMessage state and handleMessageUnmount are added to show and dismiss message
+      const [showMessage, setShowMessage] = useState(false);
+      const handleMessageUnmount = () => {
+          setShowMessage(false);
+      }
 
     const addChild = async () => {
 
@@ -19,9 +26,10 @@ const AddChildForm = () => {
                     'Content-Type': 'application/json'
                   }
             })
+            
                  if (response.ok) {
                    setShowInvalidChild(false);
-                   setSuccesMessage(true);
+                   setShowMessage(true);
                    return;
                  }
                  if(response.status === 500) {
@@ -30,12 +38,14 @@ const AddChildForm = () => {
                      setSelfMomMsg(true);
                      return;
                    }
+                   if(error.errorCode === "alreadyChild") {
+                    return setChildAlreadyExistInPending(true);
+                  }
                  }
                  if(response.status === 405){
                    return setChildAlreadyExistInPending(true);
                  }
                   setShowInvalidChild(true);
-                  setSuccesMessage(false);
 
             }   catch (error) {
             console.error('Error:', error);
@@ -43,32 +53,26 @@ const AddChildForm = () => {
         }
 
 
-        const { inputs, handleInputChange, handleSubmit, setShowInvalidChild, showInvalidChild, setSuccesMessage, generateSuccessMessage, setChildAlreadyExistInPending, generateChildAlreadyExistInPendingMessage, selfMomMsg, setSelfMomMsg } = useAddChild(addChild);
+        const { inputs, handleInputChange, handleSubmit, setShowInvalidChild, showInvalidChild, setChildAlreadyExistInPending, generateChildAlreadyExistInPendingMessage, selfMomMsg, setSelfMomMsg } = useAddChild(addChild);
 
 
     return <React.Fragment>
-        <Row>
-          <Col className="content">
             <h1>Add a child</h1>
             <form onSubmit={handleSubmit}>
               <TextInput
                name="phone"
                onChange={handleInputChange}
-                 value={inputs.phone || ''}
-                 className={ `validate ${showInvalidChild || generateSuccessMessage || generateChildAlreadyExistInPendingMessage || selfMomMsg ? 'invalid' : ''}`}
+                 value={inputs.phone}
+                 className={ `validate ${showInvalidChild || generateChildAlreadyExistInPendingMessage || selfMomMsg ? 'invalid' : ''}`}
                   label="Phone number"
                    s={12} l={12}
                    required />
                    {showInvalidChild ? (
-              <p className="helper-text" style={{ color: 'red' }}>There is no recipient with this phone number</p>
+              <p s={12} l={12} className="helper-text" style={{ color: 'red' }}>There is no recipient with this phone number</p>
             ) : (
               ''
             )}
-            {generateSuccessMessage ? (
-              <p className="helper-text" style={{ color: 'green' }}>A mail has been sent to your child who has to confirm you as a parent</p>
-            ) : (
-              ''
-            )}
+
             {generateChildAlreadyExistInPendingMessage ? (
               <p className="helper-text" style={{ color: 'orange' }}>You already send a request to this user</p>
             ) : (
@@ -92,8 +96,13 @@ const AddChildForm = () => {
                       ADD CHILD
                     </Button>
             </form>
-          </Col>
-        </Row>
+        {showMessage ? <MessageComponent 
+                                success
+                                redirectTo="/profile/children/" 
+                                text={[`A mail has been sent to ${inputs.phone} who has to confirm you as a parent`]} 
+                                unmountMe={handleMessageUnmount} 
+                            />
+                            : null}
       </React.Fragment>;
 }
 
