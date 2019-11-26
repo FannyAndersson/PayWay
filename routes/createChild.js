@@ -3,7 +3,7 @@ const sendMailToChild = require('../send-email.js');
 
 function createChild(app, db) {
 
-    app.post('/api/createchild', async (req, res) => {
+    app.post('/api/createchild', async(req, res) => {
 
         const { user } = req.session;
 
@@ -39,7 +39,7 @@ function createChild(app, db) {
 
         const confirmLink = `http://localhost:3000/api/child/confirmation/${parent._id}${child._id}`;
 
-        const rejectLink = `http://localhost:3000/api/reject-parent/${parent._id}`;
+        const rejectLink = `http://localhost:3000/api/child/reject-parent/${parent._id}${child._id}`;
 
         sendMailToChild({
 
