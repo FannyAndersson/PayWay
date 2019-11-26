@@ -31,7 +31,7 @@ function createChild(app, db) {
 
         parent.children.pending.includes(child._id) ? res.send('You have already send a request to this user') : parent.children.pending.push(child);
 
-        parent.children.confirmed.push(child);
+        parent.children.pending.push(child);
 
         parent.save();
 

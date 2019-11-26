@@ -9,20 +9,20 @@ const RegisterForm = () => {
 	const [otherError, setOtherError] = useState(false);
 	const [serverErrors, setServerErrors] = useState({});
 	const catchError = err => {
-        setServerErrors({...serverErrors, [err.error]:true});
+		setServerErrors({ ...serverErrors, [err.error]: true });
 	};
 	const handleOnKeyUp = (e) => {
-		setServerErrors({...serverErrors, [e.target.name]: false});
-		setErrors({...errors, [e.target.name]: false});
+		setServerErrors({ ...serverErrors, [e.target.name]: false });
+		setErrors({ ...errors, [e.target.name]: false });
 	}
-	
+
 	//showMessage state and handleMessageUnmount are added to show and dismiss message
 	const [showMessage, setShowMessage] = useState(false);
 	const handleMessageUnmount = () => {
 		setShowMessage(false);
 	}
 	const onRegister = async () => {
-		if(validate(inputs)) {
+		if (validate(inputs)) {
 			try {
 				const register = {
 					name: inputs.name,
@@ -38,18 +38,17 @@ const RegisterForm = () => {
 					}
 				}).catch(err => {
 					setOtherError(true);
-                    setShowMessage(true);
-                    return console.error(err);
+					setShowMessage(true);
+					return console.error(err);
 				});
 				let result = {};
-				if(!response) {
+				if (!response) {
 					setOtherError(true);
-                    setShowMessage(true);
+					setShowMessage(true);
 				}
 				else {
-					result = {response: await response.json(), status: response.status}
+					result = { response: await response.json(), status: response.status }
 				}
-				console.log(result, 'result')
 				if (result) {
 					if (result.status === 200) {
 						setShowMessage(true);
@@ -93,7 +92,7 @@ const RegisterForm = () => {
 		}
 		setErrors(errors);
 
-		if(Object.keys(errors).length) {
+		if (Object.keys(errors).length) {
 			return false;
 		}
 		return true;
@@ -163,7 +162,7 @@ const RegisterForm = () => {
 									}
 								>
 									{errors.phone}
-									{serverErrors.phone ? 'User with such phone number already exists': null}
+									{serverErrors.phone ? 'User with such phone number already exists' : null}
 								</span>
 							</Col>
 							<Col s={12} l={12} className="input-field inline">
@@ -193,7 +192,7 @@ const RegisterForm = () => {
 									}
 								>
 									{errors.email}
-									{serverErrors.email ? 'User with such email address already exists': null}
+									{serverErrors.email ? 'User with such email address already exists' : null}
 								</span>
 							</Col>
 							<Col s={12} l={12} className="input-field inline">
@@ -275,13 +274,13 @@ const RegisterForm = () => {
 					</Col>
 				</Row>
 			</div>
-			{showMessage ? <MessageComponent 
-				success= {otherError ? false : true}
-				redirectTo={otherError ? null : "/login"} 
-				text={otherError ? [`Something went wrong! It happened on our side.`, `Try register later!`] : [`Account with email ${inputs.email} has been created.`, `Check your mailbox.`]} 
-				unmountMe={handleMessageUnmount} 
+			{showMessage ? <MessageComponent
+				success={otherError ? false : true}
+				redirectTo={otherError ? null : "/login"}
+				text={otherError ? [`Something went wrong! It happened on our side.`, `Try register later!`] : [`Account with email ${inputs.email} has been created.`, `Check your mailbox.`]}
+				unmountMe={handleMessageUnmount}
 			/>
-			: null}
+				: null}
 		</>
 	);
 };
