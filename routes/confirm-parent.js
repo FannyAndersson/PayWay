@@ -2,30 +2,33 @@ const User = require('../mongoose-models/user.model');
 const sendMail = require('../send-email.js');
 
 function confirmParent(app) {
-    app.post('/api/confirm-parent/:id', async (req, res) => {
-        const { email } = req.body;
-        const child = await User.findOne({ email });
-        const parent = await User.findById(req.params.id);
-        if(!child) {
+    app.get('/api/child/confirmation/:id', async (req, res) => {
+
+        let params = req.params.id;
+        let parentID = params.slice(0, 24);
+        let childID = params.slice(24, 49);
+
+        const child = await User.findById(childID);
+        const parent = await User.findById(parentID);
+        if (!child) {
             res.status(404).send('User not found');
         }
-        if(!parent) {
+        if (!parent) {
             res.status(404).send('Parent not found');
-            
+
         }
 
-
-        if(parent) {
+        if (parent) {
 
             //check if child's id pasted in link
-            if(String(child._id) === req.params.id) {
+            if (String(child._id) === req.params.id) {
                 return res.status(404).send('It is your id, you can\'t be your child!');
             }
             //check if child has been already added to pending
             //return message that didn't send any request
-            if(parent.children.pending.indexOf(child._id) === -1) {
-                
-                return res.send(`${parent.name} didn't send request to be your parent. Sorry about it!`) 
+            if (parent.children.pending.indexOf(child._id) === -1) {
+
+                return res.send(`${parent.name} didn't send request to be your parent. Sorry about it!`)
             }
 
             // if parent and child exists and child is pending, remove child from pending
@@ -35,8 +38,8 @@ function confirmParent(app) {
 
             //check if child has been already added to confirmed
             //return message that parent has been already confirmed
-            if(parent.children.confirmed.indexOf(child._id) !== -1) {
-            return res.send(`You have already confirmed ${parent.name} as your parent. Link is invalid.`) 
+            if (parent.children.confirmed.indexOf(child._id) !== -1) {
+                return res.send(`You have already confirmed ${parent.name} as your parent. Link is invalid.`)
             }
 
 
@@ -58,7 +61,7 @@ function confirmParent(app) {
 
             res.status(200).end();
         }
-            
+
     });
 }
 
