@@ -1,14 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Row, Col, TextInput, Button } from 'react-materialize';
 import { UserContext } from '../../AuthUserContext';
 import UseAddFavourite from './UseCreateFavoriteHook';
 import {  Redirect } from 'react-router-dom';
+import MessageComponent from '../Message/MessageComponent';
+
 
 
 
 const CreateFavouriteComponent = () => {
 
     const { user } = useContext(UserContext);
+    //showMessage state and handleMessageUnmount are added to show and dismiss message
+    const [showMessage, setShowMessage] = useState(false);
+    const handleMessageUnmount = () => {
+        setShowMessage(false);
+    }
 
     const addFav = async () => {
          try {
@@ -24,7 +31,7 @@ const CreateFavouriteComponent = () => {
     });
         const result ={response:await response.json(), status:response.status}
         if(result.status === 200){
-            setFavoriteSuccessMsg(true);
+            setShowMessage(true);
         }
         if(result.status === 500) {
             if (result.response.errorCode === "noUser") {
@@ -37,14 +44,14 @@ const CreateFavouriteComponent = () => {
                 setFavoriteAlreadyExistsMsg(true);
             }
         }
-        
+
     }
     catch (error) {
         console.error('Error:', error)
     }
 }
 
-    const { inputs, handleInputChange, handleSubmit, favoriteAlreadyExistsMsg, setFavoriteAlreadyExistsMsg, favoriteSuccessMsg, setFavoriteSuccessMsg, userDontExistMsg, setUserDontExistMsg, selfFavouriteMsg, setselfFavouriteMsg } = UseAddFavourite(addFav);
+    const { inputs, handleInputChange, handleSubmit, favoriteAlreadyExistsMsg, setFavoriteAlreadyExistsMsg, favoriteSuccessMsg, userDontExistMsg, setUserDontExistMsg, selfFavouriteMsg, setselfFavouriteMsg } = UseAddFavourite(addFav);
 
     return (
         <React.Fragment>
@@ -61,15 +68,10 @@ const CreateFavouriteComponent = () => {
                             s={12}
                             l={12}
                             onChange={handleInputChange}
-                            value={inputs.phone}
+                            value={inputs.phone || ''}
                             required />
 
-                             {favoriteSuccessMsg ? (
-              <p style={{ color: 'green' }}>This user just been added to your favorite list</p>
-            ) : (
-              ''
-            )}
-
+                             
                             {favoriteAlreadyExistsMsg ? (
               <p style={{ color: 'orange' }}>This user is already a favorite</p>
             ) : (
@@ -91,7 +93,13 @@ const CreateFavouriteComponent = () => {
                         </Button>
                     </Col>
                 </Row>
-
+                {showMessage ? <MessageComponent 
+                                success
+                                redirectTo="/profile/favorites/" 
+                                text={[`User with number ${inputs.phone} has been added to your favorites!`]} 
+                                unmountMe={handleMessageUnmount} 
+                            />
+                            : null}
         </React.Fragment>
 
     );
