@@ -87,7 +87,7 @@ const TransactionPage = () => {
             </Tabs>
         </React.Fragment>
     ) : (
-        <p>{`You doesn't have any transactions yet`}</p>
+        <p>{`You don't have any transactions yet`}</p>
         )
 }
 

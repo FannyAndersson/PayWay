@@ -3,7 +3,6 @@ const User = require('../mongoose-models/user.model');
 function deleteFavourite(app) {
     app.post('/api/delete-favourite/:id', async (req, res) => {
         const { user } = req.session;
-        console.log(user, "user");
 
         if (!user) {
             return res.status(400).send('log in to remove your favourite contact');
