@@ -35,7 +35,6 @@ const Children = () => {
     }, [])
 
 
-
     if (children[0] === undefined) return <div>Loading...</div>
 
     if (children[1] === undefined) return <div>Loading...</div>
