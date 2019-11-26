@@ -1,11 +1,10 @@
 
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 
 import { Redirect, Link} from "react-router-dom";
 
 import {UserContext} from '../../AuthUserContext';
 import { Row, Col, Button } from 'react-materialize';
-import MessageComponent from '../Message/MessageComponent';
 
 
 
@@ -18,7 +17,7 @@ const MainPage = () => {
         <Col style={{width: '100%', marginTop: '42%'}}>
           <Row>
             <Button type="button" style={{ width: '100%', marginBottom: '50%' }}>
-              <Link to="/send-money">SEND MONEY</Link>
+              <Link style={{color: "#fff"}} to="/send-money">SEND MONEY</Link>
             </Button>
           </Row>
           <Row>

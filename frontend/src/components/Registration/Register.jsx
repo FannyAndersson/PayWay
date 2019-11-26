@@ -1,20 +1,28 @@
 import React, { useState } from "react";
-import { Redirect, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Row, Col, Button } from "react-materialize";
 import useRegisterUser from "./useRegisterUser";
+import MessageComponent from '../Message/MessageComponent';
+
 
 const RegisterForm = () => {
-	const [okToRedirect, setOkToRedirect] = useState(false);
+	const [otherError, setOtherError] = useState(false);
 	const [serverErrors, setServerErrors] = useState({});
 	const catchError = err => {
-        setServerErrors({...serverErrors, [err.error]:true});
+		setServerErrors({ ...serverErrors, [err.error]: true });
 	};
 	const handleOnKeyUp = (e) => {
-		setServerErrors({...serverErrors, [e.target.name]: false});
-		setErrors({...errors, [e.target.name]: false});
-    }
+		setServerErrors({ ...serverErrors, [e.target.name]: false });
+		setErrors({ ...errors, [e.target.name]: false });
+	}
+
+	//showMessage state and handleMessageUnmount are added to show and dismiss message
+	const [showMessage, setShowMessage] = useState(false);
+	const handleMessageUnmount = () => {
+		setShowMessage(false);
+	}
 	const onRegister = async () => {
-		if(validate(inputs)) {
+		if (validate(inputs)) {
 			try {
 				const register = {
 					name: inputs.name,
@@ -28,11 +36,22 @@ const RegisterForm = () => {
 					headers: {
 						"Content-type": "application/json"
 					}
+				}).catch(err => {
+					setOtherError(true);
+					setShowMessage(true);
+					return console.error(err);
 				});
-				let result = {response: await response.json(), status: response.status}
+				let result = {};
+				if (!response) {
+					setOtherError(true);
+					setShowMessage(true);
+				}
+				else {
+					result = { response: await response.json(), status: response.status }
+				}
 				if (result) {
 					if (result.status === 200) {
-						setOkToRedirect(true);
+						setShowMessage(true);
 						return;
 					}
 					if (result.status === 500) {
@@ -41,7 +60,7 @@ const RegisterForm = () => {
 					}
 				}
 			} catch (error) {
-				console.log("Error: ", error);
+				setOtherError(true);
 			}
 		}
 	};
@@ -73,7 +92,7 @@ const RegisterForm = () => {
 		}
 		setErrors(errors);
 
-		if(Object.keys(errors).length) {
+		if (Object.keys(errors).length) {
 			return false;
 		}
 		return true;
@@ -85,7 +104,6 @@ const RegisterForm = () => {
 
 	return (
 		<>
-			{okToRedirect && <Redirect to="/login" />}
 			<div className="registration-page container center-align">
 				<Row>
 					<Col l={4} offset="l4" className="content">
@@ -144,7 +162,7 @@ const RegisterForm = () => {
 									}
 								>
 									{errors.phone}
-									{serverErrors.phone ? 'User with such phone number already exists': null}
+									{serverErrors.phone ? 'User with such phone number already exists' : null}
 								</span>
 							</Col>
 							<Col s={12} l={12} className="input-field inline">
@@ -174,7 +192,7 @@ const RegisterForm = () => {
 									}
 								>
 									{errors.email}
-									{serverErrors.email ? 'User with such email address already exists': null}
+									{serverErrors.email ? 'User with such email address already exists' : null}
 								</span>
 							</Col>
 							<Col s={12} l={12} className="input-field inline">
@@ -256,6 +274,13 @@ const RegisterForm = () => {
 					</Col>
 				</Row>
 			</div>
+			{showMessage ? <MessageComponent
+				success={otherError ? false : true}
+				redirectTo={otherError ? null : "/login"}
+				text={otherError ? [`Something went wrong! It happened on our side.`, `Try register later!`] : [`Account with email ${inputs.email} has been created.`, `Check your mailbox.`]}
+				unmountMe={handleMessageUnmount}
+			/>
+				: null}
 		</>
 	);
 };
