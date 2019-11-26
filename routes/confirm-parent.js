@@ -3,17 +3,10 @@ const sendMail = require('../send-email.js');
 
 function confirmParent(app) {
     app.get('/api/child/confirmation/:id', async (req, res) => {
-        // const { email } = req.body;
-        // console.log(req.body, "body");
-        // const child = await User.findById(req.params.id);
-        // const parent = await User.findById(req.params.id);
+
         let params = req.params.id;
         let parentID = params.slice(0, 24);
         let childID = params.slice(24, 49);
-
-        // console.log(parentID, "parent");
-        // console.log(childID, "child");
-
 
         const child = await User.findById(childID);
         const parent = await User.findById(parentID);
@@ -25,8 +18,6 @@ function confirmParent(app) {
 
         }
 
-        console.log(child, "child");
-        console.log(parent, "parent");
         if (parent) {
 
             //check if child's id pasted in link
