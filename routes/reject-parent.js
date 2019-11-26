@@ -2,13 +2,20 @@ const User = require('../mongoose-models/user.model');
 const sendRejectMailToParent = require('../send-email.js');
 
 function rejectParent(app) {
-    app.post('/api/reject-parent/:id', async(req, res) => {
-        const { email } = req.body;
+    app.get('/api/child/reject-parent/:id', async(req, res) => {
 
-        const child = await User.findOne({ email });
+        let params = req.params.id;
+        let parentID = params.slice(0, 24);
+        let childID = params.slice(24, 49);
+
+
+        const child = await User.findById(childID);
+        const parent = await User.findById(parentID);
+
+        console.log(child, 'child');
+        console.log(parent, 'parent');
 
         try {
-            const parent = await User.findById(req.params.id);
 
             if (!child) {
                 return res.status(404).send('Child not found');
