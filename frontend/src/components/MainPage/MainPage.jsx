@@ -1,22 +1,33 @@
-import React, {useContext} from "react";
+
+import React, {useContext, useState} from "react";
+
+import { Redirect, Link} from "react-router-dom";
 
 import {UserContext} from '../../AuthUserContext';
-import { Row, Col } from 'react-materialize';
+import { Row, Col, Button } from 'react-materialize';
+import MessageComponent from '../Message/MessageComponent';
 
 
 
 const MainPage = () => {
+
     const {user} = useContext(UserContext);
-    return (
-        <React.Fragment>
-            <Row>
-                <Col l={3} offset='l4'>
-                    <h1>Main Page</h1>
-                    <p>Hello {user.name}</p>
-                </Col>
-            </Row>   
-        </React.Fragment>
-    );
+
+    return <React.Fragment>
+        {!user ? <Redirect to="/login" /> : null}
+        <Col style={{width: '100%', marginTop: '42%'}}>
+          <Row>
+            <Button type="button" style={{ width: '100%', marginBottom: '50%' }}>
+              <Link to="/send-money">SEND MONEY</Link>
+            </Button>
+          </Row>
+          <Row>
+            <Button type="button" style={{ width: '100%', backgroundColor: '#03DAC6' }}>
+              <Link to="/profile/transactions">TRANSACTIONS</Link>
+            </Button>
+          </Row>
+        </Col>
+      </React.Fragment>;
 }
 
 export default MainPage;

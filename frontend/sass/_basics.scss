@@ -13,14 +13,31 @@ h1 {
     border: 1px solid transparentize($secondary-color, 0.7);
     &:hover {
         background-color: #fff;
-        border-color: $secondary-color;
     }
 }
 
 .logo {
     font-size: 2rem;
+    padding: 7px 15px;
+    display: block;
+    color: $secondary-color;
 }
 
 .w100 {
     width: 100%;
+}
+
+.mb {
+    margin-bottom: 1.5rem;
+}
+
+.input-field {
+    .error-helper {
+        color: #ff0000;
+        opacity: 0;
+        transition: opacity 0.5s;
+        &.on {
+            opacity: 1;
+        }
+    }
 }
