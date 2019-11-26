@@ -19,8 +19,8 @@ function createChild(app, db) {
             return res.status(404).send('Parent is not found');
         }
 
-        if(String(child._id) === user._id){
-            return res.status(500).send({error: 'You can not be a child to yourself!', errorCode: 'selfMom'})
+        if (String(child._id) === user._id) {
+            return res.status(500).send({ error: 'You cannot be a child to yourself!', errorCode: 'selfMom' })
         }
 
         //check if request has been already sent to child
@@ -29,18 +29,19 @@ function createChild(app, db) {
             return res.status(405).send(`You have already sent request to add ${child.name} as your child. Wait for confirmation. This link is invalid.`)
         }
 
-        parent.children.pending.includes(child._id) ? res.send('You have already send a rquest to this user') : parent.children.confirmed.push(child);
+        parent.children.pending.includes(child._id) ? res.send('You have already send a request to this user') : parent.children.pending.push(child);
 
         parent.save();
 
-        const confirmLink = `http://localhost:3000/api/confirm-parent/${parent._id}`;
+        const confirmLink = `http://localhost:3000/api/child/confirmation/${parent._id}${child._id}`;
 
         const rejectLink = `http://localhost:3000/api/reject-parent/${parent._id}`;
 
         sendMailToChild({
 
             to: child.email,
-            html: `<body><p>${parent.name} with phone number ${parent.phone} wish to get access to your account- Do you confirm? ${confirmLink} or do you reject? ${rejectLink}</p></body>`,
+            html: `<body><p>${parent.name} with phone number ${parent.phone} wishes to get access to your account. Click here to accept ${confirmLink} <br>
+            If you do not want to allow ${parent.name} to have access to your account click here ${rejectLink}</p></body>`,
             subject: "PayWay - Confirm parent NO REPLY"
 
         });
