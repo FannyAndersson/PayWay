@@ -30,7 +30,6 @@ const CreateFavouriteComponent = () => {
                 }
             });
 
-            console.log(response, "res");
             const result = { response: await response.json(), status: response.status }
             if (result.status === 200) {
                 setShowMessage(true);

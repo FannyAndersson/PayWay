@@ -52,7 +52,7 @@ const LoginPage = () => {
                     <Col node="form" onSubmit={handleSubmit} l={12} className="form">
                         <TextInput className="form-control" name="email" onChange={handleInputChange} value={inputs.email} label="Email" email={true} s={12} l={12} required />
                         <TextInput className="form-control" name="password" onChange={handleInputChange} value={inputs.password} label="Password" password={true} s={12} l={12} required />
-                        <Col node="p" s={12} l={12} className="forgot-your-pwd">Forgot your password?</Col>
+                        {/* <Col node="p" s={12} l={12} className="forgot-your-pwd">Forgot your password?</Col> */}
                         <Button className="login-btn" waves="light" style={{ width: '100%' }} >
                             login
                         </Button>

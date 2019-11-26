@@ -16,8 +16,6 @@ const useAddChild = (callback) => {
             event.preventDefault()
         }
 
-        setInputs('');
-
         callback();
 
     }
