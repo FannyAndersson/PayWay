@@ -20,6 +20,8 @@ const SendMoney = (props) => {
 
     const { history } = props;
 
+
+
     // function to handle when form is submitted
     const handleSubmit = async (e) => {
 
@@ -35,7 +37,7 @@ const SendMoney = (props) => {
             setTransactionStatus({ loading: true, loaded: false, error: false, status: null });
 
             const body = {
-                recipient: recipientPhone,
+                recipient: recipientPhone || history.location.state.recipientPhone,
                 amount: transactionAmount,
                 message: transactionMessage,
             };
@@ -110,7 +112,7 @@ const SendMoney = (props) => {
         id: 'recipient-phone-number',
         type: 'tel',
         className: `validate${ showInvalidRecipientNotice ? ' invalid' : '' }`,
-        value: recipientPhone,
+        value: history.location.state ? history.location.state.recipientPhone : recipientPhone,
         onChange: e => {
             setRecipientPhone(e.target.value);
 
@@ -140,6 +142,7 @@ const SendMoney = (props) => {
     }
 
     return (
+        
         <div className="row">
             <form className="col" onSubmit={ handleSubmit }>
                 <div className="row">

@@ -33,7 +33,7 @@ function createChild(app, db) {
             return res.status(500).send({error: 'You has already sent parent request to this child!', errorCode: 'alreadyChild'});
         }
 
-        parent.children.confirmed.push(child);
+        parent.children.pending.push(child);
 
         parent.save();
 

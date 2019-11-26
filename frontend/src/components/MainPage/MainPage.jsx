@@ -18,7 +18,7 @@ const MainPage = () => {
         <Col style={{width: '100%', marginTop: '42%'}}>
           <Row>
             <Button type="button" style={{ width: '100%', marginBottom: '50%' }}>
-              <Link to="/send-money">SEND MONEY</Link>
+              <Link style={{color: "#fff"}} to="/send-money">SEND MONEY</Link>
             </Button>
           </Row>
           <Row>
