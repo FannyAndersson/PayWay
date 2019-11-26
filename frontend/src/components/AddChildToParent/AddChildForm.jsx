@@ -44,7 +44,7 @@ const AddChildForm = () => {
                  }
                  if(response.status === 405){
                    return setChildAlreadyExistInPending(true);
-                 } 
+                 }
                   setShowInvalidChild(true);
 
             }   catch (error) {

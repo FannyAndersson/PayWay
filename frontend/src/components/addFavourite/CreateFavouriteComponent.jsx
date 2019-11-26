@@ -37,7 +37,7 @@ const CreateFavouriteComponent = () => {
                 setFavoriteAlreadyExistsMsg(true);
             }
         }
-        
+
     }
     catch (error) {
         console.error('Error:', error)
@@ -61,7 +61,7 @@ const CreateFavouriteComponent = () => {
                             s={12}
                             l={12}
                             onChange={handleInputChange}
-                            value={inputs.phone}
+                            value={inputs.phone || ''}
                             required />
 
                              {favoriteSuccessMsg ? (
