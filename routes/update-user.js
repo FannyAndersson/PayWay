@@ -7,8 +7,15 @@ function updateUser(app) {
 			(user && String(user._id) === req.session.user._id) ||
 			req.session.user.role === "admin"
 		) {
+			if(await User.findOne({phone: req.body.phone})) {
+				return res.status(500).send({error: 'phone'});
+			}
+			if(await User.findOne({email: req.body.email})) {
+				return res.status(500).send({error: 'email'});
+			}
 			try {
 				await User.updateOne({ _id: req.params.id }, req.body);
+				
 			} catch (error) {
 				if(error.errmsg.includes('phone')) {
 					return res.status(500).send({error: 'phone'});

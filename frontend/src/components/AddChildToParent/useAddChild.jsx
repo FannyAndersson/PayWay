@@ -7,8 +7,6 @@ const useAddChild = (callback) => {
 
     const [showInvalidChild, setShowInvalidChild] = useState(false);
 
-    const[generateSuccessMessage, setSuccesMessage] = useState(false);
-
     const [generateChildAlreadyExistInPendingMessage, setChildAlreadyExistInPending] = useState(false);
 
     const [selfMomMsg, setSelfMomMsg] = useState(false);
@@ -17,8 +15,6 @@ const useAddChild = (callback) => {
         if(event){
             event.preventDefault()
         }
-
-        setInputs('');
 
         callback();
 
@@ -33,7 +29,6 @@ const useAddChild = (callback) => {
         ))
 
         setShowInvalidChild(false);
-        setSuccesMessage(false);
         setChildAlreadyExistInPending(false);
         setSelfMomMsg(false);
 
@@ -41,7 +36,7 @@ const useAddChild = (callback) => {
 
 
     return {
-             inputs, handleSubmit, handleInputChange, setShowInvalidChild, showInvalidChild, setSuccesMessage, generateSuccessMessage, generateChildAlreadyExistInPendingMessage, setChildAlreadyExistInPending, selfMomMsg, setSelfMomMsg
+             inputs, handleSubmit, handleInputChange, setShowInvalidChild, showInvalidChild, generateChildAlreadyExistInPendingMessage, setChildAlreadyExistInPending, selfMomMsg, setSelfMomMsg
            }
 }
 

@@ -8,11 +8,24 @@ const encryptPassword = require('../helpers/encrypt-password');
 
 function register(app) {
 	app.post('/api/register', async (req, res) => {
-		const {password} = req.body;
+		const {phone, email, password} = req.body;
+
 		const user = new User({
 			...req.body,
 			password: encryptPassword(password)
 		});
+
+		//these testEmail and testPhone are created to check duplicate email and phone in db
+		//because in-built mongoose check of unique fields doesn't work properly by some reason / bug
+		let testEmail = await User.findOne({email: email});
+		if(testEmail && testEmail.email === email) {
+			return res.status(500).json({error: 'email'});
+		}
+		
+		let testPhone = await User.findOne({phone: phone});
+		if (testPhone && testPhone.phone === phone) {
+			return res.status(500).json({error: 'phone'});
+		}
 		try {
 			await user.save();
 		} catch (error) {
