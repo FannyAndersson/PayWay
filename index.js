@@ -16,35 +16,35 @@ const useCustomRoutes = require("./routes/index");
 
 // Connect to MongoDB via Mongoose
 mongoose
-	.connect(connectionstring, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-		useCreateIndex: true,
-	})
-	.then(
-		() => {
-			global.db = mongoose.connection;
-			console.log("db is up & running");
-		},
-		err => {
-			console.log(err);
-		}
-	);
+    .connect(connectionstring, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+    })
+    .then(
+        () => {
+            global.db = mongoose.connection;
+            console.log("db is up & running");
+        },
+        err => {
+            console.log(err);
+        }
+    );
 
 for (let conf of config.sass) {
-	new Sass(conf);
+    new Sass(conf);
 }
 
 // connect middleware
 app.use(express.json()); // body parser
 app.use(
-	session({
-		secret: salt, // a unique secret
-		resave: false,
-		saveUninitialized: true,
-		cookie: { secure: false }, // true on htttps server
-		store: new connectMongo({ mongooseConnection: mongoose.connection })
-	})
+    session({
+        secret: salt, // a unique secret
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: false }, // true on htttps server
+        store: new connectMongo({ mongooseConnection: mongoose.connection })
+    })
 );
 
 // custom routes
@@ -66,5 +66,5 @@ app.use(theRest(express, "/api", pathToModelFolder));
 
 app.use(express.static("public"));
 app.listen(port, () => {
-	console.log("Server listening on", port);
+    console.log("Server listening on", port);
 });
