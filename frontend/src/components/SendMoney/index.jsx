@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import MessageComponent from '../Message/MessageComponent';
 
 const SendMoney = (props) => {
@@ -75,6 +75,13 @@ const SendMoney = (props) => {
         }
 
     }
+    const [transactionStatusTimeOut, setTransactionStatusTimeOut] = useState(false);
+
+    useEffect(() =>{
+        setTimeout(() => {
+            setTransactionStatusTimeOut(setTransactionStatus);
+        }, 5000);
+    }, []);
 
     const preloader = (
         <div className="row">
