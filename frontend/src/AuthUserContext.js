@@ -5,7 +5,7 @@ export const UserContext = createContext();
 const UserContextProvider = (props) => {
 
     const [user, setUser] = useState('');
-    const [activation,setActivation] = useState(false);
+    const [activation, setActivation] = useState(false);
 
     const keepAuthUser = (user) => {
         setUser(user);

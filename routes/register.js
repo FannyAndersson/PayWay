@@ -45,7 +45,7 @@ function register(app) {
 		});
 
 		// const link = `https://paywayapp.se/api/register/${user._id}`;
-		const link = `http://localhost:3000/active-account/${user._id}`;
+		const link = `http://localhost:3000/activate-account/${user._id}`;
 
 		//send email for activation
 		sendEmail({
@@ -64,18 +64,20 @@ function register(app) {
 	app.get('/api/register/:id', async (req, res) => {
 		try {
 			const user = await User.findById(req.params.id);
+			if(user && user.activated) {
+				return res.status(500).json({error: "Your account is already activated. Link is invalid."});
+			}
 			user.activated = true;
 			await user.save();
 
 			//send email after activation
 
-			// sendEmail({
-			// 	to: user.email,
-			// 	html: `<body><p>Your account has been activated!</p></body>`,
-			// 	subject: "PayWay -Successfully activated NO REPLY"
-			// });
-			// res.send("Your account has been activated!");
-			res.status(200).json({user});
+			sendEmail({
+				to: user.email,
+				html: `<body><p>Your account has been activated!</p></body>`,
+				subject: "PayWay -Successfully activated NO REPLY"
+			});
+			return res.status(200).json({user});
 		} catch (error) {
 			res.status(500).json(error);
 		}

@@ -7,16 +7,16 @@ import { UserContext } from '../../AuthUserContext';
 const ActivatedUser = (props) => {
     const { onActivation } = useContext(UserContext);
     const [showMessage, setShowMessage] = useState(false);
-    const [showErrorMessage, setErrorShowMessage] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const [activatedUser, setActivatedUser] = useState({});
     const handleMessageUnmount = () => {
         setShowMessage(false);
     }
 
     const accountId= props.match.params.id;
-    onActivation(true);
     
     useEffect(() => {
+        onActivation(true);
 
         // read more about AbortController here https://medium.com/@selvaganesh93/how-to-clean-up-subscriptions-in-react-components-using-abortcontroller-72335f19b6f7
         const controller = new AbortController();
@@ -30,7 +30,10 @@ const ActivatedUser = (props) => {
                 onActivation(false);
             }
             else {
-                setErrorShowMessage(true);
+                if(result.error) {
+                    setErrorMessage(result.error);
+                    return;
+                }
             }
         }
         activateAccount();
@@ -42,9 +45,9 @@ const ActivatedUser = (props) => {
     }, []);
     return (
         <React.Fragment>
-            {showMessage ||showErrorMessage ? <MessageComponent 
+            {showMessage ||errorMessage ? <MessageComponent 
             success={showMessage ? true : false}
-            text={showMessage ? [`Dear ${activatedUser.name}! Your account is activated!`] : [`Account not found!`]} 
+            text={showMessage ? [`Dear ${activatedUser.name}! Your account is activated!`] : errorMessage ? [`${errorMessage}`] : [`Account not found!`]} 
             unmountMe={handleMessageUnmount}
             redirectTo={'/login'}
         />

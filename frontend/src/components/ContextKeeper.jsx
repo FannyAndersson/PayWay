@@ -17,7 +17,7 @@ const ContextKeeper = props => {
     let match = useRouteMatch("/activate-account/:id");
 
     if(match) {
-        onActivation();   
+        onActivation();
     }
 
     
