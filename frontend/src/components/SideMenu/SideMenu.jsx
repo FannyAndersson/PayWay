@@ -23,6 +23,7 @@ const SideMenu = props => {
 				<li className="sideMenu-user-info">
 					<dl>
 						<dd>Logged in as {user.name}</dd>
+						<dd>Current balance: {user.balance}</dd>
 						<dd>Phone: {user.phone}</dd>
 					</dl>
 				</li>
