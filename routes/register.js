@@ -44,14 +44,15 @@ function register(app) {
 			email: user.email
 		});
 
-		const link = `http://localhost:3000/api/register/${user._id}`;
+		// const link = `https://paywayapp.se/api/register/${user._id}`;
+		const link = `http://localhost:3000/active-account/${user._id}`;
 
 		//send email for activation
-		// sendEmail({
-		// 	to: user.email,
-		// 	html: `<body><p>Click this link to activate your PayWay account - ${link}</p></body>`,
-		// 	subject: "PayWay -Email activation NO REPLY"
-		// });
+		sendEmail({
+			to: user.email,
+			html: `<body><p>Click this link to activate your PayWay account - <a href="${link}" target=_blank title="activate account">Activate account on paywayapp.se</a></p></body>`,
+			subject: "PayWay -Email activation NO REPLY"
+		});
 
 		res.status(200).end();
 	});
@@ -68,12 +69,13 @@ function register(app) {
 
 			//send email after activation
 
-			sendEmail({
-				to: user.email,
-				html: `<body><p>Your account has been activated!</p></body>`,
-				subject: "PayWay -Successfully activated NO REPLY"
-			});
-			res.send("Your account has been activated!");
+			// sendEmail({
+			// 	to: user.email,
+			// 	html: `<body><p>Your account has been activated!</p></body>`,
+			// 	subject: "PayWay -Successfully activated NO REPLY"
+			// });
+			// res.send("Your account has been activated!");
+			res.status(200).json({user});
 		} catch (error) {
 			res.status(500).json(error);
 		}

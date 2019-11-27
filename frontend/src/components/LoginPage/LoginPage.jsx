@@ -12,8 +12,14 @@ const LoginPage = () => {
     // if user exists in context, app navigates to mainPage
     const { user, keepAuthUser } = useContext(UserContext);
     const [showMMessage, setShowMessage] = useState(false);
+    const [errorText, setErrorText] = useState('');
     const handleMessageUnmount = () => {
         setShowMessage(false);
+    }
+
+    const showErrorMessage = (text) => {
+        setShowMessage(true);
+        setErrorText(text);
     }
 
     const onLogin = async () => {
@@ -30,12 +36,20 @@ const LoginPage = () => {
                 }
             });
 
-            const result = { user: await response.json(), status: response.status };
+            const result = { response: await response.json(), status: response.status };
             if (result.status === 200) {
-                keepAuthUser(result.user);
+                keepAuthUser(result.response);
             }
             else {
-                setShowMessage(true);
+                if(result.response.errorCode === "wrongPwd") {
+                    showErrorMessage(result.response.error);
+                }
+                if(result.response.errorCode === "inactivated") {
+                    showErrorMessage(result.response.error);
+                }
+                if(result.response.errorCode === "notFound") {
+                    showErrorMessage(result.response.error);
+                }
             }
         } catch (error) {
             console.error('Error:', error);
@@ -66,7 +80,7 @@ const LoginPage = () => {
             </Row>
             {showMMessage ? <MessageComponent 
                                 success={false}
-                                text={[`Email or password is wrong!`, `Try another  login credentials.`]} 
+                                text={[errorText]} 
                                 unmountMe={handleMessageUnmount} 
                             />
                             : null}

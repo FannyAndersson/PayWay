@@ -15,18 +15,20 @@ function useLogin(app) {
         if (user) {
 
             if (user.password === password) {
-
-                req.session.user = user;
-                return res.status(200).json(user);
-
+                if(user.activated) {
+                    req.session.user = user;
+                    return res.status(200).json(user);
+                }
+                else {
+                    return res.status(400).json({error: "Your account is not activated. Check your mailbox.", errorCode: "inactivated"})
+                }
             }
             else {
-                return res.status(400).json({ error: "Password doesn't match" });
+                return res.status(400).json({ error: "Password doesn't match", errorCode: "wrongPwd" });
             }
         }
-
         else {
-            return res.status(404).json({ error: "User not found" });
+            return res.status(500).json({ error: "User not found", errorCode: "notFound" });
         }
     });
 

@@ -13,8 +13,8 @@ const Header = () => {
     return (
         <React.Fragment>
             <Row>
-                <Col node='header' l={3} offset='l4' className='header'>
-                    <SideMenu user={user} />
+                <Col node='header' l={12} className='header' style={!user ? {justifyContent: "flex-end"} : null}>
+                    {user ? <SideMenu user={user} /> : null}
                     <Link to="/" title="PayWay | Navigate to main-page" className="logo">PayWay</Link>
                 </Col>
             </Row>
