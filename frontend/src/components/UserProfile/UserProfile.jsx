@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { Link } from 'react-router-dom';
 import { UserContext } from "../../AuthUserContext";
 import { Row, Col, TextInput, Button } from "react-materialize";
 import MessageComponent from '../Message/MessageComponent';
@@ -166,6 +167,7 @@ const UserProfile = () => {
 						s={12}
 						l={12}
 					/>
+					<Link to="/profile/reset-password" title="Reset password" s={12} l={12} className="forgot-your-pwd">Reset password</Link>
 					<Col s={12} l={12} className="btn-group">
 						<Button
 							type="button"

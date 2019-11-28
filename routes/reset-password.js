@@ -59,6 +59,22 @@ function resetPassword(app) {
 			res.status(500).json(error);
 		}
 	});
+
+	app.post('/api/change-password/:id', async(req, res) => {
+		const { password } = req.body;
+
+		try {
+			const user = await User.findById(req.params.id);
+			user.password = encryptPassword(password);
+			await user.save();
+
+			sendMailWithChangedPassword(user.email, password);
+			return res.status(200).json();
+			
+		} catch (error) {
+			return res.status(500).json(error);
+		}
+	})
 }
 
 function generateUniquePassword() {
@@ -69,7 +85,15 @@ function sendMailWithNewPassword(email, password) {
 	sendEmail({
 		to: email,
 		subject: "PayWay - New password",
-		html: `<body><p>Hi! Your new password is ${password}. You can now use your new password to log into PayWay. We recommend that you change this password to something more fun and perhaps a bit naughty (but only if you feel like it).`
+		html: `<body><p>Hi! Your new password is ${password}. You can now use your new password to log into PayWay. We recommend that you change this password to something more fun and perhaps a bit naughty (but only if you feel like it).</p></body>`
+	});
+}
+
+function sendMailWithChangedPassword(email, password) {
+	sendEmail({
+		to: email,
+		subject: "PayWay - Your password has been changed",
+		html: `<body><p>Hi! You've just changed your password. Your password is ${password}. You can now use your new password to log into PayWay.</p></body>`
 	});
 }
 
