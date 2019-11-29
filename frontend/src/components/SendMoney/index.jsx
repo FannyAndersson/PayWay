@@ -1,17 +1,18 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import MessageComponent from '../Message/MessageComponent';
 
-const SendMoney = (props) => {
+const SendMoney = (props) => { 
+    const [acceptSending, setAcceptSending] = useState(false);
+    const [sendMoney, setSendMoney] = useState(false);
+    const [recipientPhone, setRecipientPhone] = useState('');
+    const [transactionAmount, setTransactionAmount] = useState(0);
+    const [transactionMessage, setTransactionMessage] = useState('');
 
-    const [ recipientPhone, setRecipientPhone ] = useState('');
-    const [ transactionAmount, setTransactionAmount ] = useState(0);
-    const [ transactionMessage, setTransactionMessage ] = useState('');
+    const [showInvalidRecipientNotice, setShowInvalidRecipientNotice] = useState(false);
+    const [showGenericErrorMessage, setShowGenericErrorMessage] = useState(false);
 
-    const [ showInvalidRecipientNotice, setShowInvalidRecipientNotice ] = useState(false);
-    const [ showGenericErrorMessage, setShowGenericErrorMessage ] = useState(false);
+    const [transactionStatus, setTransactionStatus] = useState({ loading: false, loaded: false, error: false, status: null });
 
-    const [ transactionStatus, setTransactionStatus ] = useState({ loading: false, loaded: false, error: false, status: null });
-    
     //showMessage state and handleMessageUnmount are added to show and dismiss message
     const [showMMessage, setShowMessage] = useState(false);
     const handleMessageUnmount = () => {
@@ -28,6 +29,13 @@ const SendMoney = (props) => {
         // prevent page reload on form submission
         e.preventDefault();
 
+        if(acceptSending){
+            sendMoney();
+        }
+        else {
+            console.log('wait for a second')
+        }
+
         // clear error status
         setShowGenericErrorMessage(false);
 
@@ -41,15 +49,29 @@ const SendMoney = (props) => {
                 amount: transactionAmount,
                 message: transactionMessage,
             };
-
             // send a request to 'send money' endpoint
-            const response = await fetch('/api/send-money', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(body),
-            });
+           
+                
+                // 
+                const response = setTimeout(() => {
+                setSendMoney(true)
+                }, 5000);
+                if (sendMoney){
+            
+            
+                await fetch('/api/send-money', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(body),
+                });
+
+            }
+            else {
+                (setSendMoney(console.log('gatcha')))
+            }
+
 
             setTransactionStatus({ loading: false, loaded: true, error: false, status: response.status });
 
@@ -65,6 +87,7 @@ const SendMoney = (props) => {
             } else {
 
                 setShowGenericErrorMessage(true);
+                setAcceptSending(false);
 
             }
 
@@ -75,13 +98,13 @@ const SendMoney = (props) => {
         }
 
     }
-    const [transactionStatusTimeOut, setTransactionStatusTimeOut] = useState(false);
+    // const [transactionStatusTimeOut, setTransactionStatusTimeOut] = useState(false);
 
-    useEffect(() =>{
-        setTimeout(() => {
-            setTransactionStatusTimeOut(setTransactionStatus);
-        }, 5000);
-    }, []);
+    // useEffect(() =>{
+    //     setTimeout(() => {
+    //         setTransactionStatusTimeOut(setTransactionStatus);
+    //     }, 5000);
+    // }, []);
 
     const preloader = (
         <div className="row">
@@ -107,7 +130,7 @@ const SendMoney = (props) => {
 
         return (
             <div>
-                Error in send-money: { error.toString() }
+                Error in send-money: {error.toString()}
             </div>
         );
     }
@@ -118,7 +141,7 @@ const SendMoney = (props) => {
         placeholder: 'Enter phone number...',
         id: 'recipient-phone-number',
         type: 'tel',
-        className: `validate${ showInvalidRecipientNotice ? ' invalid' : '' }`,
+        className: `validate${showInvalidRecipientNotice ? ' invalid' : ''}`,
         value: history.location.state ? history.location.state.recipientPhone : recipientPhone,
         onChange: e => {
             setRecipientPhone(e.target.value);
@@ -149,23 +172,23 @@ const SendMoney = (props) => {
     }
 
     return (
-        
+
         <div className="row">
-            <form className="col" onSubmit={ handleSubmit }>
+            <form className="col" onSubmit={handleSubmit}>
                 <div className="row">
                     <div className="input-field col s12">
-                        <input { ...recipientInputProps } />
+                        <input {...recipientInputProps} />
                         <label htmlFor="recipient-phone-number" className="active">Recipient</label>
-                        { showInvalidRecipientNotice ? 'There is no recipient with this phone number' : '' }
+                        {showInvalidRecipientNotice ? 'There is no recipient with this phone number' : ''}
                     </div>
                     <div className="input-field col s12">
-                        <input { ...amountInputProps } />
+                        <input {...amountInputProps} />
                         <label htmlFor="transaction-amount" className="active">Amount</label>
                     </div>
                 </div>
                 <div className="row">
                     <div className="input-field col s12">
-                        <textarea { ...messageInputProps } />
+                        <textarea {...messageInputProps} />
                         <label htlmfor="transaction-message">Message</label>
                     </div>
                 </div>
@@ -173,17 +196,17 @@ const SendMoney = (props) => {
                 <div className="row">
                     <div className="col s6">
                         <button
-                            disabled={ loading }
+                            disabled={loading}
                             className="waves-effect waves-light raised-btn btn w100"
                             type="button"
-                            onClick={ () => history.push('./') }
+                            onClick={() => history.push('./')}
                         >
                             Cancel
                         </button>
                     </div>
 
                     <div className="col s6">
-                        <button disabled={ loading } className="btn w100 waves-effect waves-light" type="submit" name="action">Send
+                        <button disabled={loading} className="btn w100 waves-effect waves-light" type="submit" name="action">Send
                             <i className="material-icons right">send</i>
                         </button>
                     </div>
@@ -192,18 +215,18 @@ const SendMoney = (props) => {
 
             <div className="row">
                 <div className="col s12 l3 offset-l4">
-                    { loading ? preloader : null }
+                    {loading ? preloader : null}
 
-                    { showGenericErrorMessage ? genericErrorMessage : null }
+                    {showGenericErrorMessage ? genericErrorMessage : null}
                 </div>
             </div>
-            {showMMessage ? <MessageComponent 
-                                success
-                                redirectTo="/" 
-                                text={[`Congrats! You've just sent ${transactionAmount} coins`, `to recipient with phone number ${recipientPhone}`]} 
-                                unmountMe={handleMessageUnmount} 
-                            />
-                            : null}
+            {showMMessage ? <MessageComponent
+                success
+                redirectTo="/"
+                text={[`Congrats! You've just sent ${transactionAmount} coins`, `to recipient with phone number ${recipientPhone}`]}
+                unmountMe={handleMessageUnmount}
+            />
+                : null}
         </div>
     );
 }
