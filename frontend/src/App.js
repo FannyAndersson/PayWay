@@ -76,7 +76,7 @@ function App() {
 								</Route>
 								<PrivateRoute exact path="/send-money" component={SendMoney} />
 								<Route exact path="/activate-account/:id" component={ActivatedUser} />
-								<Route exact path="/profile/reset-password" component={ChangePasswordComponent} />
+								<Route exact path="/profile/change-password" component={ChangePasswordComponent} />
 							</Switch>
 						</section>
 					</React.Fragment>

@@ -167,7 +167,10 @@ const UserProfile = () => {
 						s={12}
 						l={12}
 					/>
-					<Link to="/profile/reset-password" title="Reset password" s={12} l={12} className="forgot-your-pwd">Reset password</Link>
+					<Button flat style={{marginBottom: "20px"}}>
+					<Link to="/profile/change-password" title="Change password" s={12} l={12} className="forgot-your-pwd">Change password</Link>
+					</Button>
+
 					<Col s={12} l={12} className="btn-group">
 						<Button
 							type="button"
