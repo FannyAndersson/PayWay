@@ -137,7 +137,7 @@ const ChangePasswordComponent = () => {
 	return (
 		<React.Fragment>
 			<Col node="form" onSubmit={handleSubmit}>
-				<h1>Reset password</h1>
+				<h1>Change password</h1>
 				<Col s={12} l={12} className="input-field inline">
 					<input
 						className="form-control"
