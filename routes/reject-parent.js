@@ -1,8 +1,9 @@
 const User = require('../mongoose-models/user.model');
 const sendRejectMailToParent = require('../send-email.js');
 
+
 function rejectParent(app) {
-    app.get('/api/child/reject-parent/:id', async (req, res) => {
+    app.get('/api/child/reject-parent/:id', async(req, res) => {
 
         let params = req.params.id;
         let parentID = params.slice(0, 24);
@@ -31,6 +32,7 @@ function rejectParent(app) {
             if (!parent.children.pending.includes(child._id)) {
                 return res.send(`You've aldready reject ${parent.name} as your parent.`);
             }
+
 
             //Delete child from pending array
 

@@ -2,7 +2,7 @@ const User = require('../mongoose-models/user.model');
 const sendMail = require('../send-email.js');
 
 function confirmParent(app) {
-    app.get('/api/child/confirmation/:id', async (req, res) => {
+    app.get('/api/child/confirmation/:id', async(req, res) => {
 
         let params = req.params.id;
         let parentID = params.slice(0, 24);
@@ -47,7 +47,7 @@ function confirmParent(app) {
             parent.children.confirmed.push(child);
             parent.save();
 
-            const linkToTransactions = `http://localhost:3000/api/child-transactions/${child._id}`;
+            const linkToTransactions = `http://paywayapp.se/api/child-transactions/${child._id}`;
             //send mail to parent about confirmation
             sendMail({
                 to: parent.email,

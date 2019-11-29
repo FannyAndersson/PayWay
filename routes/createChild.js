@@ -37,9 +37,9 @@ function createChild(app, db) {
 
         parent.save();
 
-        const confirmLink = `http://localhost:3000/api/child/confirmation/${parent._id}${child._id}`;
+        const confirmLink = `http://paywayapp.se/api/child/confirmation/${parent._id}${child._id}`;
 
-        const rejectLink = `http://localhost:3000/api/child/reject-parent/${parent._id}${child._id}`;
+        const rejectLink = `http://paywayapp.se/api/child/reject-parent/${parent._id}${child._id}`;
 
         sendMailToChild({
 
