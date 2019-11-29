@@ -16,6 +16,7 @@ import ChildrenTransactions from "./components/Children/ChildrenTransaction";
 import CreateFavouriteComponent from './components/addFavourite/CreateFavouriteComponent';
 import FavouritesList from './components/FavouritesList/FavouritesList';
 import AddChild from './components/AddChildToParent/AddChildForm';
+import ResetPasswordComponent from './components/ResetPassword/ResetPasswordComponent';
 
 function App() {
 	return (
@@ -73,6 +74,7 @@ function App() {
 									<FavouritesList />
 								</Route>
 								<PrivateRoute exact path="/send-money" component={SendMoney} />
+								<Route exact path="/reset-password/:id" component={ResetPasswordComponent} />
 							</Switch>
 						</section>
 					</React.Fragment>

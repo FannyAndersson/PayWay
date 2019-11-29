@@ -18,12 +18,12 @@ function resetPassword(app) {
 		}
 
 		// generate the users reset link (to the endpoint we create below)
-		const link = `http://localhost:3000/api/reset-password/${user._id}`;
+		const link = `http://localhost:3000/reset-password/${user._id}`;
 
 		// send email to the user with the password reset link
 		sendEmail({
 			to: user.email,
-			html: `<body><p>Click this link to get a new password - ${link}</p></body>`,
+			html: `<body><p>Click this link to get a new password - <a href="${link}" title="Click here to reset password" target="_blank">reset password now</a></p></body>`,
 			subject: "PayWay - Reset Password NO REPLY"
 		});
 
@@ -43,26 +43,34 @@ function resetPassword(app) {
 			// get the user
 			const user = await User.findById(req.params.id);
 
-			// change the password (encrypt before saving)
-			user.password = encryptPassword(password);
-			await user.save();
+			if(user) {
+				// change the password (encrypt before saving)
+				user.password = encryptPassword(password);
+				await user.save();
 
-			// notify the user with mail (send them the unencrypted pwd)
-			sendMailWithNewPassword(user.email, password);
+				// notify the user with mail (send them the unencrypted pwd)
+				sendMailWithNewPassword(user.email, password);
 
-			res.send(
-				"We have sent an email to you containing your new password. You can now use this password to login."
-			);
+				res.status(200).json({user});
+			}
+			
 		} catch (error) {
 			// respond with status 500 (internal server error) to let frontend know there was an error when processing
 			// the request. Also send error obj as response.
-			res.status(500).json(error);
+			res.status(500).json({error});
 		}
 	});
 }
 
 function generateUniquePassword() {
-	return String(Math.random());
+	let symbols = '1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+    symbols = symbols.split("");
+    let randomPassword = '';
+    for (let i = 0; i <= 5; i++) {
+      let letter = symbols[Math.floor(Math.random() * symbols.length)];
+      randomPassword = randomPassword + letter;
+    }
+	return randomPassword;
 }
 
 function sendMailWithNewPassword(email, password) {
