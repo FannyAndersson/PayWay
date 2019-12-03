@@ -14,6 +14,7 @@ const LoginPage = () => {
     const [showMessage, setShowMessage] = useState(false);
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     const [errorText, setErrorText] = useState('');
+
     const handleMessageUnmount = () => {
         setShowMessage(false);
     }
@@ -58,7 +59,16 @@ const LoginPage = () => {
         }
     }
 
+    const { inputs, handleInputChange, handleSubmit } = useLoginForm(onLogin);
+
     const onResetPassword = async () => {
+
+        if (!inputs.email) {
+
+            return onShowErrorMessage('Enter your email adress!');
+
+        }
+
         try {
             const response = await fetch('/api/reset-password', {
                 method: 'POST',
@@ -70,12 +80,13 @@ const LoginPage = () => {
 
             if (response.ok) {
                 setShowMessage(true);
+            } else {
+                onShowErrorMessage(`That didn't work! Are you sure you enterted the correct email?`);
             }
         } catch (error) {
             console.error('Error:', error);
         }
     }
-    const { inputs, handleInputChange, handleSubmit } = useLoginForm(onLogin);
     return (
 
         <React.Fragment>
