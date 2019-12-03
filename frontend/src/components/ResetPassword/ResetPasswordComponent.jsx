@@ -5,7 +5,7 @@ import { UserContext } from '../../AuthUserContext';
 
 
 const ResetPasswordComponent = (props) => {
-    const { onResetPassword } = useContext(UserContext);
+    const { onLinkFromEmail } = useContext(UserContext);
     const [showMessage, setShowMessage] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [updatedUser, setUpdatedUser] = useState({});
@@ -16,7 +16,7 @@ const ResetPasswordComponent = (props) => {
     const accountId= props.match.params.id;
 
     useEffect(() => {
-        onResetPassword(true);
+        onLinkFromEmail(true);
 
         // read more about AbortController here https://medium.com/@selvaganesh93/how-to-clean-up-subscriptions-in-react-components-using-abortcontroller-72335f19b6f7
         const controller = new AbortController();
@@ -27,7 +27,7 @@ const ResetPasswordComponent = (props) => {
             if(response.ok) {
                 setUpdatedUser(result.user);
                 setShowMessage(true);
-                onResetPassword(false);
+                onLinkFromEmail(false);
             }
             else {
                 if(result.error) {

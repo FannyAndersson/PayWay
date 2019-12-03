@@ -5,7 +5,7 @@ import { UserContext } from '../../AuthUserContext';
 
 
 const ActivatedUser = (props) => {
-    const { onActivation } = useContext(UserContext);
+    const { onLinkFromEmail } = useContext(UserContext);
     const [showMessage, setShowMessage] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [activatedUser, setActivatedUser] = useState({});
@@ -16,7 +16,7 @@ const ActivatedUser = (props) => {
     const accountId= props.match.params.id;
     
     useEffect(() => {
-        onActivation(true);
+        onLinkFromEmail(true);
 
         // read more about AbortController here https://medium.com/@selvaganesh93/how-to-clean-up-subscriptions-in-react-components-using-abortcontroller-72335f19b6f7
         const controller = new AbortController();
@@ -29,7 +29,7 @@ const ActivatedUser = (props) => {
                 if(response.ok) {
                     setActivatedUser(result.user);
                     setShowMessage(true);
-                    onActivation(false);
+                    onLinkFromEmail(false);
                 }
                 else {
                     if(result.error) {
