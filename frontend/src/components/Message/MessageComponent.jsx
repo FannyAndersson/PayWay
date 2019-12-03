@@ -11,7 +11,7 @@ const MessageComponent = (props) => {
     }
     return (
         <div className="message-wrap">
-            <Col l={4} offset="l4" className="message-body">
+            <Col className="message-body">
                 {props.text.map(line => {
                     return <p key={line}>{line}</p>
                 })}
