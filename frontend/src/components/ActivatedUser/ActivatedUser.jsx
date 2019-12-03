@@ -23,7 +23,6 @@ const ActivatedUser = (props) => {
         const signal = controller.signal;
         const activateAccount = async () => {
             const response = await fetch('/api/register/' + accountId, {signal: signal}).catch(err => console.error(err));
-            console.log(response);
             if(response) {
                 const result = await response.json();
                 if(response.ok) {

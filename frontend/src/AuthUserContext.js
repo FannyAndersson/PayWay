@@ -7,6 +7,7 @@ export const UserContext = createContext();
 
 const handleCashFlow = (cash) => {
 
+    // this is where we want to send a push notification
     console.log('You just got CA$H!', cash);
 
 };
@@ -19,13 +20,9 @@ const UserContextProvider = (props) => {
 
     const keepAuthUser = (newUser) => {
 
-        console.log('updating user', newUser, user)
-
         setUser(newUser);
 
         if (!user || (newUser.id !== user.id)) {
-
-            console.log('adding listener');
 
             // listen for socket events containing newUsers id
             socket.on(`transaction-${newUser._id}`, handleCashFlow);
