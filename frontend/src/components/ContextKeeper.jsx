@@ -63,7 +63,7 @@ const ContextKeeper = props => {
 
 	return (
 		<div>
-			{(!resetPwd && !user) || (!activation &&  !user) ? <Redirect to="/login" /> : null}
+			{!user && !activation && !resetPwd ? <Redirect to="/login" /> : null}
 			<Row>
                 <Col s={12} l={3} offset='l4'>
 					{props.children}

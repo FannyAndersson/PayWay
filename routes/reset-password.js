@@ -18,7 +18,7 @@ function resetPassword(app) {
 		}
 
 		// generate the users reset link (to the endpoint we create below)
-		const link = `http://localhost:3000/reset-password/${user._id}`;
+		const link = `https://paywayapp.se/reset-password/${user._id}`;
 
 		// send email to the user with the password reset link
 		sendEmail({

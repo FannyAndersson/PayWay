@@ -23,18 +23,23 @@ const ActivatedUser = (props) => {
         const signal = controller.signal;
         const activateAccount = async () => {
             const response = await fetch('/api/register/' + accountId, {signal: signal}).catch(err => console.error(err));
-            const result = await response.json();
-            if(response.ok) {
-                setActivatedUser(result.user);
-                setShowMessage(true);
-                onActivation(false);
-            }
-            else {
-                if(result.error) {
-                    setErrorMessage(result.error);
-                    return;
+            console.log(response);
+            if(response) {
+                const result = await response.json();
+                if(response.ok) {
+                    setActivatedUser(result.user);
+                    setShowMessage(true);
+                    onActivation(false);
+                }
+                else {
+                    if(result.error) {
+                        setErrorMessage(result.error);
+                        return;
+                    }
                 }
             }
+           
+            
         }
         activateAccount();
 
