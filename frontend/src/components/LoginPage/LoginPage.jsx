@@ -13,8 +13,15 @@ const LoginPage = () => {
     const { user, keepAuthUser } = useContext(UserContext);
     const [showMessage, setShowMessage] = useState(false);
     const [showErrorMessage, setShowErrorMessage] = useState(false);
+    const [errorText, setErrorText] = useState('');
     const handleMessageUnmount = () => {
         setShowMessage(false);
+    }
+
+    const onShowErrorMessage = (text) => {
+        setShowMessage(true);
+        setShowErrorMessage(true);
+        setErrorText(text);
     }
 
     const onLogin = async () => {
@@ -31,13 +38,20 @@ const LoginPage = () => {
                 }
             });
 
-            const result = { user: await response.json(), status: response.status };
+            const result = { response: await response.json(), status: response.status };
             if (result.status === 200) {
-                keepAuthUser(result.user);
+                keepAuthUser(result.response);
             }
             else {
-                setShowMessage(true);
-                setShowErrorMessage(true);
+                if(result.response.errorCode === "wrongPwd") {
+                    onShowErrorMessage(result.response.error);
+                }
+                if(result.response.errorCode === "inactivated") {
+                    onShowErrorMessage(result.response.error);
+                }
+                if(result.response.errorCode === "notFound") {
+                    onShowErrorMessage(result.response.error);
+                }
             }
         } catch (error) {
             console.error('Error:', error);
@@ -89,7 +103,7 @@ const LoginPage = () => {
             </Row>
             {showMessage ? <MessageComponent 
                                 success={!showErrorMessage ? true : false}
-                                text={!showErrorMessage ? [`New password has been send to ${inputs.email}`, `Check your mailbox.`] : [`Email or password is wrong!`, `Try another  login credentials.`]} 
+                                text={!showErrorMessage ? [`New password has been send to ${inputs.email}`, `Check your mailbox.`] : [errorText]} 
                                 unmountMe={handleMessageUnmount} 
                             />
                             : null}

@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
 
 function sendEmail(options) {
 	const defaultMailOptions = {
-		from: `"PayWay Notification NOREPLY" demichka@gmail.com`,
+		from: `"PayWay Notification NOREPLY" miuchka@gmail.com`,
 		subject: "Email subject",
 		html:
 			"<body><h3>Hello Zhenya!</h3><p>Hallå Zhenya! Hur är det med dig?</p></body>",

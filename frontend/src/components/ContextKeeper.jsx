@@ -8,18 +8,25 @@ import { Row, Col } from 'react-materialize';
 //and saves it as user to UserContext
 //All components are located inside of ContextKeeper and consume to UserContext
 const ContextKeeper = props => {
-    const { user, keepAuthUser, resetPwd, onResetPassword } = useContext(UserContext);
+    const { user, keepAuthUser, resetPwd, onResetPassword, activation, onActivation } = useContext(UserContext);
 
     const [authUser, setAuthUser] = useState(false);
 
     const [isLoading, setIsLoading] = useState(true);
 
-    let match = useRouteMatch("/reset-password/:id");
+    let matchResetPassword = useRouteMatch("/reset-password/:id");
 
-    if(match) {
+    if(matchResetPassword) {
         onResetPassword();
     }
 
+    let matchActivateAccount = useRouteMatch("/activate-account/:id");
+
+    if(matchActivateAccount) {
+        onActivation();
+    }
+
+    
     const checkLogin = async () => {
 
         const response = await fetch('/api/login').catch(err => console.error(err, 'Error'));
@@ -35,7 +42,7 @@ const ContextKeeper = props => {
     if (!authUser) {
         checkLogin();
 	}
-	
+    
 
     if (isLoading) {
 
@@ -56,7 +63,7 @@ const ContextKeeper = props => {
 
 	return (
 		<div>
-			{!resetPwd && !user ? <Redirect to="/login" /> : null}
+			{(!resetPwd && !user) || (!activation &&  !user) ? <Redirect to="/login" /> : null}
 			<Row>
                 <Col s={12} l={3} offset='l4'>
 					{props.children}

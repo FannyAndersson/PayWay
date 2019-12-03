@@ -110,9 +110,9 @@ const RegisterForm = () => {
 
 	return (
 		<>
-			<div className="registration-page container center-align">
+			
 				<Row>
-					<Col l={4} offset="l4" className="content">
+					<Col className="content">
 						<h3>Sign up!</h3>
 						<form onSubmit={handleSubmit}>
 							<Col s={12} l={12} className="input-field inline">
@@ -279,7 +279,6 @@ const RegisterForm = () => {
 						</form>
 					</Col>
 				</Row>
-			</div>
 			{showMessage ? <MessageComponent
 				success={otherError ? false : true}
 				redirectTo={otherError ? null : "/login"}
