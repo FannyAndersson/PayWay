@@ -6,7 +6,7 @@
   "scripts": {
     "test": "node test-runner",
     "frontend": "cd frontend && npm start",
-    "backend-dev": "nodemon --ignore 'frontend/' index",
+    "backend-dev": "nodemon --ignore frontend/ index",
     "backend": "node index",
     "start": "concurrently \"npm:backend-dev\" \"npm:frontend\"",
     "start-server": "concurrently \"npm:backend\" \"npm:frontend\"",
@@ -28,6 +28,7 @@
     "open": "^7.0.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
+    "socket.io": "^2.3.0",
     "the.rest": "^1.0.29"
   },
   "devDependencies": {

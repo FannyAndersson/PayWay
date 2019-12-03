@@ -8,6 +8,7 @@ const session = require("express-session");
 const connectMongo = require("connect-mongo")(session);
 const app = express();
 const salt = 'lussekatter are the best'; // unique secret
+const http = require('http');
 
 const theRest = require("the.rest");
 const port = 3001;
@@ -47,8 +48,17 @@ app.use(
     })
 );
 
+
+app.use(express.static("public"));
+
+const server = http.createServer(app);
+
+const io = require('socket.io')(server);
+
+io.on('connection', () => { console.log('say helloo to a bright new day!')} );
+
 // custom routes
-useCustomRoutes(app, mongoose.connection);
+useCustomRoutes(app, io);
 
 // connect our own acl middleware
 const acl = require("./acl");
@@ -64,7 +74,6 @@ app.use(acl(aclRules));
 const pathToModelFolder = path.join(__dirname, "mongoose-models");
 app.use(theRest(express, "/api", pathToModelFolder));
 
-app.use(express.static("public"));
-app.listen(port, () => {
+server.listen(port, () => {
     console.log("Server listening on", port);
 });

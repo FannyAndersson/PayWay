@@ -47,10 +47,10 @@ routesList.push(checkOldPassword);
 
 
 
-function useCustomRoutes(app, db) {
+function useCustomRoutes(app, socket) {
   // tell express server to use routes
   routesList.forEach(useRoute => {
-    useRoute(app, db);
+    useRoute(app, socket);
   });
 }
 
