@@ -9,6 +9,7 @@ const ChangePasswordComponent = () => {
 	const [showMessage, setShowMessage] = useState(false);
 	const [showErrorMessage, setshowErrorMessage] = useState(false);
 	const [notMatch, setNotMatch] = useState(false);
+	const [cleanedMatchError, setCleanedMatchError] = useState(false);
 	const [inputs, setInputs] = useState("");
 	const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState(false);
@@ -35,16 +36,21 @@ const ChangePasswordComponent = () => {
 			});
 
 			const result = await response.json();
+
 			if (!response.ok && result.errorCode === "notMatch") {
+				setCleanedMatchError(false);
 				return setNotMatch(true);
 			}
+			return setNotMatch(false);
+
+
 		} catch (error) {
 			console.error("error: ", error);
 		}
 	};
 
 	const cleanError = () => {
-		setNotMatch(false);
+		setCleanedMatchError(true);
 	};
 
 	const handleOnKeyUp = e => {
@@ -80,14 +86,17 @@ const ChangePasswordComponent = () => {
 	function validate(inputs) {
 		let errors = {};
 		if (!inputs.password) {
-			errors.password = "Password is required";
+			errors.password = "Password is required.";
 		} else if (inputs.password.length < 5) {
-			errors.password = "Password must be 5 characters at least";
+			errors.password = "Password must be 5 characters at least.";
+		}
+		if(inputs.password === inputs.oldPassword) {
+			errors.password = "You entered your old password. Try another one."
 		}
 		if (!inputs.confirmPassword) {
 			errors.confirmPassword = "Type in the password again";
 		} else if (inputs.confirmPassword !== inputs.password) {
-			errors.confirmPassword = "Password does not match";
+			errors.confirmPassword = "Password does not match.";
 		}
 		setErrors(errors);
 
@@ -98,7 +107,7 @@ const ChangePasswordComponent = () => {
 	}
 
 	const onResetPassword = async () => {
-		if (validate(inputs)) {
+		if (validate(inputs)  && !notMatch) {
 			try {
 				const response = await fetch(
 					"/api/change-password/" + user._id,
@@ -122,6 +131,9 @@ const ChangePasswordComponent = () => {
 			} catch (error) {
 				console.error({ error: error });
 			}
+		}
+		else if(notMatch) {
+			setshowErrorMessage(true);
 		}
 	};
 
@@ -159,7 +171,7 @@ const ChangePasswordComponent = () => {
 					</label>
 					<span
 						className={
-							"helper-text error-helper " + (notMatch ? "on" : "")
+							"helper-text error-helper " + (notMatch && !cleanedMatchError ? "on" : "")
 						}
 					>
 						Old password doesn't match
@@ -235,7 +247,7 @@ const ChangePasswordComponent = () => {
 						</Link>
 					</Button>
 					<Button
-						disabled={!touched ? true : false}
+						disabled={notMatch || !touched ? true : false}
 						type="submit"
 						waves="light"
 						style={{ width: "49%" }}

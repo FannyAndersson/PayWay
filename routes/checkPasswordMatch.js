@@ -8,7 +8,7 @@ function checkPasswordMatch(app) {
 		let user = await User.findOne({ email: email });
 		if (user) {
 			if (user.password === password) {
-				return res.status(200);
+				return res.status(200).json({success: true});
             }
             else {
                 return res.status(500).json({errorCode: 'notMatch'});
