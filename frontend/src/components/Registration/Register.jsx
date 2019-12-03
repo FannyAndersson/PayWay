@@ -77,8 +77,14 @@ const RegisterForm = () => {
 		}
 		if (!inputs.phone) {
 			errors.phone = "Enter a phone number";
-		} else if (!/[0-9]/.test(inputs.phone)) {
+		} else if (!/^[0-9]/.test(inputs.phone)) {
 			errors.phone = "Enter a valid phone number";
+		}
+		if (inputs.phone.length < 5) {
+			errors.phone = "Your phone number must be more than 5 digits";
+		}
+		if (inputs.phone.length > 12) {
+			errors.phone = "Your phone number can't be more than 12 digits";
 		}
 		if (!inputs.password) {
 			errors.password = "Password is required";

@@ -16,6 +16,7 @@ import ChildrenTransactions from "./components/Children/ChildrenTransaction";
 import CreateFavouriteComponent from './components/addFavourite/CreateFavouriteComponent';
 import FavouritesList from './components/FavouritesList/FavouritesList';
 import AddChild from './components/AddChildToParent/AddChildForm';
+import ResetPasswordComponent from './components/ResetPassword/ResetPasswordComponent';
 import ActivatedUser from './components/ActivatedUser/ActivatedUser';
 import ChangePasswordComponent from './components/ResetPassword/ChangePasswordComponent';
 
@@ -75,6 +76,7 @@ function App() {
 									<FavouritesList />
 								</Route>
 								<PrivateRoute exact path="/send-money" component={SendMoney} />
+								<Route exact path="/reset-password/:id" component={ResetPasswordComponent} />
 								<Route exact path="/activate-account/:id" component={ActivatedUser} />
 								<Route exact path="/profile/change-password" component={ChangePasswordComponent} />
 							</Switch>
