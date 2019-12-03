@@ -5,8 +5,6 @@ export const UserContext = createContext();
 const UserContextProvider = (props) => {
 
     const [user, setUser] = useState('');
-    const [resetPwd, setResetPwd] = useState(false);
-    const [activation, setActivation] = useState(false);
     const [noUserNeeds, setNoUserNeeds] = useState(false);
 
     const keepAuthUser = (user) => {
@@ -15,14 +13,6 @@ const UserContextProvider = (props) => {
 
     const destroyAuthUser = () => {
         setUser('');
-    }
-
-    const onActivation = () => {
-        setActivation(true);
-    }
-
-    const onResetPassword = () => {
-        setResetPwd(true);
     }
 
     const onLinkFromEmail = () => {

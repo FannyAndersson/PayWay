@@ -14,9 +14,9 @@ const ContextKeeper = props => {
 
     const [isLoading, setIsLoading] = useState(true);
 
+    //Check here route matching to be sure if app needs user in context or not
     let matchResetPassword = useRouteMatch("/reset-password/:id");
     let matchActivateAccount = useRouteMatch("/activate-account/:id");
-
 
     if(matchResetPassword || matchActivateAccount) {
         onLinkFromEmail();
