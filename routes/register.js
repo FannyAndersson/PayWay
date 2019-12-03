@@ -44,7 +44,7 @@ function register(app) {
 			email: user.email
 		});
 
-		const link = `http://paywayapp:3000/activate-account/${user._id}`;
+		const link = `https://paywayapp.se/activate-account/${user._id}`;
 
 		//send email for activation
 		sendEmail({

@@ -5,6 +5,7 @@ export const UserContext = createContext();
 const UserContextProvider = (props) => {
 
     const [user, setUser] = useState('');
+    const [resetPwd, setResetPwd] = useState(false);
     const [activation, setActivation] = useState(false);
 
     const keepAuthUser = (user) => {
@@ -18,8 +19,14 @@ const UserContextProvider = (props) => {
     const onActivation = () => {
         setActivation(true);
     }
+
+    const onResetPassword = () => {
+        setResetPwd(true);
+    }
+
+
     return (
-        <UserContext.Provider value={{user, keepAuthUser: keepAuthUser, destroyAuthUser: destroyAuthUser, activation: activation, onActivation: onActivation}}>
+        <UserContext.Provider value={{user, keepAuthUser: keepAuthUser, destroyAuthUser: destroyAuthUser, activation: activation, onActivation: onActivation, resetPwd: resetPwd, onResetPassword: onResetPassword}}>
             {props.children}
         </UserContext.Provider>
     );
