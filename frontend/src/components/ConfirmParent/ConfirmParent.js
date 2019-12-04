@@ -1,13 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { UserContext } from '../../AuthUserContext';
+import React, { useEffect, useState } from 'react';
 import MessageComponent from '../Message/MessageComponent';
 
 const ConfirmParent = (props) => {
     // console.log(props, "props");
-    const { onConfirmation } = useContext(UserContext);
-    const { user } = useContext(UserContext);
     const [message, setMessage] = useState("");
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState("");
     const [showMessage, setShowMessage] = useState(false);
 
     const handleMessageUnmount = () => {
@@ -19,20 +16,20 @@ const ConfirmParent = (props) => {
     useEffect(() => {
         let mounted = true;
 
-        onConfirmation(true);
-
         const confirmParent = async () => {
             try {
                 let key = "/api/child/confirm-parent/";
                 const response = await fetch(key + id);
                 const result = await response.json();
                 if (mounted && result.message) {
-                    onConfirmation(false);
                     setMessage(result.message);
+                    setShowMessage(true);
                 }
                 else {
                     if (mounted && result.error) {
                         setErrorMessage(result.error)
+                        setShowMessage(true);
+
                     }
                 }
             } catch (error) {
@@ -50,7 +47,7 @@ const ConfirmParent = (props) => {
 
     return (
         <React.Fragment>
-            {message || errorMessage ? <MessageComponent
+            {showMessage ? <MessageComponent
                 success={message ? true : false}
                 text={message ? [message] : [errorMessage]}
                 unmountMe={handleMessageUnmount}

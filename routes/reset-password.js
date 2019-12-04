@@ -44,7 +44,7 @@ function resetPassword(app) {
 			// get the user
 			const user = await User.findById(req.params.id);
 
-			if(user) {
+			if (user) {
 				// change the password (encrypt before saving)
 				user.password = encryptPassword(password);
 				await user.save();
@@ -52,17 +52,17 @@ function resetPassword(app) {
 				// notify the user with mail (send them the unencrypted pwd)
 				sendMailWithNewPassword(user.email, password);
 
-				res.status(200).json({user});
+				res.status(200).json({ user });
 			}
-			
+
 		} catch (error) {
 			// respond with status 500 (internal server error) to let frontend know there was an error when processing
 			// the request. Also send error obj as response.
-			res.status(500).json({error});
+			res.status(500).json({ error });
 		}
 	});
 
-	app.post('/api/change-password/:id', async(req, res) => {
+	app.post('/api/change-password/:id', async (req, res) => {
 		const { password } = req.body;
 
 		try {
@@ -72,7 +72,7 @@ function resetPassword(app) {
 
 			sendMailWithChangedPassword(user.email, password);
 			return res.status(200).json();
-			
+
 		} catch (error) {
 			return res.status(500).json(error);
 		}
@@ -81,12 +81,12 @@ function resetPassword(app) {
 
 function generateUniquePassword() {
 	let symbols = '1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
-    symbols = symbols.split("");
-    let randomPassword = '';
-    for (let i = 0; i <= 5; i++) {
-      let letter = symbols[Math.floor(Math.random() * symbols.length)];
-      randomPassword = randomPassword + letter;
-    }
+	symbols = symbols.split("");
+	let randomPassword = '';
+	for (let i = 0; i <= 5; i++) {
+		let letter = symbols[Math.floor(Math.random() * symbols.length)];
+		randomPassword = randomPassword + letter;
+	}
 	return randomPassword;
 }
 

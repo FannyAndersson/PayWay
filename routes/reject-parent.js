@@ -30,7 +30,7 @@ function rejectParent(app) {
 
             //Check if parent aldready been rejected
             if (!parent.children.pending.includes(child._id)) {
-                return res.json({ error: `You've already rejected ${parent.name} as your parent.` });
+                return res.json({ error: "invalid link" });
             }
 
 

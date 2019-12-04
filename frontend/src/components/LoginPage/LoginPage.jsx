@@ -63,12 +63,6 @@ const LoginPage = () => {
 
     const onResetPassword = async () => {
 
-        if (!inputs.email) {
-
-            return onShowErrorMessage('Enter your email adress!');
-
-        }
-
         try {
             const response = await fetch('/api/reset-password', {
                 method: 'POST',
@@ -81,7 +75,7 @@ const LoginPage = () => {
             if (response.ok) {
                 setShowMessage(true);
             } else {
-                onShowErrorMessage(`That didn't work! Are you sure you enterted the correct email?`);
+                onShowErrorMessage(`That didn't work! Are you sure you entered the correct email?`);
             }
         } catch (error) {
             console.error('Error:', error);

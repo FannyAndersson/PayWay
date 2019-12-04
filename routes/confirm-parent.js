@@ -25,7 +25,7 @@ function confirmParent(app) {
             //return message that didn't send any request
             if (parent.children.pending.indexOf(child._id) === -1) {
 
-                return res.json({ error: `${parent.name} didn't send request to be your parent. Sorry about it!` })
+                return res.json({ error: "This link has expired" })
                 // return res.status(200).json({ parent })
             }
 
