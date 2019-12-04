@@ -110,7 +110,6 @@ const RegisterForm = () => {
 
 	return (
 		<>
-			
 				<Row>
 					<Col className="content">
 						<h3>Sign up!</h3>

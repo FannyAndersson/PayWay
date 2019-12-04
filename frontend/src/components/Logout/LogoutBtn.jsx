@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { Redirect } from 'react-router-dom';
 import { Icon } from "react-materialize";
 import { UserContext } from '../../AuthUserContext';
 
@@ -18,7 +17,6 @@ const LogoutBtn = () => {
 
     return (
         <React.Fragment>
-            {/* {user ? <Redirect to='/' /> : null} */}
             <li>
                 <span onClick={onLogout} className="logout-btn waves-effect sidenav-close" title={user.name + ' | Log out'}>
                     <Icon>exit_to_app</Icon>

@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { Redirect, useRouteMatch } from "react-router-dom";
 import { UserContext } from "../AuthUserContext";
 import { Row, Col } from 'react-materialize';
 
@@ -8,28 +7,11 @@ import { Row, Col } from 'react-materialize';
 //and saves it as user to UserContext
 //All components are located inside of ContextKeeper and consume to UserContext
 const ContextKeeper = props => {
-    const { user, keepAuthUser, activation, onActivation, confirmed, onConfirmation, rejected, onRejection } = useContext(UserContext);
+    const { keepAuthUser } = useContext(UserContext);
 
     const [authUser, setAuthUser] = useState(false);
 
     const [isLoading, setIsLoading] = useState(true);
-
-    let match = useRouteMatch("/activate-account/:id");
-    if (match) {
-        onActivation();
-    }
-    let matchConfirmation = useRouteMatch("/child/confirmation/:id");
-
-
-    if (matchConfirmation) {
-        onConfirmation()
-    }
-
-    let matchRejection = useRouteMatch("/child/rejection/:id");
-
-    if (matchRejection) {
-        onRejection()
-    }
 
 
     const checkLogin = async () => {
@@ -69,7 +51,6 @@ const ContextKeeper = props => {
 
     return (
         <div>
-            {!activation && !user && !confirmed && !rejected ? <Redirect to="/login" /> : null}
             <Row>
                 <Col s={12} l={3} offset='l4'>
                     {props.children}
