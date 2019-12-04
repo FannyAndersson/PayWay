@@ -29,56 +29,27 @@ function App() {
 						<section className={"container-fluid"}>
 							<Header />
 							<Switch>
-								<Route exact path="/">
-									<MainPage />
-								</Route>
-								<Route exact path="/login">
-									<LoginPage />
-								</Route>
-								<Route exact path="/favourites">
-									<FavouritesList />
-								</Route>
-								<Route exact path="/profile/favorites/add-favorite">
-									<CreateFavouriteComponent />
-								</Route>
-								<Route exact path="/profile/favorites">
-									<FavouritesList />
-								</Route>
-								<Route exact path="/register">
-									<Register />
-								</Route>
+								<Route exact path="/login" component={LoginPage} />
+								<PrivateRoute exact path="/" component={MainPage} />
+								<PrivateRoute exact path="/favourites" component={FavouritesList} />
+								<PrivateRoute exact path="/profile/favorites/add-favorite" component={CreateFavouriteComponent} />
+								<PrivateRoute exact path="/profile/favorites" component={FavouritesList} />
+								<Route exact path="/register" component={Register} />
 								<PrivateRoute exact path="/send-money" component={ SendMoney } />
-								<Route exact path="/profile/settings">
-									<UserProfile/>
-								</Route>
-								<Route exact path="/profile/transactions">
-									<TransactionPage />
-								</Route>
-								<Route exact path="/profile/children">
-									<Children />
-								</Route>
-								<Route
-									exact path="/profile/children/transactions/:_id"
-									render={props => (
-										<ChildrenTransactions
-											{...props}
+								<PrivateRoute exact path="/profile/settings" component={ UserProfile } />
+								<PrivateRoute exact path="/profile/transactions" component={ TransactionPage } />
+								<PrivateRoute exact path="/profile/children" component={ Children } />
+								<PrivateRoute exact path="/profile/children/transactions/:_id" component={ ChildrenTransactions } />
+								<PrivateRoute exact path="/profile/children/add-child" component={ AddChild } />
+								<PrivateRoute exact path="/profile/favorites/add-favorite" component={ CreateFavouriteComponent } />
+								<PrivateRoute exact path="/profile/change-password" component={ChangePasswordComponent} />
+								<PrivateRoute exact path="/profile/favorites" component={ FavouritesList } />
 
-										/>
-									)}
-								/>
-								<Route exact path="/profile/children/add-child">
-									<AddChild />
-								</Route>
-								<Route exact path="/profile/favorites/add-favorite">
-									<CreateFavouriteComponent />
-								</Route>
-								<Route exact path="/profile/favorites">
-									<FavouritesList />
-								</Route>
-								<PrivateRoute exact path="/send-money" component={SendMoney} />
-								<Route exact path="/reset-password/:id" component={ResetPasswordComponent} />
 								<Route exact path="/activate-account/:id" component={ActivatedUser} />
-								<Route exact path="/profile/change-password" component={ChangePasswordComponent} />
+								<Route exact path="/reset-password/:id" component={ ResetPasswordComponent } />
+								
+								
+							
 							</Switch>
 						</section>
 					</React.Fragment>
