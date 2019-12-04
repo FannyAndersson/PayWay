@@ -44,8 +44,8 @@ function createChild(app, db) {
         sendMailToChild({
 
             to: child.email,
-            html: `<body><p>${parent.name} with phone number ${parent.phone} wishes to get access to your account. Click here to accept ${confirmLink} <br>
-            If you do not want to allow ${parent.name} to have access to your account click here ${rejectLink}</p></body>`,
+            html: `<body><p>${parent.name} with phone number ${parent.phone} wishes to get access to your account. <a href="${confirmLink}" target="_blank" title="Confirm ${parent.name} as a parent">Click here to accept</> <br>
+            If you do not want to allow ${parent.name} to have access to your account. <a href="${rejectLink}" target="_blank" title="Reject ${parent.name} as a parent">Click here to reject</></p></body>`,
             subject: "PayWay - Confirm parent NO REPLY"
 
         });
