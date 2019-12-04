@@ -44,13 +44,13 @@ const LoginPage = () => {
                 keepAuthUser(result.response);
             }
             else {
-                if(result.response.errorCode === "wrongPwd") {
+                if (result.response.errorCode === "wrongPwd") {
                     onShowErrorMessage(result.response.error);
                 }
-                if(result.response.errorCode === "inactivated") {
+                if (result.response.errorCode === "inactivated") {
                     onShowErrorMessage(result.response.error);
                 }
-                if(result.response.errorCode === "notFound") {
+                if (result.response.errorCode === "notFound") {
                     onShowErrorMessage(result.response.error);
                 }
             }
@@ -63,16 +63,10 @@ const LoginPage = () => {
 
     const onResetPassword = async () => {
 
-        if (!inputs.email) {
-
-            return onShowErrorMessage('Enter your email adress!');
-
-        }
-
         try {
             const response = await fetch('/api/reset-password', {
                 method: 'POST',
-                body: JSON.stringify({email: inputs.email}),
+                body: JSON.stringify({ email: inputs.email }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -81,7 +75,7 @@ const LoginPage = () => {
             if (response.ok) {
                 setShowMessage(true);
             } else {
-                onShowErrorMessage(`That didn't work! Are you sure you enterted the correct email?`);
+                onShowErrorMessage(`That didn't work! Are you sure you entered the correct email?`);
             }
         } catch (error) {
             console.error('Error:', error);
@@ -99,11 +93,11 @@ const LoginPage = () => {
                         <TextInput className="form-control" name="password" onChange={handleInputChange} value={inputs.password} label="Password" password={true} s={12} l={12} required />
                         <Button node="button" s={12} l={12} type="button" flat className="forgot-your-pwd" title="Click me to reset password!" onClick={onResetPassword}>Forgot your password?</Button>
                         <Col s={12} l={12} style={{ marginTop: '20px' }}>
-                        <Button className="login-btn" waves="light" style={{ width: '100%' }} >
-                            login
+                            <Button className="login-btn" waves="light" style={{ width: '100%' }} >
+                                login
                         </Button>
                         </Col>
-                        
+
                     </form>
                     <Col s={12} l={12} style={{ marginTop: '20px' }}>
                         <Button flat={true} className="register-link-btn raised-btn" style={{ width: '100%' }} waves="light" >
@@ -112,13 +106,13 @@ const LoginPage = () => {
                     </Col>
                 </Col>
             </Row>
-            {showMessage ? <MessageComponent 
-                                success={!showErrorMessage ? true : false}
-                                text={!showErrorMessage ? [`New password has been send to ${inputs.email}`, `Check your mailbox.`] : [errorText]} 
-                                unmountMe={handleMessageUnmount} 
-                            />
-                            : null}
-        </React.Fragment>
+            {showMessage ? <MessageComponent
+                success={!showErrorMessage ? true : false}
+                text={!showErrorMessage ? [`New password has been send to ${inputs.email}`, `Check your mailbox.`] : [errorText]}
+                unmountMe={handleMessageUnmount}
+            />
+                : null}
+        </React.Fragment >
     );
 }
 

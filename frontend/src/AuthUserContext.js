@@ -1,4 +1,4 @@
-import React,  {createContext, useState} from 'react';
+import React, { createContext, useState } from 'react';
 
 export const UserContext = createContext();
 
@@ -16,7 +16,7 @@ const UserContextProvider = (props) => {
 
 
     return (
-        <UserContext.Provider value={{user, keepAuthUser: keepAuthUser, destroyAuthUser: destroyAuthUser}}>
+        <UserContext.Provider value={{ user, keepAuthUser: keepAuthUser, destroyAuthUser: destroyAuthUser }}>
             {props.children}
         </UserContext.Provider>
     );

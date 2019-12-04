@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import UserContextProvider from './AuthUserContext';
 import ContextKeeper from './components/ContextKeeper';
 import './css/style.css';
@@ -18,6 +18,8 @@ import FavouritesList from './components/FavouritesList/FavouritesList';
 import AddChild from './components/AddChildToParent/AddChildForm';
 import ResetPasswordComponent from './components/ResetPassword/ResetPasswordComponent';
 import ActivatedUser from './components/ActivatedUser/ActivatedUser';
+import ConfirmParent from './components/ConfirmParent/ConfirmParent';
+import RejectParent from './components/RejectParent/RejectParent';
 import ChangePasswordComponent from './components/ResetPassword/ChangePasswordComponent';
 
 function App() {
@@ -35,21 +37,27 @@ function App() {
 								<PrivateRoute exact path="/profile/favorites/add-favorite" component={CreateFavouriteComponent} />
 								<PrivateRoute exact path="/profile/favorites" component={FavouritesList} />
 								<Route exact path="/register" component={Register} />
-								<PrivateRoute exact path="/send-money" component={ SendMoney } />
-								<PrivateRoute exact path="/profile/settings" component={ UserProfile } />
-								<PrivateRoute exact path="/profile/transactions" component={ TransactionPage } />
-								<PrivateRoute exact path="/profile/children" component={ Children } />
-								<PrivateRoute exact path="/profile/children/transactions/:_id" component={ ChildrenTransactions } />
-								<PrivateRoute exact path="/profile/children/add-child" component={ AddChild } />
-								<PrivateRoute exact path="/profile/favorites/add-favorite" component={ CreateFavouriteComponent } />
+								<PrivateRoute exact path="/send-money" component={SendMoney} />
+								<PrivateRoute exact path="/profile/settings" component={UserProfile} />
+								<PrivateRoute exact path="/profile/transactions" component={TransactionPage} />
+								<PrivateRoute exact path="/profile/children" component={Children} />
+								<PrivateRoute exact path="/profile/children/transactions/:_id" component={ChildrenTransactions} />
+								<PrivateRoute exact path="/profile/children/add-child" component={AddChild} />
+								<PrivateRoute exact path="/profile/favorites/add-favorite" component={CreateFavouriteComponent} />
 								<PrivateRoute exact path="/profile/change-password" component={ChangePasswordComponent} />
-								<PrivateRoute exact path="/profile/favorites" component={ FavouritesList } />
+								<PrivateRoute exact path="/profile/favorites" component={FavouritesList} />
 
 								<Route exact path="/activate-account/:id" component={ActivatedUser} />
-								<Route exact path="/reset-password/:id" component={ ResetPasswordComponent } />
-								
-								
-							
+								<Route exact path="/child/confirmation/:id" component={ConfirmParent} />
+								<Route exact path="/child/rejection/:id" component={RejectParent} />
+
+								)}
+
+
+								<Route exact path="/reset-password/:id" component={ResetPasswordComponent} />
+
+
+
 							</Switch>
 						</section>
 					</React.Fragment>

@@ -7,13 +7,13 @@ import { Row, Col } from 'react-materialize';
 //and saves it as user to UserContext
 //All components are located inside of ContextKeeper and consume to UserContext
 const ContextKeeper = props => {
-    const { keepAuthUser} = useContext(UserContext);
+    const { keepAuthUser } = useContext(UserContext);
 
     const [authUser, setAuthUser] = useState(false);
 
     const [isLoading, setIsLoading] = useState(true);
 
-    
+
     const checkLogin = async () => {
 
         const response = await fetch('/api/login').catch(err => console.error(err, 'Error'));
@@ -27,9 +27,10 @@ const ContextKeeper = props => {
 
     }
     if (!authUser) {
+
         checkLogin();
-	}
-    
+    }
+
 
     if (isLoading) {
 
@@ -48,15 +49,15 @@ const ContextKeeper = props => {
         );
     }
 
-	return (
-		<div>
-			<Row>
+    return (
+        <div>
+            <Row>
                 <Col s={12} l={3} offset='l4'>
-					{props.children}
+                    {props.children}
                 </Col>
             </Row>
-		</div>
-	);
+        </div>
+    );
 };
 
 export default ContextKeeper;
