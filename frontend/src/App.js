@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import UserContextProvider from './AuthUserContext';
 import ContextKeeper from './components/ContextKeeper';
 import './css/style.css';
@@ -17,6 +17,7 @@ import CreateFavouriteComponent from './components/addFavourite/CreateFavouriteC
 import FavouritesList from './components/FavouritesList/FavouritesList';
 import AddChild from './components/AddChildToParent/AddChildForm';
 import ActivatedUser from './components/ActivatedUser/ActivatedUser';
+import ConfirmChild from './components/ConfirmChild/ConfirmChild';
 
 function App() {
 	return (
@@ -45,9 +46,9 @@ function App() {
 								<Route exact path="/register">
 									<Register />
 								</Route>
-								<PrivateRoute exact path="/send-money" component={ SendMoney } />
+								<PrivateRoute exact path="/send-money" component={SendMoney} />
 								<Route exact path="/profile/settings">
-									<UserProfile/>
+									<UserProfile />
 								</Route>
 								<Route exact path="/profile/transactions">
 									<TransactionPage />
@@ -75,7 +76,9 @@ function App() {
 								</Route>
 								<PrivateRoute exact path="/send-money" component={SendMoney} />
 								<Route exact path="/activate-account/:id" component={ActivatedUser} />
-							</Switch>
+								<Route exact path="/child/confirmation/:id" component={ConfirmChild} />)}
+
+						     </Switch>
 						</section>
 					</React.Fragment>
 				</ContextKeeper>

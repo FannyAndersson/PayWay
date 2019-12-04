@@ -34,6 +34,7 @@ const SideMenu = props => {
 				<SideMenuItem to="/profile/favorites" icon="stars" text="Favorites" />
 				<SideMenuItem to="/profile/favorites/add-favorite" icon="star" text="Add a favorite" />
 				<SideNavItem divider />
+
 				<SideMenuItem to="/profile/settings" icon="account_box" text="Settings" />
 				<LogoutBtn />
 			</SideNav>

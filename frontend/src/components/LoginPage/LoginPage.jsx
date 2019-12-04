@@ -41,13 +41,13 @@ const LoginPage = () => {
                 keepAuthUser(result.response);
             }
             else {
-                if(result.response.errorCode === "wrongPwd") {
+                if (result.response.errorCode === "wrongPwd") {
                     showErrorMessage(result.response.error);
                 }
-                if(result.response.errorCode === "inactivated") {
+                if (result.response.errorCode === "inactivated") {
                     showErrorMessage(result.response.error);
                 }
-                if(result.response.errorCode === "notFound") {
+                if (result.response.errorCode === "notFound") {
                     showErrorMessage(result.response.error);
                 }
             }
@@ -78,12 +78,12 @@ const LoginPage = () => {
                     </Col>
                 </Col>
             </Row>
-            {showMMessage ? <MessageComponent 
-                                success={false}
-                                text={[errorText]} 
-                                unmountMe={handleMessageUnmount} 
-                            />
-                            : null}
+            {showMMessage ? <MessageComponent
+                success={false}
+                text={[errorText]}
+                unmountMe={handleMessageUnmount}
+            />
+                : null}
         </React.Fragment>
     );
 }

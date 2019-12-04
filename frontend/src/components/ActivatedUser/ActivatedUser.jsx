@@ -13,8 +13,8 @@ const ActivatedUser = (props) => {
         setShowMessage(false);
     }
 
-    const accountId= props.match.params.id;
-    
+    const accountId = props.match.params.id;
+
     useEffect(() => {
         onActivation(true);
 
@@ -22,15 +22,15 @@ const ActivatedUser = (props) => {
         const controller = new AbortController();
         const signal = controller.signal;
         const activateAccount = async () => {
-            const response = await fetch('/api/register/' + accountId, {signal: signal}).catch(err => console.error(err));
+            const response = await fetch('/api/register/' + accountId, { signal: signal }).catch(err => console.error(err));
             const result = await response.json();
-            if(response.ok) {
+            if (response.ok) {
                 setActivatedUser(result.user);
                 setShowMessage(true);
                 onActivation(false);
             }
             else {
-                if(result.error) {
+                if (result.error) {
                     setErrorMessage(result.error);
                     return;
                 }
@@ -45,13 +45,13 @@ const ActivatedUser = (props) => {
     }, []);
     return (
         <React.Fragment>
-            {showMessage ||errorMessage ? <MessageComponent 
-            success={showMessage ? true : false}
-            text={showMessage ? [`Dear ${activatedUser.name}! Your account is activated!`] : errorMessage ? [`${errorMessage}`] : [`Account not found!`]} 
-            unmountMe={handleMessageUnmount}
-            redirectTo={'/login'}
-        />
-        : null}
+            {showMessage || errorMessage ? <MessageComponent
+                success={showMessage ? true : false}
+                text={showMessage ? [`Dear ${activatedUser.name}! Your account is activated!`] : errorMessage ? [`${errorMessage}`] : [`Account not found!`]}
+                unmountMe={handleMessageUnmount}
+                redirectTo={'/login'}
+            />
+                : null}
         </React.Fragment>
     );
 }
