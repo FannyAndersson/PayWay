@@ -7,6 +7,8 @@ const UserContextProvider = (props) => {
     const [user, setUser] = useState('');
     const [activation, setActivation] = useState(false);
     const [confirmed, setConfirmed] = useState(false);
+    const [rejected, setRejected] = useState(false);
+
 
     const keepAuthUser = (user) => {
         setUser(user);
@@ -23,8 +25,15 @@ const UserContextProvider = (props) => {
     const onConfirmation = () => {
         setConfirmed(true);
     }
+
+    const onRejection = () => {
+        setRejected(true);
+    }
     return (
-        <UserContext.Provider value={{ user, keepAuthUser: keepAuthUser, destroyAuthUser: destroyAuthUser, activation: activation, onActivation: onActivation, confirmed: confirmed, onConfirmation: onConfirmation }}>
+        <UserContext.Provider value={{
+            user, keepAuthUser: keepAuthUser, destroyAuthUser: destroyAuthUser, activation: activation, onActivation: onActivation, confirmed: confirmed, onConfirmation: onConfirmation,
+            rejected: rejected, onRejection: onRejection
+        }}>
             {props.children}
         </UserContext.Provider>
     );

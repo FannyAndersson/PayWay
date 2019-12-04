@@ -17,7 +17,8 @@ import CreateFavouriteComponent from './components/addFavourite/CreateFavouriteC
 import FavouritesList from './components/FavouritesList/FavouritesList';
 import AddChild from './components/AddChildToParent/AddChildForm';
 import ActivatedUser from './components/ActivatedUser/ActivatedUser';
-import ConfirmChild from './components/ConfirmChild/ConfirmChild';
+import ConfirmParent from './components/ConfirmParent/ConfirmParent';
+import RejectParent from './components/RejectParent/RejectParent';
 
 function App() {
 	return (
@@ -76,7 +77,10 @@ function App() {
 								</Route>
 								<PrivateRoute exact path="/send-money" component={SendMoney} />
 								<Route exact path="/activate-account/:id" component={ActivatedUser} />
-								<Route exact path="/child/confirmation/:id" component={ConfirmChild} />)}
+								<Route exact path="/child/confirmation/:id" component={ConfirmParent} />
+								<Route exact path="/child/rejection/:id" component={RejectParent} />
+
+								)}
 
 						     </Switch>
 						</section>

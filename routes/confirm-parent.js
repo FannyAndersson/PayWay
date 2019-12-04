@@ -3,7 +3,6 @@ const sendMail = require('../send-email.js');
 
 function confirmParent(app) {
     app.get('/api/child/confirm-parent/:id', async (req, res) => {
-        console.log(req.params, "params");
         let params = req.params.id;
         let parentID = params.slice(0, 24);
         let childID = params.slice(24, 49);
@@ -14,7 +13,6 @@ function confirmParent(app) {
         }
         if (!parent) {
             res.status(404).json({ error: 'Parent not found' });
-
         }
 
         if (parent) {
@@ -44,7 +42,7 @@ function confirmParent(app) {
 
 
             //add child to confirmed array
-            // parent.children.confirmed.push(child);---------
+            parent.children.confirmed.push(child);
             parent.save();
 
             const linkToTransactions = `http://paywayapp.se/api/child-transactions/${child._id}`;

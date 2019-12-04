@@ -8,7 +8,7 @@ import { Row, Col } from 'react-materialize';
 //and saves it as user to UserContext
 //All components are located inside of ContextKeeper and consume to UserContext
 const ContextKeeper = props => {
-    const { user, keepAuthUser, activation, onActivation, confirmed, onConfirmation } = useContext(UserContext);
+    const { user, keepAuthUser, activation, onActivation, confirmed, onConfirmation, rejected, onRejection } = useContext(UserContext);
 
     const [authUser, setAuthUser] = useState(false);
 
@@ -23,6 +23,12 @@ const ContextKeeper = props => {
 
     if (matchConfirmation) {
         onConfirmation()
+    }
+
+    let matchRejection = useRouteMatch("/child/rejection/:id");
+
+    if (matchRejection) {
+        onRejection()
     }
 
 
@@ -63,7 +69,7 @@ const ContextKeeper = props => {
 
     return (
         <div>
-            {!activation && !user && !confirmed ? <Redirect to="/login" /> : null}
+            {!activation && !user && !confirmed && !rejected ? <Redirect to="/login" /> : null}
             <Row>
                 <Col s={12} l={3} offset='l4'>
                     {props.children}

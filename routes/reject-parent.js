@@ -3,7 +3,7 @@ const sendRejectMailToParent = require('../send-email.js');
 
 
 function rejectParent(app) {
-    app.get('/api/child/reject-parent/:id', async(req, res) => {
+    app.get('/api/child/reject-parent/:id', async (req, res) => {
 
         let params = req.params.id;
         let parentID = params.slice(0, 24);
@@ -17,20 +17,20 @@ function rejectParent(app) {
         try {
 
             if (!child) {
-                return res.status(404).send('Child not found');
+                return res.status(404).json({ error: 'Child not found' });
             }
             if (!parent) {
-                return res.status(404).send('Parent not found');
+                return res.status(404).json({ error: 'Parent not found' });
             }
             if (String(child._id) === req.params.id) {
                 return res
                     .status(404)
-                    .send(`You can't be your own child`);
+                    .json({ error: `You can\'t send a request to yourself` });
             }
 
             //Check if parent aldready been rejected
             if (!parent.children.pending.includes(child._id)) {
-                return res.send(`You've aldready reject ${parent.name} as your parent.`);
+                return res.json({ error: `You've already rejected ${parent.name} as your parent.` });
             }
 
 
@@ -47,7 +47,7 @@ function rejectParent(app) {
                 subject: 'PayWay - You are rejected NO REPLY!'
             });
 
-            res.send(`You rejected ${parent.name} as your parent.`);
+            res.json({ message: `You rejected ${parent.name} as your parent.` });
 
             res.status(200).end();
 
