@@ -1,4 +1,4 @@
-import React,  {createContext, useState} from 'react';
+import React, { createContext, useState } from 'react';
 import io from 'socket.io-client';
 
 const socket = io('/');
@@ -15,8 +15,6 @@ const handleCashFlow = (cash) => {
 const UserContextProvider = (props) => {
 
     const [user, setUser] = useState('');
-    const [resetPwd, setResetPwd] = useState(false);
-    const [activation, setActivation] = useState(false);
 
     const keepAuthUser = (newUser) => {
 
@@ -35,17 +33,9 @@ const UserContextProvider = (props) => {
         setUser('');
     }
 
-    const onActivation = () => {
-        setActivation(true);
-    }
-
-    const onResetPassword = () => {
-        setResetPwd(true);
-    }
-
 
     return (
-        <UserContext.Provider value={{user, keepAuthUser: keepAuthUser, destroyAuthUser: destroyAuthUser, activation: activation, onActivation: onActivation, resetPwd: resetPwd, onResetPassword: onResetPassword}}>
+        <UserContext.Provider value={{ user, keepAuthUser: keepAuthUser, destroyAuthUser: destroyAuthUser }}>
             {props.children}
         </UserContext.Provider>
     );
