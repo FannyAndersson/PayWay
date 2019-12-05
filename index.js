@@ -55,8 +55,6 @@ const server = http.createServer(app);
 
 const io = require('socket.io')(server);
 
-io.on('connection', () => { console.log('say helloo to a bright new day!')} );
-
 // custom routes
 useCustomRoutes(app, io);
 
