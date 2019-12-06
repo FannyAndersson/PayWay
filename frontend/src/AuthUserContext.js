@@ -1,20 +1,18 @@
 import React, { createContext, useState } from 'react';
 import io from 'socket.io-client';
+import ToastNotification from './components/ToastNotification/ToastNotification';
 
 const socket = io('/');
 
 export const UserContext = createContext();
 
-const handleCashFlow = (cash) => {
 
-    // this is where we want to send a push notification
-    console.log('You just got CA$H!', cash);
-
-};
 
 const UserContextProvider = (props) => {
 
     const [user, setUser] = useState('');
+    const [showToast, setShowToast] = useState(false);
+    const [dataToast, setDataToast] = useState({});
 
     const keepAuthUser = (newUser) => {
 
@@ -33,10 +31,26 @@ const UserContextProvider = (props) => {
         setUser('');
     }
 
+    const handleToast = (cash) => {
+        setDataToast(cash);
+        setShowToast(true);
+        setTimeout(() => {
+            setShowToast(false); 
+            setDataToast({});
+        }, 5000);
+    }
+
+    const handleCashFlow = (cash) => {
+
+        // this is where we want to send a push notification
+        handleToast(cash);
+    };
+
 
     return (
         <UserContext.Provider value={{ user, keepAuthUser: keepAuthUser, destroyAuthUser: destroyAuthUser }}>
             {props.children}
+            {showToast ? <ToastNotification data={dataToast} showMe={true} /> : null}
         </UserContext.Provider>
     );
 }

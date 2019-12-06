@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import MessageComponent from '../Message/MessageComponent';
+import { UserContext } from "../../AuthUserContext";
+
 
 const SendMoney = (props) => {
 
@@ -19,6 +21,7 @@ const SendMoney = (props) => {
     }
 
     const { history } = props;
+    const {user} = useContext(UserContext);
 
 
 
@@ -193,7 +196,7 @@ const SendMoney = (props) => {
             {showMMessage ? <MessageComponent 
                                 success
                                 redirectTo="/" 
-                                text={[`Congrats! You've just sent ${transactionAmount} coins`, `to recipient with phone number ${recipientPhone}`]} 
+                                text={[`Congrats! You've just sent ${transactionAmount} ${user.currency}`, `to recipient with phone number ${recipientPhone}`]} 
                                 unmountMe={handleMessageUnmount} 
                             />
                             : null}

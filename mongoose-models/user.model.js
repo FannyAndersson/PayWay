@@ -59,6 +59,10 @@ const userSchema = new Schema({
     limit: {
         type: Number,
         default: 1000
+    },
+    currency: {
+        type: String,
+        default: 'SEK'
     }
 }, {
     toJSON: { virtuals: true },
