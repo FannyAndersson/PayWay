@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { UserContext } from "../AuthUserContext";
 import { Row, Col } from 'react-materialize';
 
-
 //ContextKeeper is a holder of UserContext. It checks if there is session (authenticated user)
 //and saves it as user to UserContext
 //All components are located inside of ContextKeeper and consume to UserContext

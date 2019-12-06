@@ -1,7 +1,7 @@
 const User = require('../mongoose-models/user.model');
 const sendMailToChild = require('../send-email.js');
 
-function createChild(app, db) {
+function createChild(app) {
 
     app.post('/api/createchild', async (req, res) => {
 
