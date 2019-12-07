@@ -212,6 +212,18 @@ const SendMoney = (props) => {
                         </button>
                     </div>
                 </div>
+                <div className="row">
+                    <div className="col s6">
+                    <button
+                    disabled={}
+                     class="waves-effect waves-light raised-btn btn w100"
+                     type="button"
+                     onClick={() => stopMoney()}
+                     >
+                         Abort
+                         </button>
+                    </div>
+                </div>
             </form>
 
             <div className="row">
