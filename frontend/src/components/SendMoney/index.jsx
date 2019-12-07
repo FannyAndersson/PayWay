@@ -22,7 +22,7 @@ const SendMoney = (props) => {
 
     const { history } = props;
 
-
+    const stopMoney()
 
     // function to handle when form is submitted
     const handleSubmit = async (e) => {
@@ -32,6 +32,9 @@ const SendMoney = (props) => {
 
         if(acceptSending){
             sendMoney();
+        }
+        else if(onClick){
+            StopMoney();
         }
         else {
             console.log('wait for a second')
@@ -98,6 +101,13 @@ const SendMoney = (props) => {
 
         }
 
+    }
+    const stopMoney = async () =>{
+if (handleSubmit){
+    return console.log('stop money')
+}
+
+    return;
     }
     // const [transactionStatusTimeOut, setTransactionStatusTimeOut] = useState(false);
 
