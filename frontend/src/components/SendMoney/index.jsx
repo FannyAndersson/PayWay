@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MessageComponent from '../Message/MessageComponent';
-import {Row, Col, Button} from 'react-materialize';
+import { Button} from 'react-materialize';
 
 const SendMoney = (props) => { 
     const [acceptSending, setAcceptSending] = useState(false);
@@ -202,32 +202,32 @@ const SendMoney = (props) => {
 
                 <div className="row">
                     <div className="col s6">
-                        <button
+                        <Button
                             disabled={loading}
                             className="waves-effect waves-light raised-btn btn w100"
                             type="button"
                             onClick={() => history.push('./')}
                         >
                             Cancel
-                        </button>
+                        </Button>
                     </div>
 
                     <div className="col s6">
-                        <button disabled={loading} className="btn w100 waves-effect waves-light" type="submit" name="action">Send
+                        <Button disabled={loading} className="btn w100 waves-effect waves-light" type="submit" name="action">Send
                             <i className="material-icons right">send</i>
-                        </button>
+                        </Button>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col s6">
-                    <button
+                <div className="row ab-btn">
+                    <div className="col s6 ">
+                    <Button
                     disabled={undefined}
-                     class="waves-effect waves-light raised-btn btn w100"
+                     className="waves-effect waves-light raised-btn btn w100"
                      type="button"
-                     onClick={() => stopMoney()}
+                     onClick={() => setStopMoney()}
                      >
                          Abort
-                         </button>
+                         </Button>
                     </div>
                 </div>
             </form>
