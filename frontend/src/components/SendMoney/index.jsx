@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MessageComponent from '../Message/MessageComponent';
+import {Row, Col, Button} from 'react-materialize';
 
 const SendMoney = (props) => { 
     const [acceptSending, setAcceptSending] = useState(false);
