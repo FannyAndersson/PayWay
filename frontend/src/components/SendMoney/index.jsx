@@ -5,6 +5,7 @@ import {Row, Col, Button} from 'react-materialize';
 const SendMoney = (props) => { 
     const [acceptSending, setAcceptSending] = useState(false);
     const [sendMoney, setSendMoney] = useState(false);
+    const [stopMoney, setStopMoney] = useState({loading:true, loaded:false, status: null});
     const [recipientPhone, setRecipientPhone] = useState('');
     const [transactionAmount, setTransactionAmount] = useState(0);
     const [transactionMessage, setTransactionMessage] = useState('');
@@ -22,7 +23,7 @@ const SendMoney = (props) => {
 
     const { history } = props;
 
-    const stopMoney()
+    
 
     // function to handle when form is submitted
     const handleSubmit = async (e) => {
@@ -33,8 +34,9 @@ const SendMoney = (props) => {
         if(acceptSending){
             sendMoney();
         }
-        else if(onClick){
-            StopMoney();
+        else if(e){
+            setStopMoney({loading:false, loaded:false, status: null});
+            setAcceptSending(false);
         }
         else {
             console.log('wait for a second')
@@ -102,13 +104,7 @@ const SendMoney = (props) => {
         }
 
     }
-    const stopMoney = async () =>{
-if (handleSubmit){
-    return console.log('stop money')
-}
-
-    return;
-    }
+    
     // const [transactionStatusTimeOut, setTransactionStatusTimeOut] = useState(false);
 
     // useEffect(() =>{
@@ -225,7 +221,7 @@ if (handleSubmit){
                 <div className="row">
                     <div className="col s6">
                     <button
-                    disabled={}
+                    disabled={undefined}
                      class="waves-effect waves-light raised-btn btn w100"
                      type="button"
                      onClick={() => stopMoney()}
