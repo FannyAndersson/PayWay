@@ -59,7 +59,8 @@ const userSchema = new Schema({
     limit: {
         type: Number,
         default: 1000
-    }
+    },
+    subscriptions: [{type:Object}],
 }, {
     toJSON: { virtuals: true },
 });
