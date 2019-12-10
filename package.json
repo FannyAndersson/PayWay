@@ -29,7 +29,8 @@
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
     "socket.io": "^2.3.0",
-    "the.rest": "^1.0.29"
+    "the.rest": "^1.0.29",
+    "web-push": "^3.4.3"
   },
   "devDependencies": {
     "eslint": "^6.6.0"
