@@ -51,6 +51,12 @@ app.use(
 
 app.use(express.static("public"));
 
+if (process.env.NODE_ENV === 'production') {
+
+    app.use(express.static('frontend/build'));
+
+}
+
 const server = http.createServer(app);
 
 const io = require('socket.io')(server);
