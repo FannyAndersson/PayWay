@@ -8,6 +8,7 @@ const session = require("express-session");
 const connectMongo = require("connect-mongo")(session);
 const app = express();
 const salt = 'lussekatter are the best'; // unique secret
+const http = require('http');
 
 const theRest = require("the.rest");
 const port = 3001;
@@ -16,39 +17,52 @@ const useCustomRoutes = require("./routes/index");
 
 // Connect to MongoDB via Mongoose
 mongoose
-	.connect(connectionstring, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-		useCreateIndex: true,
-	})
-	.then(
-		() => {
-			global.db = mongoose.connection;
-			console.log("db is up & running");
-		},
-		err => {
-			console.log(err);
-		}
-	);
+    .connect(connectionstring, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+    })
+    .then(
+        () => {
+            global.db = mongoose.connection;
+            console.log("db is up & running");
+        },
+        err => {
+            console.log(err);
+        }
+    );
 
 for (let conf of config.sass) {
-	new Sass(conf);
+    new Sass(conf);
 }
 
 // connect middleware
 app.use(express.json()); // body parser
 app.use(
-	session({
-		secret: salt, // a unique secret
-		resave: false,
-		saveUninitialized: true,
-		cookie: { secure: false }, // true on htttps server
-		store: new connectMongo({ mongooseConnection: mongoose.connection })
-	})
+    session({
+        secret: salt, // a unique secret
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: false }, // true on htttps server
+        store: new connectMongo({ mongooseConnection: mongoose.connection })
+    })
 );
 
+
+app.use(express.static("public"));
+
+if (process.env.NODE_ENV === 'production') {
+
+    app.use(express.static('frontend/build'));
+
+}
+
+const server = http.createServer(app);
+
+const io = require('socket.io')(server);
+
 // custom routes
-useCustomRoutes(app, mongoose.connection);
+useCustomRoutes(app, io);
 
 // connect our own acl middleware
 const acl = require("./acl");
@@ -64,7 +78,6 @@ app.use(acl(aclRules));
 const pathToModelFolder = path.join(__dirname, "mongoose-models");
 app.use(theRest(express, "/api", pathToModelFolder));
 
-app.use(express.static("public"));
-app.listen(port, () => {
-	console.log("Server listening on", port);
+server.listen(port, () => {
+    console.log("Server listening on", port);
 });

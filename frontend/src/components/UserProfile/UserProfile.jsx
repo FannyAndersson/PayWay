@@ -1,10 +1,17 @@
 import React, { useContext, useState } from "react";
+import { Link } from 'react-router-dom';
 import { UserContext } from "../../AuthUserContext";
 import { Row, Col, TextInput, Button } from "react-materialize";
+import MessageComponent from '../Message/MessageComponent';
 
 const UserProfile = () => {
 	const { user, keepAuthUser } = useContext(UserContext);
-    const [errors, setErrors] = useState({});
+	const [errors, setErrors] = useState({});
+	const [showMessage, setShowMessage] = useState(false);
+	const handleMessageUnmount = () => {
+    setShowMessage(false);
+  };
+
 	let initialState = {};
 	if (user) {
 		initialState = {
@@ -47,7 +54,7 @@ const UserProfile = () => {
             labels[i].classList.add('active');
         }
     };
-    
+
     const handleOnKeyUp = (e) => {
         setErrors({...errors, [e.target.name]: false});
     }
@@ -55,7 +62,7 @@ const UserProfile = () => {
 	const catchError = err => {
         setErrors({...errors, [err.error]:true});
     };
-    
+
 	const onUpdateProfile = async () => {
 		try {
 			const body = {
@@ -75,6 +82,7 @@ const UserProfile = () => {
 			};
 
 			if (result.status === 200) {
+				setShowMessage(true);
 				setTouched(false);
 				keepAuthUser(result.response);
 			}
@@ -159,6 +167,10 @@ const UserProfile = () => {
 						s={12}
 						l={12}
 					/>
+					<Button flat style={{marginBottom: "20px"}}>
+					<Link to="/profile/change-password" title="Change password" s={12} l={12} className="forgot-your-pwd">Change password</Link>
+					</Button>
+
 					<Col s={12} l={12} className="btn-group">
 						<Button
 							type="button"
@@ -182,6 +194,13 @@ const UserProfile = () => {
 					</Col>
 				</Col>
 			</Row>
+			{showMessage ? <MessageComponent
+                                success
+                                redirectTo="/"
+                                text={[`You have updated your profile`]}
+                                unmountMe={handleMessageUnmount}
+                            />
+                            : null}
 		</React.Fragment>
 	);
 };

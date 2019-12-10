@@ -1,6 +1,6 @@
 const User = require('../mongoose-models/user.model')
 
-function createFavorite(app, db) {
+function createFavorite(app) {
     app.post('/api/createFavorite', async(req, res) => {
 
         const { user } = req.session;

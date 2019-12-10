@@ -19,7 +19,7 @@ const githubWebhook = require('./github-webhook');
 const getChildren = require('./get-children');
 const getFavorites = require('./getFavorites');
 const deleteFavourite = require('./delete-favourite');
-
+const checkOldPassword = require('./checkPasswordMatch');
 const routesList = [];
 
 // ... and here
@@ -43,13 +43,14 @@ routesList.push(register);
 routesList.push(githubWebhook);
 routesList.push(getChildren);
 routesList.push(getFavorites);
+routesList.push(checkOldPassword);
 
 
 
-function useCustomRoutes(app, db) {
+function useCustomRoutes(app, socket) {
   // tell express server to use routes
   routesList.forEach(useRoute => {
-    useRoute(app, db);
+    useRoute(app, socket);
   });
 }
 

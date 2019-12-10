@@ -7,6 +7,10 @@ cd /var/www/PayWay
 git fetch
 git checkout master
 git pull
+npm install
+cd frontend
+npm install
+npm run build
 
 echo "Automatic deploy finished! Let's crack open a cold beer and enjoy this moment!"
 

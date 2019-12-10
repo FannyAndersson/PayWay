@@ -1,7 +1,7 @@
 const Transaction = require('../mongoose-models/transaction.model');
 const User = require('../mongoose-models/user.model');
 
-function sendMoney(app) {
+function sendMoney(app, socket) {
     app.post('/api/send-money', async(req, res) => {
         const { user } = req.session;
 
@@ -62,6 +62,9 @@ function sendMoney(app) {
                 await actualRecipient.save();
 
             }
+
+            // transaction is successful, send socket.io event containing users id in its name
+            socket.emit(`transaction-${actualRecipient._id}`, result);
 
             res.json(result);
 

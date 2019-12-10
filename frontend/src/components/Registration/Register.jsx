@@ -77,8 +77,14 @@ const RegisterForm = () => {
 		}
 		if (!inputs.phone) {
 			errors.phone = "Enter a phone number";
-		} else if (!/[0-9]/.test(inputs.phone)) {
+		} else if (!/^[0-9]/.test(inputs.phone)) {
 			errors.phone = "Enter a valid phone number";
+		}
+		if (inputs.phone.length < 5) {
+			errors.phone = "Your phone number must be more than 5 digits";
+		}
+		if (inputs.phone.length > 12) {
+			errors.phone = "Your phone number can't be more than 12 digits";
 		}
 		if (!inputs.password) {
 			errors.password = "Password is required";
@@ -104,9 +110,8 @@ const RegisterForm = () => {
 
 	return (
 		<>
-			<div className="registration-page container center-align">
 				<Row>
-					<Col l={4} offset="l4" className="content">
+					<Col className="content">
 						<h3>Sign up!</h3>
 						<form onSubmit={handleSubmit}>
 							<Col s={12} l={12} className="input-field inline">
@@ -273,7 +278,6 @@ const RegisterForm = () => {
 						</form>
 					</Col>
 				</Row>
-			</div>
 			{showMessage ? <MessageComponent
 				success={otherError ? false : true}
 				redirectTo={otherError ? null : "/login"}
