@@ -48,6 +48,8 @@ function sendMoney(app, socket) {
 
             const result = await transaction.save();
 
+            const dataForNotification = await Transaction.findById(transaction._id).populate('sender' );       
+
             // only adjust balance if sender and recipient are different accounts
             if (actualRecipient.id !== senderId) {
 
@@ -64,7 +66,7 @@ function sendMoney(app, socket) {
             }
 
             // transaction is successful, send socket.io event containing users id in its name
-            socket.emit(`transaction-${actualRecipient._id}`, result);
+            socket.emit(`transaction-${actualRecipient._id}`, dataForNotification);
 
             res.json(result);
 

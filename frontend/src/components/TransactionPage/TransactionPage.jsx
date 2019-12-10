@@ -50,6 +50,7 @@ const TransactionPage = () => {
                                         contact={transaction.sender.name} 
                                         transaction={transaction} 
                                         key={transaction._id} 
+                                        message={transaction.message}
                                     />
                                 )}) : null;
 
@@ -60,7 +61,8 @@ const TransactionPage = () => {
                                     className={"outgoing"} 
                                     contact={transaction.recipient.name} 
                                     transaction={transaction} 
-                                    key={transaction._id} 
+                                    key={transaction._id}
+                                    message={transaction.message} 
                                 />
                                 )}) : null;
 
