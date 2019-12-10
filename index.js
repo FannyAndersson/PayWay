@@ -16,6 +16,14 @@ const connectionstring = require("./connectionstring.js");
 const useCustomRoutes = require("./routes/index");
 const webpush = require("web-push")
 
+//PayWay\node_modules\web-push>
+//web-push genarate vapid-keys
+//Public Key:
+//BBrISh-JBf3HJOPr1URjtAh_8MsWjBuqkS7w5SWY7ke1aN_1Zn70ptl_EDxs2RdcSaMHx2v2MBAIZF8DtKzuXWc
+
+//Private Key:
+//r5y7PXpA0wG6L1zFLHZSasPl8W0VJ34aF6nYpXDlhAQ
+
 // Connect to MongoDB via Mongoose
 mongoose
     .connect(connectionstring, {
