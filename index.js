@@ -66,7 +66,7 @@ if (process.env.NODE_ENV === 'production') {
     // serve index html for all urls as last resort - so it works with the whole SPA things
     app.get('*', (req, res) => {
 
-        response.sendFile(path.resolve(__dirname, 'frontend/build/index.html'));
+        res.sendFile(path.resolve(__dirname, 'frontend/build/index.html'));
 
     })
 
