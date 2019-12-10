@@ -1,4 +1,4 @@
-const { spawn } = require('child_process');
+const { exec } = require('child_process');
 
 function useWebHook(app) {
 
@@ -12,9 +12,7 @@ function useWebHook(app) {
 
             if (req.body.ref === 'refs/heads/master') {
 
-                const childProcess = spawn('sh deploy.sh')
-
-                childProcess.stdout.setEncoding('utf8');
+                const childProcess = exec('sh deploy.sh')
 
                 childProcess.stdout.on('data', chunk => {
 
