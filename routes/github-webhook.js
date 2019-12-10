@@ -1,4 +1,4 @@
-const exec = require('child_process').exec;
+const { exec } = require('child_process');
 
 function useWebHook(app) {
 
@@ -12,17 +12,19 @@ function useWebHook(app) {
 
             if (req.body.ref === 'refs/heads/master') {
 
-                exec('sh deploy.sh', (error, stdout, stderr) => {
+                const childProcess = exec('sh deploy.sh')
 
-                    console.log(stdout);
-                    console.log(stderr);
+                childProcess.stdout.on('data', chunk => {
 
-                    if (error !== null) {
-                        console.log(`exec error: ${error}`);
-                    }
+                    console.log(chunk);
+
                 });
 
-                console.log('---- AUTOMATIC DEPL0Y ATTEMPTED -----');
+                childProcess.on('close', (code) => {
+
+                    console.log('Automatic Deployment script exited with code', code);
+
+                });
 
                 return res.status(200).end('Push to master, automatic deploy started.');
 
