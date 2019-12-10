@@ -51,18 +51,26 @@ app.use(
 
 app.use(express.static("public"));
 
-if (process.env.NODE_ENV === 'production') {
-
-    app.use(express.static('frontend/build'));
-
-}
-
 const server = http.createServer(app);
 
 const io = require('socket.io')(server);
 
 // custom routes
 useCustomRoutes(app, io);
+
+if (process.env.NODE_ENV === 'production') {
+
+    // if in production, serve static files of frontend build
+    app.use(express.static('frontend/build'));
+
+    // serve index html for all urls as last resort - so it works with the whole SPA things
+    app.get('*', (req, res) => {
+
+        res.sendFile(path.resolve(__dirname, 'frontend/build/index.html'));
+
+    })
+
+}
 
 // connect our own acl middleware
 const acl = require("./acl");
