@@ -51,7 +51,7 @@ const ContextKeeper = props => {
     return (
         <div>
             <Row>
-                <Col s={12} l={3} offset='l4'>
+                <Col s={12} m={6} l={3} offset='l4 m3'>
                     {props.children}
                 </Col>
             </Row>

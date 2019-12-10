@@ -13,7 +13,7 @@ const SendMoney = (props) => {
 
     const [ showInvalidRecipientNotice, setShowInvalidRecipientNotice ] = useState(false);
     const [ showGenericErrorMessage, setShowGenericErrorMessage ] = useState(false);
-    const [ showOverLimitErrorMessage, setShowOverLimitErrorMessage ] = useState(false);
+    const [ textErrorMessage, setTextErrorMessage ] = useState('');
 
     const [ transactionStatus, setTransactionStatus ] = useState({ loading: false, loaded: false, error: false, status: null });
     
@@ -23,12 +23,62 @@ const SendMoney = (props) => {
         setShowMessage(false);
     }
 
+    const handleInvalidRecipientNotice = (errorCode) => {
+        if(errorCode === 'selfie') {
+            setShowInvalidRecipientNotice(true);
+            setTextErrorMessage(
+                <div className="row">
+                    <div className="col s12">
+                        <span>You can't send money to yourself!</span>
+                    </div>
+                </div>
+            );
+            return;
+        }
+        else {
+            setShowInvalidRecipientNotice(true);
+            setTextErrorMessage(
+                <div className="row">
+                    <div className="col s12">
+                        <span>User with such phone number doesn't exist</span>
+                    </div>
+                </div>
+            );
+            return;
+        }
+    }
+
+    const handleGenericErrorMessage = (errorCode) => {
+        setShowGenericErrorMessage(true);
+        if(errorCode === 'overLimit') {
+            setTextErrorMessage(
+                <div className="row">
+                    <div className="col s12" style={{padding: '5px 25px'}}>
+                        <span>You've made an attempt to send more than your limit!</span>
+                    </div>
+                    <div className="col s12" style={{padding: '5px 25px'}}>
+                        <span>Your limit is {user.limit}. You can change your limit in <Link title="Go to settings" to="/profile/settings">settings</Link>.</span>
+                    </div>
+                </div>
+            );
+            return;
+        }
+        
+        else {
+            setTextErrorMessage(
+                <div className="row">
+                    <div className="col s12">
+                        <span>Something went wrong! Make sure that your account has suffiecent funds and try again.</span>
+                    </div>
+                </div>
+            );
+            return;
+        }
+    }
+
     const { history } = props;
     const {user} = useContext(UserContext);
 
-    const isOverLimit = (amount) => {
-        return amount > user.limit ? true : false;
-    }
 
     // function to handle when form is submitted
     const handleSubmit = async (e) => {
@@ -39,10 +89,6 @@ const SendMoney = (props) => {
         // clear error status
         setShowGenericErrorMessage(false);
 
-        if(isOverLimit(transactionAmount)) {
-            setShowOverLimitErrorMessage(true);
-            return;
-        }
 
         // try to send money via API
         try {
@@ -64,11 +110,13 @@ const SendMoney = (props) => {
                 body: JSON.stringify(body),
             });
 
+            const result = await response.json();
+
             setTransactionStatus({ loading: false, loaded: true, error: false, status: response.status });
 
             if (response.status === 404) {
 
-                setShowInvalidRecipientNotice(true);
+                handleInvalidRecipientNotice('');
 
             } else if (response.ok) {
 
@@ -76,8 +124,17 @@ const SendMoney = (props) => {
                 setShowMessage(true);
 
             } else {
-
-                setShowGenericErrorMessage(true);
+                if(result.errorCode === 'overLimit') {
+                    handleGenericErrorMessage(result.errorCode);
+                    return;  
+                }
+                if(result.errorCode === 'selfie') {
+                    handleInvalidRecipientNotice(result.errorCode);
+                    return;  
+                }
+                else {
+                    handleGenericErrorMessage('');
+                }
 
             }
 
@@ -100,22 +157,7 @@ const SendMoney = (props) => {
     );
 
     const genericErrorMessage = (
-        <div className="row">
-            <div className="col s12">
-                <span>Something went wrong! Make sure that your account has suffiecent funds and try again.</span>
-            </div>
-        </div>
-    );
-
-    const overLimitErrorMessage = (
-        <div className="row">
-            <div className="col s12" style={{padding: '5px 25px'}}>
-                <span>You've made an attempt to send more than your limit!</span>
-            </div>
-            <div className="col s12" style={{padding: '5px 25px'}}>
-                <span>Your limit is {user.limit}. You can change your limit in <Link title="Go to settings" to="/profile/settings">settings</Link>.</span>
-            </div>
-        </div>
+        textErrorMessage
     );
 
     const { loading, error } = transactionStatus;
@@ -149,11 +191,14 @@ const SendMoney = (props) => {
         disabled: loading,
         id: 'transaction-amount',
         type: 'number',
-        className: 'validate',
+        className: `validate${showGenericErrorMessage ? ' invalid' : ''}`,
         min: 1,
         step: 1,
         value: transactionAmount,
-        onChange: e => setTransactionAmount(e.target.value),
+        onChange: e => {
+            setTransactionAmount(e.target.value);
+            setShowGenericErrorMessage(false);
+        },
     };
 
     const messageInputProps = {
@@ -168,12 +213,12 @@ const SendMoney = (props) => {
     return (
         
         <div className="row">
-            <form className="col" onSubmit={ handleSubmit }>
+            <form className="col s12" onSubmit={ handleSubmit }>
                 <div className="row">
                     <div className="input-field col s12">
                         <input { ...recipientInputProps } />
                         <label htmlFor="recipient-phone-number" className="active">Recipient</label>
-                        { showInvalidRecipientNotice ? 'There is no recipient with this phone number' : '' }
+                        { showInvalidRecipientNotice ? textErrorMessage : '' }
                     </div>
                     <div className="input-field col s12">
                         <input { ...amountInputProps } />
@@ -212,7 +257,6 @@ const SendMoney = (props) => {
                     { loading ? preloader : null }
 
                     { showGenericErrorMessage ? genericErrorMessage : null }
-                    {showOverLimitErrorMessage ? overLimitErrorMessage : null}
                 </div>
             </div>
             {showMMessage ? <MessageComponent 
