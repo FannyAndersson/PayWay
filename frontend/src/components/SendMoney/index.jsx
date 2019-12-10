@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import MessageComponent from '../Message/MessageComponent';
 import { UserContext } from "../../AuthUserContext";
+import { Link } from "react-router-dom";
+
 
 
 const SendMoney = (props) => {
@@ -11,6 +13,7 @@ const SendMoney = (props) => {
 
     const [ showInvalidRecipientNotice, setShowInvalidRecipientNotice ] = useState(false);
     const [ showGenericErrorMessage, setShowGenericErrorMessage ] = useState(false);
+    const [ showOverLimitErrorMessage, setShowOverLimitErrorMessage ] = useState(false);
 
     const [ transactionStatus, setTransactionStatus ] = useState({ loading: false, loaded: false, error: false, status: null });
     
@@ -23,7 +26,9 @@ const SendMoney = (props) => {
     const { history } = props;
     const {user} = useContext(UserContext);
 
-
+    const isOverLimit = (amount) => {
+        return amount > user.limit ? true : false;
+    }
 
     // function to handle when form is submitted
     const handleSubmit = async (e) => {
@@ -33,6 +38,11 @@ const SendMoney = (props) => {
 
         // clear error status
         setShowGenericErrorMessage(false);
+
+        if(isOverLimit(transactionAmount)) {
+            setShowOverLimitErrorMessage(true);
+            return;
+        }
 
         // try to send money via API
         try {
@@ -93,6 +103,17 @@ const SendMoney = (props) => {
         <div className="row">
             <div className="col s12">
                 <span>Something went wrong! Make sure that your account has suffiecent funds and try again.</span>
+            </div>
+        </div>
+    );
+
+    const overLimitErrorMessage = (
+        <div className="row">
+            <div className="col s12" style={{padding: '5px 25px'}}>
+                <span>You've made an attempt to send more than your limit!</span>
+            </div>
+            <div className="col s12" style={{padding: '5px 25px'}}>
+                <span>Your limit is {user.limit}. You can change your limit in <Link title="Go to settings" to="/profile/settings">settings</Link>.</span>
             </div>
         </div>
     );
@@ -191,6 +212,7 @@ const SendMoney = (props) => {
                     { loading ? preloader : null }
 
                     { showGenericErrorMessage ? genericErrorMessage : null }
+                    {showOverLimitErrorMessage ? overLimitErrorMessage : null}
                 </div>
             </div>
             {showMMessage ? <MessageComponent 
