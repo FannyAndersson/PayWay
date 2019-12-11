@@ -253,7 +253,7 @@ const SendMoney = (props) => {
             </form>
 
             <div className="row">
-                <div className="col s12 l3 offset-l4">
+                <div className="col s12">
                     { loading ? preloader : null }
 
                     { showGenericErrorMessage ? genericErrorMessage : null }

@@ -25,9 +25,19 @@ function sendMoney(app, socket) {
                 return res.status(500).send('sender does not exist in db');
             }
 
+            //check if sender try to send money to himself
+            if(recipient === sender.phone) {
+                return res.status(400).json({errorCode: 'selfie'});
+            }
+
             // check that sender has enogugh money
             if (sender.balance < amount) {
-                return res.status(400).send('You do not have enough money!');
+                return res.status(400).json('You do not have enough money!');
+            }
+
+            //check that amount is not over limit
+            if(sender.limit < amount) {
+                return res.status(400).json({errorCode: 'overLimit'});
             }
 
             // convert phone nr to string just in case
@@ -35,7 +45,7 @@ function sendMoney(app, socket) {
 
 
             if (!actualRecipient) {
-                return res.status(404).send('No such user');
+                return res.status(404).json('No such user');
             }
 
             // show me the money
