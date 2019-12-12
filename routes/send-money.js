@@ -1,5 +1,6 @@
 const Transaction = require('../mongoose-models/transaction.model');
 const User = require('../mongoose-models/user.model');
+const webpush = require('web-push');
 
 function sendMoney(app, socket) {
     app.post('/api/send-money', async(req, res) => {
@@ -75,11 +76,25 @@ function sendMoney(app, socket) {
 
             }
 
+            res.json(result);
+
             // transaction is successful, send socket.io event containing users id in its name
             socket.emit(`transaction-${actualRecipient._id}`, dataForNotification);
 
-            res.json(result);
+            const { subscription } = actualRecipient;
 
+            // send push notification to recipient
+            if (subscription) {
+
+                const toSend = {
+                    title: 'New Payment',
+                    icon: '/logo192.png',
+                    body: `You received a new payment from ${sender.name}.`,
+                };
+
+                await webpush.sendNotification(subscription, JSON.stringify(toSend));
+
+            }
         } catch (error) {
             res.status(500).json(error);
         }

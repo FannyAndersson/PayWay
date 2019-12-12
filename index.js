@@ -9,11 +9,20 @@ const connectMongo = require("connect-mongo")(session);
 const app = express();
 const salt = 'lussekatter are the best'; // unique secret
 const http = require('http');
+const webpush = require('web-push');
 
 const theRest = require("the.rest");
 const port = 3001;
 const connectionstring = require("./connectionstring.js");
 const useCustomRoutes = require("./routes/index");
+
+const { public, private } = require('./vapid-keys.json');
+
+webpush.setVapidDetails(
+    'mailto:elias.hj@gmail.com',
+    public,
+    private,
+);
 
 // Connect to MongoDB via Mongoose
 mongoose

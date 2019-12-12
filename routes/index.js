@@ -20,6 +20,7 @@ const getChildren = require('./get-children');
 const getFavorites = require('./getFavorites');
 const deleteFavourite = require('./delete-favourite');
 const checkOldPassword = require('./checkPasswordMatch');
+const pushSubscribe = require('./push-subscribe');
 const routesList = [];
 
 // ... and here
@@ -44,6 +45,7 @@ routesList.push(githubWebhook);
 routesList.push(getChildren);
 routesList.push(getFavorites);
 routesList.push(checkOldPassword);
+routesList.push(pushSubscribe);
 
 
 

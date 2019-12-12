@@ -15,16 +15,26 @@ const ContextKeeper = props => {
 
     const checkLogin = async () => {
 
-        const response = await fetch('/api/login').catch(err => console.error(err, 'Error'));
-        const result = { user: await response.json(), status: response.status };
-        if (result.user) {
-            keepAuthUser(result.user);
-            setAuthUser(true);
+        try {
+
+            const response = await fetch('/api/login').catch(err => console.error(err, 'Error'));
+            const result = { user: await response.json(), status: response.status };
+            if (result.user) {
+                keepAuthUser(result.user);
+                setAuthUser(true);
+            }
+
+            setIsLoading(false);
+
+        } catch (e) {
+
+            setIsLoading(false);
+
         }
 
-        setIsLoading(false);
 
     }
+
     if (!authUser) {
 
         checkLogin();
