@@ -67,3 +67,7 @@ config
 
 # output from sass compiler
 frontend/src/css/style.css
+
+#vapid keys
+vapid-keys.json
+fronted/vapid-keys.json
