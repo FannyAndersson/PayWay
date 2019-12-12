@@ -16,9 +16,11 @@ const connectionstring = require("./connectionstring.js");
 const useCustomRoutes = require("./routes/index");
 //webpush, to push notifications
 const webpush = require("web-push");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+
+// app.use(express.json());
 
 //PayWay\node_modules\web-push>
 //web-push genarate vapid-keys
