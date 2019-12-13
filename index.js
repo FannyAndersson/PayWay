@@ -26,14 +26,13 @@ const webpush = require("web-push");
 //web-push genarate vapid-keys
 //Public Key:
 //BBrISh-JBf3HJOPr1URjtAh_8MsWjBuqkS7w5SWY7ke1aN_1Zn70ptl_EDxs2RdcSaMHx2v2MBAIZF8DtKzuXWc
-const publicVapidKey ='BBrISh-JBf3HJOPr1URjtAh_8MsWjBuqkS7w5SWY7ke1aN_1Zn70ptl_EDxs2RdcSaMHx2v2MBAIZF8DtKzuXWc';
 
-//Private Key:
-//r5y7PXpA0wG6L1zFLHZSasPl8W0VJ34aF6nYpXDlhAQ
+const vapidKeys = {
+    public: 'BBrISh-JBf3HJOPr1URjtAh_8MsWjBuqkS7w5SWY7ke1aN_1Zn70ptl_EDxs2RdcSaMHx2v2MBAIZF8DtKzuXWc',
+    private: require('./vapid-private-key.json').privateVapidKey
+}
 
-const privateVapidKey = 'r5y7PXpA0wG6L1zFLHZSasPl8W0VJ34aF6nYpXDlhAQ';
-
-webpush.setVapidDetails('mailto:pawelrz@wp.pl',publicVapidKey, privateVapidKey);
+webpush.setVapidDetails('mailto:pawelrz@wp.pl',vapidKeys.public, vapidKeys.private);
 
 // Connect to MongoDB via Mongoose
 mongoose

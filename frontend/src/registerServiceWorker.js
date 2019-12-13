@@ -14,6 +14,7 @@ class RegisterServiceWorker {
     }
    
     async register() {
+
       // check if there are any registrered service workers
       let registrations = await navigator.serviceWorker.getRegistrations();
       // wait for the service worker to register
