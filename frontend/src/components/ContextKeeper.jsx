@@ -33,6 +33,7 @@ const ContextKeeper = props => {
 
     useEffect(() => {
         checkLogin();
+        // eslint-disable-next-line
     }, []);
 
     if (isLoading) {
