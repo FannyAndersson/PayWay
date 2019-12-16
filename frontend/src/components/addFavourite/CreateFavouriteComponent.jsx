@@ -58,7 +58,7 @@ const CreateFavouriteComponent = () => {
         <React.Fragment>
             {!user ? <Redirect to='/login' /> : null}
             <Row>
-                <Col node="form" onSubmit={handleSubmit} s={12} m={4} offset="m4">
+                <Col node="form" onSubmit={handleSubmit} s={12}>
                     <h1>Add your favourite</h1>
 
                     <TextInput
