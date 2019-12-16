@@ -16,12 +16,12 @@ const MainPage = () => {
     {!user ? <Redirect to="/login" /> : null}
     <Col style={{ width: '100%', marginTop: '42%' }}>
       <Row>
-        <Button type="button" style={{ width: '100%', marginBottom: '50%' }}>
+        <Button className="link-btn" type="button" style={{ width: '100%', marginBottom: '50%' }}>
           <Link style={{ color: "#fff" }} to="/send-money">SEND MONEY</Link>
         </Button>
       </Row>
       <Row>
-        <Button type="button" style={{ width: '100%', backgroundColor: '#03DAC6' }}>
+        <Button className="link-btn" type="button" style={{ width: '100%', backgroundColor: '#03DAC6' }}>
           <Link to="/profile/transactions">TRANSACTIONS</Link>
         </Button>
       </Row>
