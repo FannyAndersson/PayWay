@@ -64,9 +64,9 @@ const userSchema = new Schema({
         type: String,
         default: 'SEK'
     },
-    subscription: {
+    subscriptions: [{
         type: Object,
-    },
+    }],
 }, {
     toJSON: { virtuals: true },
 });

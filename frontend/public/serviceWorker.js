@@ -1,10 +1,10 @@
-// this version number must be bumped when assets change
-const version = 0.2;
+// this version number must be bumped when assets change - otherwise we will keep serving the old stuff from old cache
+const version = 0.3;
 
 // this gets magically changed to true in production
 const production = false;
-// ...
-// just kidding, it gets changed to true in our postBuildScript.js
+
+// got ya! :) it was of course a joke, it gets changed to true in our postBuildScript.js
 
 // only log stuff when in development
 function log( ...args ) {
@@ -28,7 +28,7 @@ self.addEventListener('activate', event => {
 
     log('activation')
 
-    // I don't know why I write it this way, I just read on the internet that the argument to waitUntil should be a promise
+    // argument passed to waitUntil must be a promise
     event.waitUntil(async function() {
 
         await self.clients.claim();
@@ -55,8 +55,9 @@ self.addEventListener('fetch', event => {
 
     const route = request.url.replace(location.origin, '');
 
-    // anything to the API/socket/chrome-extensions is network only
-    if (request.method.toLowerCase() !== 'get' || /^\/api\//.test(route) || /^\/socket/.test(route) || /^chrome/.test(route)) {
+    // everything when developing is network only
+    // anything to the API/socket/chrome-extensions is network only in production aswell
+    if (!production || request.method.toLowerCase() !== 'get' || /^\/api\//.test(route) || /^\/socket/.test(route) || /^chrome/.test(route)) {
 
         log(`Request to ${route} intercepted and treated as network only.`);
 
@@ -114,8 +115,10 @@ async function fetchResource(request) {
 
 async function clearOldCaches() {
 
+    // get all caches (shouldn't be more than one but you never know right)
     const keys = await caches.keys();
 
+    // return a promise that resolves when all delete operations have succeeded or failed
     return Promise.all(
         keys
             .filter(key => Number(key) !== version)

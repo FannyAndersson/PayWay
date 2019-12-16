@@ -81,10 +81,10 @@ function sendMoney(app, socket) {
             // transaction is successful, send socket.io event containing users id in its name
             socket.emit(`transaction-${actualRecipient._id}`, dataForNotification);
 
-            const { subscription } = actualRecipient;
+            const { subscriptions } = actualRecipient;
 
             // send push notification to recipient
-            if (subscription) {
+            subscriptions.forEach(async subscription => {
 
                 const toSend = {
                     title: 'New Payment',
@@ -94,7 +94,8 @@ function sendMoney(app, socket) {
 
                 await webpush.sendNotification(subscription, JSON.stringify(toSend));
 
-            }
+            });
+
         } catch (error) {
             res.status(500).json(error);
         }

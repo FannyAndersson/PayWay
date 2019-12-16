@@ -10,13 +10,20 @@ function usePushSubscribe(app) {
 
             const { subscription } = req.body;
 
-            user.subscription = subscription;
+            if (!user.subscriptions.some(({ endpoint }) => endpoint === subscription.endpoint)) {
 
-            await user.save();
+                user.subscriptions.push(subscription);
 
-            res.status(200).send('success');
+                await user.save();
 
-            console.log('finished work on', user);
+                res.status(200).send('success');
+
+            } else {
+
+                res.status(200).send('already subbed');
+
+            }
+
 
         } catch (e) {
 
@@ -25,7 +32,6 @@ function usePushSubscribe(app) {
         }
 
         setTimeout(() => {
-
 
         })
 

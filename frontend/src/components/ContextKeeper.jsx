@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../AuthUserContext";
 import { Row, Col } from 'react-materialize';
 
@@ -8,10 +8,7 @@ import { Row, Col } from 'react-materialize';
 const ContextKeeper = props => {
     const { keepAuthUser } = useContext(UserContext);
 
-    const [authUser, setAuthUser] = useState(false);
-
     const [isLoading, setIsLoading] = useState(true);
-
 
     const checkLogin = async () => {
 
@@ -21,7 +18,6 @@ const ContextKeeper = props => {
             const result = { user: await response.json(), status: response.status };
             if (result.user) {
                 keepAuthUser(result.user);
-                setAuthUser(true);
             }
 
             setIsLoading(false);
@@ -35,11 +31,9 @@ const ContextKeeper = props => {
 
     }
 
-    if (!authUser) {
-
+    useEffect(() => {
         checkLogin();
-    }
-
+    }, []);
 
     if (isLoading) {
 

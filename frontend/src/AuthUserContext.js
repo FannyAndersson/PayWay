@@ -23,8 +23,10 @@ const UserContextProvider = (props) => {
         }, 5000);
     }
 
+    // when user changes, remove old subsription and add new
     useEffect(() => {
 
+        // this might be overkill but why not
         const functionReference = handleToast;
 
         if (user) {
@@ -36,8 +38,12 @@ const UserContextProvider = (props) => {
 
         return () => {
 
-            socket.off(`transaction-${user._id}`, functionReference)
-            unregisterPushNotifications();
+            if (user) {
+
+                socket.off(`transaction-${user._id}`, functionReference)
+                unregisterPushNotifications();
+
+            }
 
         }
 
@@ -65,42 +71,32 @@ const UserContextProvider = (props) => {
 
 async function registerPushNotifications() {
 
-    if ('serviceWorker' in navigator && 'Notification' in window) {
-
-        const registration = await navigator.serviceWorker.getRegistration();
+    if ('Notification' in window) {
 
         Notification.requestPermission(status => {
             console.log('Notification permission status:', status);
         });
 
-        console.log('Hello. I am attempting to subscribe you to push notifications');
+    }
+
+    if ('serviceWorker' in navigator) {
+
+        const registration = await navigator.serviceWorker.getRegistration();
 
         const publicVapidKey = 'BPb93HRRyEZ00LbioKa_aoteLs3aE_PqabHPw0zskO6SDJ8ol0_wiyCrB4yL5QY2OJ9Q9tRYwj1vKQ59gK9Pa90';
 
-        const subscription = await registration.pushManager.subscribe({
+        const subscription = await registration.pushManager.getSubscription() || await registration.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
         });
 
-        console.log('push notifications registered', subscription);
-
-        const result = await fetch('/api/push-subscribe', {
+        await fetch('/api/push-subscribe', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ subscription }),
         });
 
-        if (result.ok) {
-
-            console.log('Registration worked');
-
-        } else {
-
-            console.log('Subscription to push events did not work - ', result)
-        }
-
     }
-
 
 }
 
@@ -117,6 +113,12 @@ async function unregisterPushNotifications() {
             if (subscription) {
 
                 subscription.unsubscribe();
+
+                await fetch('/api/push-unsubscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ subscription }),
+                });
 
             }
 
