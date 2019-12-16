@@ -4,15 +4,11 @@ async function registerServiceWorker() {
 
         try {
 
-            console.log('Hello. I\'m going to try registering a service worker for you. Hold on.');
+            await navigator.serviceWorker.register('/serviceWorker.js');
 
-            const registration = await navigator.serviceWorker.register('/serviceWorker.js');
+        } catch {
 
-            console.log('result', registration);
-
-        } catch (e) {
-
-            console.log('error registering service worker', e);
+            // silence is golden
 
         }
 

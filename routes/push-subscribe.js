@@ -31,10 +31,6 @@ function usePushSubscribe(app) {
 
         }
 
-        setTimeout(() => {
-
-        })
-
     });
 
 }
