@@ -48,5 +48,7 @@ module.exports = ({ apiPath, rules }) => {
             res.send("Page not found.");
             return;
         }
+
+        next();
     };
 };
