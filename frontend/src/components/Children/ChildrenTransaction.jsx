@@ -13,30 +13,47 @@ const ChildrenTransactions = (props) => {
     const { params: { _id } } = match
     const id = _id;
 
+    const createChildTransactionsList = (data, mounted) => {
+        const allTransactions = [...data.incomingTransactions, ...data.outgoingTransactions].sort((a, b) => {
+            return a.date > b.date ? -1 : 1
+        });
+        if (mounted) {
+            setData([...allTransactions
+            ]);
+            setName(data.childName);
+            setPhone(data.childPhone)
+        }
+    }
+
     useEffect(() => {
 
         let mounted = true;
 
         const getTransaction = async () => {
-
+            const childID = _id;
+            let key = "/api/child-transactions/";
+            let url = key + childID;
             try {
-                const childID = _id;
-                let key = "/api/child-transactions/";
-                let url = key + childID;
+                
                 const result = await fetch(url);
                 const jsonData = await result.json();
-                const allTransactions = [...jsonData.incomingTransactions, ...jsonData.outgoingTransactions].sort((a, b) => {
-                    return a.date > b.date ? -1 : 1
-                });
-                if (mounted) {
-                    setData([...allTransactions
-                    ]);
-                    setName(jsonData.childName);
-                    setPhone(jsonData.childPhone)
-                }
+                createChildTransactionsList(jsonData, mounted);
+                
 
             } catch (error) {
                 console.error('Error:', error);
+                if('caches' in window) {
+                    console.log('I have cache!');
+                    caches.match(url)
+                        .then(res => {
+                            if(res) {
+                                return res.json();
+                            }
+                        })
+                        .then(data => {
+                            createChildTransactionsList(data, mounted);
+                        })
+                }
             }
         }
 

@@ -9,22 +9,40 @@ const Children = () => {
     const [children, setChildren] = useState({});
     const { user } = useContext(UserContext);
 
+    const createChildrenList =(data, mounted) => {
+        const allChildren = data ? {confirmed: data[0], pending: data[1]} : null;
+        if (mounted) {
+            setChildren({...allChildren});
+        }
+    }
+
     useEffect(() => {
         let mounted = true;
+        const userID = user._id;
+        let key = "/api/users/";
+        let url = key + userID + "/children";
         const getChildren = async () => {
             try {
-                const userID = user._id;
-                let key = "/api/users/";
-                let url = key + userID + "/children";
-                const data = await fetch(url);
-                const result = await data.json();
-                const allChildren = result ? {confirmed: result[0], pending: result[1]} : null;
-                if (mounted) {
-                    setChildren({...allChildren});
-                }
+                
+                const result = await fetch(url);
+                const data = await result.json();
+                createChildrenList(data, mounted);
+                
 
             } catch (error) {
                 console.error(error);
+                if('caches' in window) {
+                    console.log('I have cache!');
+                    caches.match(url)
+                        .then(res => {
+                            if(res) {
+                                return res.json();
+                            }
+                        })
+                        .then(data => {
+                            createChildrenList(data, mounted);
+                        })
+                }
             }
         }
 

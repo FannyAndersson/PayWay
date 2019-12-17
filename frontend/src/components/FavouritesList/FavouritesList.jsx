@@ -16,21 +16,42 @@ const FavouritesList = () => {
     const { user } = useContext(UserContext);
     const [favorites, setFavorites] = useState([]);
 
+    const createFavouritesList = (data, mounted) => {
+        if (mounted) {
+            setFavorites([...data])
+        }
+    }
+
     useEffect(() => {
         let mounted = true;
+        
 
         const getFavorites = async () => {
+            const userID = user._id;
+            let key = '/api/users/';
+            let url = key + userID + '/favorites';
+
             try {
-                const userID = user._id;
-                let key = '/api/users/';
-                let url = key + userID + '/favorites';
-                const data = await fetch(url);
-                const result = await data.json();
-                if (mounted) {
-                    setFavorites([...result])
-                }
+
+                const result = await fetch(url);
+                const data = await result.json();
+
+                createFavouritesList(data, mounted);
+                
             } catch (error) {
                 console.error(error);
+                if('caches' in window) {
+                    console.log('I have cache!');
+                    caches.match(url)
+                        .then(res => {
+                            if(res) {
+                                return res.json();
+                            }
+                        })
+                        .then(data => {
+                            createFavouritesList(data, mounted);
+                        })
+                }
             }
         }
         getFavorites();
