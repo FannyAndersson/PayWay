@@ -37,13 +37,14 @@ const ChildrenTransactions = (props) => {
                 
                 const result = await fetch(url);
                 const jsonData = await result.json();
-                createChildTransactionsList(jsonData, mounted);
-                
+                if(jsonData) {
+                    createChildTransactionsList(jsonData, mounted);
+                }                
 
             } catch (error) {
                 console.error('Error:', error);
                 if('caches' in window) {
-                    console.log('I have cache!');
+                    console.log('Perhaps I have some cache for you?');
                     caches.match(url)
                         .then(res => {
                             if(res) {
@@ -51,7 +52,9 @@ const ChildrenTransactions = (props) => {
                             }
                         })
                         .then(data => {
-                            createChildTransactionsList(data, mounted);
+                            if(data) {
+                                createChildTransactionsList(data, mounted);
+                            }
                         })
                 }
             }

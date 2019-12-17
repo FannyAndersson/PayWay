@@ -38,7 +38,7 @@ const TransactionPage = () => {
             } catch (error) {
                 console.error('Error:', error);
                 if('caches' in window) {
-                    console.log('I have cache!');
+                    console.log('Perhaps I have some cache for you?');
                     caches.match(url)
                         .then(res => {
                             if(res) {
@@ -46,7 +46,9 @@ const TransactionPage = () => {
                             }
                         })
                         .then(data => {
-                            createTransactionsList(data, mounted);
+                            if(data) {
+                                createTransactionsList(data, mounted);
+                            }
                         })
                 }
             }

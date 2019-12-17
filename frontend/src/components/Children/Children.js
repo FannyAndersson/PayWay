@@ -26,13 +26,14 @@ const Children = () => {
                 
                 const result = await fetch(url);
                 const data = await result.json();
-                createChildrenList(data, mounted);
-                
+                if(data) {
+                    createChildrenList(data, mounted);
+                }
 
             } catch (error) {
                 console.error(error);
                 if('caches' in window) {
-                    console.log('I have cache!');
+                    console.log('Perhaps I have some cache for you?');
                     caches.match(url)
                         .then(res => {
                             if(res) {
@@ -40,7 +41,9 @@ const Children = () => {
                             }
                         })
                         .then(data => {
-                            createChildrenList(data, mounted);
+                            if(data) {
+                                createChildrenList(data, mounted);
+                            }
                         })
                 }
             }

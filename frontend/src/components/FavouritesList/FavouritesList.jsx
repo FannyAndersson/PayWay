@@ -36,12 +36,14 @@ const FavouritesList = () => {
                 const result = await fetch(url);
                 const data = await result.json();
 
-                createFavouritesList(data, mounted);
+                if(data) {
+                    createFavouritesList(data, mounted);
+                }
                 
             } catch (error) {
                 console.error(error);
                 if('caches' in window) {
-                    console.log('I have cache!');
+                    console.log('Perhaps I have some cache for you?');
                     caches.match(url)
                         .then(res => {
                             if(res) {
@@ -49,7 +51,9 @@ const FavouritesList = () => {
                             }
                         })
                         .then(data => {
-                            createFavouritesList(data, mounted);
+                            if(data) {
+                                createFavouritesList(data, mounted);
+                            }
                         })
                 }
             }

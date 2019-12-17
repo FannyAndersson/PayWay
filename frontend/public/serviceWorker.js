@@ -1,5 +1,5 @@
 // this version number must be bumped when assets change - otherwise we will keep serving the old stuff from old cache
-const version = 0.5;
+const version = 0.6;
 
 // this gets magically changed to true in production
 const production = false;
@@ -66,7 +66,29 @@ self.addEventListener('fetch', event => {
     } else {
 
         // anything else is cache first
-        return event.respondWith(fetchResource(request));
+        // return event.respondWith(fetchResource(request));
+
+        event.respondWith(
+            caches.open(version)
+              .then(function (cache) {
+                return fetch(event.request)
+                  .then(function (res) {
+                      //save in cache all dynamic cache
+                    cache.put(event.request, res.clone());
+                    return res;
+                  });
+              }).catch(err => {
+                  //serve from cache if no network in the air
+               return caches.match(event.request)
+                    .then(function (response) {
+                      if(response) {
+                        return response;     
+                      }
+                    })
+              })
+          );
+
+
 
     }
 
