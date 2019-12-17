@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../AuthUserContext";
 import { Row, Col } from 'react-materialize';
 
@@ -8,28 +8,33 @@ import { Row, Col } from 'react-materialize';
 const ContextKeeper = props => {
     const { keepAuthUser } = useContext(UserContext);
 
-    const [authUser, setAuthUser] = useState(false);
-
     const [isLoading, setIsLoading] = useState(true);
-
 
     const checkLogin = async () => {
 
-        const response = await fetch('/api/login').catch(err => console.error(err, 'Error'));
-        const result = { user: await response.json(), status: response.status };
-        if (result.user) {
-            keepAuthUser(result.user);
-            setAuthUser(true);
+        try {
+
+            const response = await fetch('/api/login').catch(err => console.error(err, 'Error'));
+            const result = { user: await response.json(), status: response.status };
+            if (result.user) {
+                keepAuthUser(result.user);
+            }
+
+            setIsLoading(false);
+
+        } catch (e) {
+
+            setIsLoading(false);
+
         }
 
-        setIsLoading(false);
 
     }
-    if (!authUser) {
 
+    useEffect(() => {
         checkLogin();
-    }
-
+        // eslint-disable-next-line
+    }, []);
 
     if (isLoading) {
 

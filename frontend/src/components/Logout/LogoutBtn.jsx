@@ -5,14 +5,8 @@ import { UserContext } from '../../AuthUserContext';
 const LogoutBtn = () => {
     const { user, destroyAuthUser } = useContext(UserContext);
     const onLogout = async (e) => {
-        let listItems = e.target.closest('li').parentNode.getElementsByClassName('active');
-        if (listItems.length) {
-            listItems[0].classList.remove('active');
-        }
-        const response = await fetch('/api/logout');
-        if (response.status === 200) {
-            destroyAuthUser();
-        }
+        destroyAuthUser();
+        await fetch('/api/logout');
     }
 
     return (

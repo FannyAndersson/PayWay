@@ -63,7 +63,10 @@ const userSchema = new Schema({
     currency: {
         type: String,
         default: 'SEK'
-    }
+    },
+    subscriptions: [{
+        type: Object,
+    }],
 }, {
     toJSON: { virtuals: true },
 });
