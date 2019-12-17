@@ -7,7 +7,7 @@
     "test": "node test-runner",
     "frontend": "cd frontend && npm start",
     "backend-dev": "nodemon --ignore frontend/ index",
-    "backend": "NODE_ENV=production node index",
+    "backend": "SET NODE_ENV=production & node index",
     "start": "concurrently \"npm:backend-dev\" \"npm:frontend\"",
     "start-server": "npm run backend",
     "lint": "./node_modules/.bin/eslint routes/ && cd frontend && ../node_modules/.bin/eslint src/"

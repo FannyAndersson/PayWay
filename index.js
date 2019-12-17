@@ -81,8 +81,8 @@ app.use(acl(aclRules));
 const pathToModelFolder = path.join(__dirname, "mongoose-models");
 app.use(theRest(express, "/api", pathToModelFolder));
 
-if (process.env.NODE_ENV === 'production') {
-
+if (process.env.NODE_ENV.trim() === 'production') {
+    console.log('I am in production now!');
     // if in production, serve static files of frontend build
     app.use(express.static('frontend/build'));
 
