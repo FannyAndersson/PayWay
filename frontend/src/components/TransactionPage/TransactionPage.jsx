@@ -9,6 +9,8 @@ const TransactionPage = () => {
 
     const { user } = useContext(UserContext);
 
+    const [text, setText] = useState('');
+
     const createTransactionsList = (data, mounted) => {
         const allTransactions = [...data.incomingTransactions, ...data.outgoingTransactions].sort((a, b) => {
             return a.date > b.date ? -1 : 1
@@ -44,9 +46,14 @@ const TransactionPage = () => {
                             if(res) {
                                 return res.json();
                             }
+                            else {
+                                console.log('Sorry, I have no cache for this case');
+                                setText('You are offline. Data cannot be updated now.');
+                            }
                         })
                         .then(data => {
                             if(data) {
+                                console.log('Happy cache!');
                                 createTransactionsList(data, mounted);
                             }
                         })
@@ -109,7 +116,7 @@ const TransactionPage = () => {
             </Tabs>
         </React.Fragment>
     ) : (
-        <p>{`You don't have any transactions yet`}</p>
+        <p>{text ? text : `You don't have any transactions yet`}</p>
         )
 }
 

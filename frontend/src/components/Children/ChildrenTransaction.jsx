@@ -12,6 +12,8 @@ const ChildrenTransactions = (props) => {
     const { match } = props;
     const { params: { _id } } = match
     const id = _id;
+    const [text, setText] = useState('');
+
 
     const createChildTransactionsList = (data, mounted) => {
         const allTransactions = [...data.incomingTransactions, ...data.outgoingTransactions].sort((a, b) => {
@@ -50,9 +52,14 @@ const ChildrenTransactions = (props) => {
                             if(res) {
                                 return res.json();
                             }
+                            else {
+                                console.log('Sorry, I have no cache for this case');
+                                setText('You are offline. Data cannot be updated now.');
+                            }
                         })
                         .then(data => {
                             if(data) {
+                                console.log('Happy cache!');
                                 createChildTransactionsList(data, mounted);
                             }
                         })
@@ -119,7 +126,7 @@ const ChildrenTransactions = (props) => {
     ) : (<React.Fragment>
         <h4>{name}</h4>
         <h5>{phone}</h5>
-        <p>{`${name} doesn't have any transactions yet`}</p>
+        <p>{text ? text : `${name} doesn't have any transactions yet`}</p>
     </React.Fragment>
         )
 }

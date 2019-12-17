@@ -8,6 +8,8 @@ import { Link, } from 'react-router-dom';
 const Children = () => {
     const [children, setChildren] = useState({});
     const { user } = useContext(UserContext);
+    const [text, setText] = useState('');
+
 
     const createChildrenList =(data, mounted) => {
         const allChildren = data ? {confirmed: data[0], pending: data[1]} : null;
@@ -39,9 +41,14 @@ const Children = () => {
                             if(res) {
                                 return res.json();
                             }
+                            else {
+                                console.log('Sorry, I have no cache for this case');
+                                setText('You are offline. Data cannot be updated now.');
+                            }
                         })
                         .then(data => {
                             if(data) {
+                                console.log('Happy cache!');
                                 createChildrenList(data, mounted);
                             }
                         })
@@ -94,7 +101,7 @@ const Children = () => {
 
 
         ) : (
-            <p>{`Loading`}</p>
+            <p>{text ? text : `Loading`}</p>
             )
 }
 

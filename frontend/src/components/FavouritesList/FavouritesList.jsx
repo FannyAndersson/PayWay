@@ -15,6 +15,8 @@ const FavouritesList = () => {
 
     const { user } = useContext(UserContext);
     const [favorites, setFavorites] = useState([]);
+    const [text, setText] = useState('');
+
 
     const createFavouritesList = (data, mounted) => {
         if (mounted) {
@@ -49,9 +51,14 @@ const FavouritesList = () => {
                             if(res) {
                                 return res.json();
                             }
+                            else {
+                                console.log('Sorry, I have no cache for this case');
+                                setText('You are offline. Data cannot be updated now.');
+                            }
                         })
                         .then(data => {
                             if(data) {
+                                console.log('Happy cache!');
                                 createFavouritesList(data, mounted);
                             }
                         })
@@ -102,7 +109,7 @@ const FavouritesList = () => {
                         </Collection>
                     </React.Fragment>
                     :   <React.Fragment>
-                        <p> You have not added any contacts to favorites</p>
+                        <p>{text ? text : 'You have not added any contacts to favorites'}</p>
                         <Link to="/profile/favorites/add-favorite" title="Add a contact to Favorites">Add a contact to Favorites</Link>
                     </React.Fragment> 
                     }
