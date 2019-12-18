@@ -1,5 +1,5 @@
 // this version number must be bumped when assets change - otherwise we will keep serving the old stuff from old cache
-const version = 0.3;
+const version = 1.0;
 
 // this gets magically changed to true in production
 const production = false;
