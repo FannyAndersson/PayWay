@@ -262,7 +262,7 @@ const SendMoney = (props) => {
             {showMMessage ? <MessageComponent 
                                 success
                                 redirectTo="/" 
-                                text={[`Congrats! You've just sent ${transactionAmount} ${user.currency}`, `to recipient with phone number ${recipientPhone}`]} 
+                                text={[`Congrats! You've just sent ${transactionAmount} SEK`, `to recipient with phone number ${recipientPhone}`]} 
                                 unmountMe={handleMessageUnmount} 
                             />
                             : null}
