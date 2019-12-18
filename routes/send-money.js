@@ -1,5 +1,6 @@
 const Transaction = require('../mongoose-models/transaction.model');
 const User = require('../mongoose-models/user.model');
+const webpush = require('web-push');
 
 function sendMoney(app, socket) {
     app.post('/api/send-money', async(req, res) => {
@@ -25,9 +26,19 @@ function sendMoney(app, socket) {
                 return res.status(500).send('sender does not exist in db');
             }
 
+            //check if sender try to send money to himself
+            if(recipient === sender.phone) {
+                return res.status(400).json({errorCode: 'selfie'});
+            }
+
             // check that sender has enogugh money
             if (sender.balance < amount) {
-                return res.status(400).send('You do not have enough money!');
+                return res.status(400).json('You do not have enough money!');
+            }
+
+            //check that amount is not over limit
+            if(sender.limit < amount) {
+                return res.status(400).json({errorCode: 'overLimit'});
             }
 
             // convert phone nr to string just in case
@@ -35,7 +46,7 @@ function sendMoney(app, socket) {
 
 
             if (!actualRecipient) {
-                return res.status(404).send('No such user');
+                return res.status(404).json('No such user');
             }
 
             // show me the money
@@ -47,6 +58,8 @@ function sendMoney(app, socket) {
             });
 
             const result = await transaction.save();
+
+            const dataForNotification = await Transaction.findById(transaction._id).populate('sender' );       
 
             // only adjust balance if sender and recipient are different accounts
             if (actualRecipient.id !== senderId) {
@@ -63,10 +76,25 @@ function sendMoney(app, socket) {
 
             }
 
-            // transaction is successful, send socket.io event containing users id in its name
-            socket.emit(`transaction-${actualRecipient._id}`, result);
-
             res.json(result);
+
+            // transaction is successful, send socket.io event containing users id in its name
+            socket.emit(`transaction-${actualRecipient._id}`, dataForNotification);
+
+            const { subscriptions } = actualRecipient;
+
+            // send push notification to recipient
+            subscriptions.forEach(async subscription => {
+
+                const toSend = {
+                    title: 'New Payment',
+                    icon: '/logo192.png',
+                    body: `You received a new payment from ${sender.name}.`,
+                };
+
+                await webpush.sendNotification(subscription, JSON.stringify(toSend));
+
+            });
 
         } catch (error) {
             res.status(500).json(error);

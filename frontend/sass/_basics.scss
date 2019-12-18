@@ -46,3 +46,12 @@ h1 {
     display: flex;
     justify-content: space-between;
 }
+
+.btn {
+    &.link-btn {
+        padding: 0;
+    }
+    a {
+        display: block;
+    }
+}

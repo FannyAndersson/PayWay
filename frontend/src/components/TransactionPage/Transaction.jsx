@@ -12,6 +12,7 @@ const Transaction = (props) => {
             <div className="contacts">
                 <p>{contact} </p>
                 <p>{newdate}</p>
+                <p style={{color: '#999'}}>{transaction.message}</p>
             </div>
             <div>
                 {transaction.amount}

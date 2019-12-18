@@ -9,11 +9,20 @@ const connectMongo = require("connect-mongo")(session);
 const app = express();
 const salt = 'lussekatter are the best'; // unique secret
 const http = require('http');
+const webpush = require('web-push');
 
 const theRest = require("the.rest");
 const port = 3001;
 const connectionstring = require("./connectionstring.js");
 const useCustomRoutes = require("./routes/index");
+
+const { public, private } = require('./vapid-keys.json');
+
+webpush.setVapidDetails(
+    'mailto:elias.hj@gmail.com',
+    public,
+    private,
+);
 
 // Connect to MongoDB via Mongoose
 mongoose
@@ -58,20 +67,6 @@ const io = require('socket.io')(server);
 // custom routes
 useCustomRoutes(app, io);
 
-if (process.env.NODE_ENV === 'production') {
-
-    // if in production, serve static files of frontend build
-    app.use(express.static('frontend/build'));
-
-    // serve index html for all urls as last resort - so it works with the whole SPA things
-    app.get('*', (req, res) => {
-
-        res.sendFile(path.resolve(__dirname, 'frontend/build/index.html'));
-
-    })
-
-}
-
 // connect our own acl middleware
 const acl = require("./acl");
 const aclRules = require("./acl-rules.json");
@@ -85,6 +80,20 @@ app.use(acl(aclRules));
 //    Please Note: This path must be absolute
 const pathToModelFolder = path.join(__dirname, "mongoose-models");
 app.use(theRest(express, "/api", pathToModelFolder));
+
+if (process.env.NODE_ENV === 'production') {
+
+    // if in production, serve static files of frontend build
+    app.use(express.static('frontend/build'));
+
+    // serve index html for all urls as last resort - so it works with the whole SPA things
+    app.get('*', (req, res) => {
+
+        res.sendFile(path.resolve(__dirname, 'frontend/build/index.html'));
+
+    })
+
+}
 
 server.listen(port, () => {
     console.log("Server listening on", port);

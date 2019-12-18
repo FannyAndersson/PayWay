@@ -64,7 +64,7 @@ const FavouritesList = () => {
 
     return (
         <Row>
-            <Col m={6} s={12}>
+            <Col s={12}>
                 {favorites.length ?
                     <React.Fragment>
                         <h5 className="mb">My favorite contacts:</h5>

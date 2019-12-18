@@ -47,9 +47,10 @@ const TransactionPage = () => {
                                 return (
                                     <Transaction
                                         className={"incoming"} 
-                                        contact={transaction.sender.name} 
+                                        contact={transaction.sender ? transaction.sender.name : 'deleted user\' name'}
                                         transaction={transaction} 
                                         key={transaction._id} 
+                                        message={transaction.message}
                                     />
                                 )}) : null;
 
@@ -58,9 +59,10 @@ const TransactionPage = () => {
                                 return (
                                 <Transaction 
                                     className={"outgoing"} 
-                                    contact={transaction.recipient.name} 
+                                    contact={transaction.recipient ? transaction.recipient.name : 'deleted user\' name'} 
                                     transaction={transaction} 
-                                    key={transaction._id} 
+                                    key={transaction._id}
+                                    message={transaction.message} 
                                 />
                                 )}) : null;
 
@@ -68,15 +70,19 @@ const TransactionPage = () => {
         <React.Fragment>
             <Tabs className="tab-demo z-depth-1">
                 <Tab title="All" active>
-                    {data.map(transaction => {
+                    {data ? data.map(transaction => {
                         if (transaction.recipient === user._id) {
                             return (
-                                <Transaction className={"incoming"} contact={transaction.sender.name} transaction={transaction} key={transaction._id} />
+                                <Transaction className={"incoming"}
+                                contact={transaction.sender ? transaction.sender.name : 'deleted user\' name'}
+                                  transaction={transaction} key={transaction._id} />
                             )
                         } else {
-                            return (<Transaction className={"outgoing"} contact={transaction.recipient.name} transaction={transaction} key={transaction._id} />)
+                            return (<Transaction className={"outgoing"}
+                             contact={transaction.recipient ? transaction.recipient.name : 'deleted user\' name'}
+                              transaction={transaction} key={transaction._id} />)
                         }
-                    })}
+                    }) : null}
                 </Tab>
                 <Tab title="Incoming" > 
                     {incomingTransactions.length ? incomingTransactions : (<p>You have no incoming transactions.</p>)}
