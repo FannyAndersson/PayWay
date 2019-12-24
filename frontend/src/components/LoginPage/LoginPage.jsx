@@ -17,6 +17,7 @@ const LoginPage = () => {
 
     const handleMessageUnmount = () => {
         setShowMessage(false);
+        setShowErrorMessage(false);
     }
 
     const onShowErrorMessage = (text) => {
@@ -62,7 +63,6 @@ const LoginPage = () => {
     const { inputs, handleInputChange, handleSubmit } = useLoginForm(onLogin);
 
     const onResetPassword = async () => {
-
         try {
             const response = await fetch('/api/reset-password', {
                 method: 'POST',
