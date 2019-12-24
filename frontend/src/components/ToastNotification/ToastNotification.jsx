@@ -9,7 +9,7 @@ const ToastNotification = (props) => {
         <React.Fragment>
             {props.data ? <div id="toast-container">
                 <div className={'toast ' + (props.showMe ? 'on' : null)}>
-                `You've got {props.data.amount} {user.currency} from {props.data.sender.name}!`
+                `You've got {props.data.amount} SEK from {props.data.sender.name}!`
                 </div>
             </div> : null}
         </React.Fragment>

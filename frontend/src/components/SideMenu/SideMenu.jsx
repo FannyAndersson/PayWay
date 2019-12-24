@@ -12,7 +12,7 @@ const SideMenu = props => {
         <li className="sideMenu-user-info">
           <dl>
             <dd>Logged in as {user.name}</dd>
-            <dd>Current balance: {user.balance} {user.currency}</dd>
+            <dd>Current balance: {user.balance} SEK</dd>
             <dd>Phone: {user.phone}</dd>
           </dl>
         </li>
