@@ -73,9 +73,7 @@ async function registerPushNotifications() {
 
     if ('Notification' in window) {
 
-        Notification.requestPermission(status => {
-            console.log('Notification permission status:', status);
-        });
+        Notification.requestPermission(() => null);
 
     }
 
