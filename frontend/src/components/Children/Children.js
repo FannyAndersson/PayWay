@@ -8,23 +8,51 @@ import { Link, } from 'react-router-dom';
 const Children = () => {
     const [children, setChildren] = useState({});
     const { user } = useContext(UserContext);
+    const [text, setText] = useState('');
+
+
+    const createChildrenList =(data, mounted) => {
+        const allChildren = data ? {confirmed: data[0], pending: data[1]} : null;
+        if (mounted) {
+            setChildren({...allChildren});
+        }
+    }
 
     useEffect(() => {
         let mounted = true;
+        const userID = user._id;
+        let key = "/api/users/";
+        let url = key + userID + "/children";
         const getChildren = async () => {
             try {
-                const userID = user._id;
-                let key = "/api/users/";
-                let url = key + userID + "/children";
-                const data = await fetch(url);
-                const result = await data.json();
-                const allChildren = result ? {confirmed: result[0], pending: result[1]} : null;
-                if (mounted) {
-                    setChildren({...allChildren});
+                
+                const result = await fetch(url);
+                const data = await result.json();
+                if(data) {
+                    createChildrenList(data, mounted);
                 }
 
             } catch (error) {
                 console.error(error);
+                if('caches' in window) {
+                    console.log('Perhaps I have some cache for you?');
+                    caches.match(url)
+                        .then(res => {
+                            if(res) {
+                                return res.json();
+                            }
+                            else {
+                                console.log('Sorry, I have no cache for this case');
+                                setText('You are offline. Data cannot be updated now.');
+                            }
+                        })
+                        .then(data => {
+                            if(data) {
+                                console.log('Happy cache!');
+                                createChildrenList(data, mounted);
+                            }
+                        })
+                }
             }
         }
 
@@ -73,7 +101,7 @@ const Children = () => {
 
 
         ) : (
-            <p>{`Loading`}</p>
+            <p>{text ? text : `Loading`}</p>
             )
 }
 

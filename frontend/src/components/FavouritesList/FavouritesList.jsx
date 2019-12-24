@@ -15,22 +15,54 @@ const FavouritesList = () => {
 
     const { user } = useContext(UserContext);
     const [favorites, setFavorites] = useState([]);
+    const [text, setText] = useState('');
+
+
+    const createFavouritesList = (data, mounted) => {
+        if (mounted) {
+            setFavorites([...data])
+        }
+    }
 
     useEffect(() => {
         let mounted = true;
+        
 
         const getFavorites = async () => {
+            const userID = user._id;
+            let key = '/api/users/';
+            let url = key + userID + '/favorites';
+
             try {
-                const userID = user._id;
-                let key = '/api/users/';
-                let url = key + userID + '/favorites';
-                const data = await fetch(url);
-                const result = await data.json();
-                if (mounted) {
-                    setFavorites([...result])
+
+                const result = await fetch(url);
+                const data = await result.json();
+
+                if(data) {
+                    createFavouritesList(data, mounted);
                 }
+                
             } catch (error) {
                 console.error(error);
+                if('caches' in window) {
+                    console.log('Perhaps I have some cache for you?');
+                    caches.match(url)
+                        .then(res => {
+                            if(res) {
+                                return res.json();
+                            }
+                            else {
+                                console.log('Sorry, I have no cache for this case');
+                                setText('You are offline. Data cannot be updated now.');
+                            }
+                        })
+                        .then(data => {
+                            if(data) {
+                                console.log('Happy cache!');
+                                createFavouritesList(data, mounted);
+                            }
+                        })
+                }
             }
         }
         getFavorites();
@@ -77,7 +109,7 @@ const FavouritesList = () => {
                         </Collection>
                     </React.Fragment>
                     :   <React.Fragment>
-                        <p> You have not added any contacts to favorites</p>
+                        <p>{text ? text : 'You have not added any contacts to favorites'}</p>
                         <Link to="/profile/favorites/add-favorite" title="Add a contact to Favorites">Add a contact to Favorites</Link>
                     </React.Fragment> 
                     }

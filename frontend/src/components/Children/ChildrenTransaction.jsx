@@ -12,31 +12,58 @@ const ChildrenTransactions = (props) => {
     const { match } = props;
     const { params: { _id } } = match
     const id = _id;
+    const [text, setText] = useState('');
+
+
+    const createChildTransactionsList = (data, mounted) => {
+        const allTransactions = [...data.incomingTransactions, ...data.outgoingTransactions].sort((a, b) => {
+            return a.date > b.date ? -1 : 1
+        });
+        if (mounted) {
+            setData([...allTransactions
+            ]);
+            setName(data.childName);
+            setPhone(data.childPhone)
+        }
+    }
 
     useEffect(() => {
 
         let mounted = true;
 
         const getTransaction = async () => {
-
+            const childID = _id;
+            let key = "/api/child-transactions/";
+            let url = key + childID;
             try {
-                const childID = _id;
-                let key = "/api/child-transactions/";
-                let url = key + childID;
+                
                 const result = await fetch(url);
                 const jsonData = await result.json();
-                const allTransactions = [...jsonData.incomingTransactions, ...jsonData.outgoingTransactions].sort((a, b) => {
-                    return a.date > b.date ? -1 : 1
-                });
-                if (mounted) {
-                    setData([...allTransactions
-                    ]);
-                    setName(jsonData.childName);
-                    setPhone(jsonData.childPhone)
-                }
+                if(jsonData) {
+                    createChildTransactionsList(jsonData, mounted);
+                }                
 
             } catch (error) {
                 console.error('Error:', error);
+                if('caches' in window) {
+                    console.log('Perhaps I have some cache for you?');
+                    caches.match(url)
+                        .then(res => {
+                            if(res) {
+                                return res.json();
+                            }
+                            else {
+                                console.log('Sorry, I have no cache for this case');
+                                setText('You are offline. Data cannot be updated now.');
+                            }
+                        })
+                        .then(data => {
+                            if(data) {
+                                console.log('Happy cache!');
+                                createChildTransactionsList(data, mounted);
+                            }
+                        })
+                }
             }
         }
 
@@ -99,7 +126,7 @@ const ChildrenTransactions = (props) => {
     ) : (<React.Fragment>
         <h4>{name}</h4>
         <h5>{phone}</h5>
-        <p>{`${name} doesn't have any transactions yet`}</p>
+        <p>{text ? text : `${name} doesn't have any transactions yet`}</p>
     </React.Fragment>
         )
 }

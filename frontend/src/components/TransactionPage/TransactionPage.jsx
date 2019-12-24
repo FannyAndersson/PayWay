@@ -9,28 +9,55 @@ const TransactionPage = () => {
 
     const { user } = useContext(UserContext);
 
+    const [text, setText] = useState('');
+
+    const createTransactionsList = (data, mounted) => {
+        const allTransactions = [...data.incomingTransactions, ...data.outgoingTransactions].sort((a, b) => {
+            return a.date > b.date ? -1 : 1
+        });
+        if (mounted) {
+            setData([...allTransactions
+            ]);
+        }
+    }
+
     useEffect(() => {
 
         let mounted = true;
 
         const getTransaction = async () => {
-
+            const userID = user._id;
+            let key = "/api/users/";
+            let url = key + userID + "/transactions";
             try {
-                const userID = user._id;
-                let key = "/api/users/";
-                let url = key + userID + "/transactions";
+                
                 const result = await fetch(url);
                 const jsonData = await result.json();
-                const allTransactions = [...jsonData.incomingTransactions, ...jsonData.outgoingTransactions].sort((a, b) => {
-                    return a.date > b.date ? -1 : 1
-                });
-                if (mounted) {
-                    setData([...allTransactions
-                    ]);
-                }
+                if(jsonData) {
+                    createTransactionsList(jsonData, mounted);
+                }                
 
             } catch (error) {
                 console.error('Error:', error);
+                if('caches' in window) {
+                    console.log('Perhaps I have some cache for you?');
+                    caches.match(url)
+                        .then(res => {
+                            if(res) {
+                                return res.json();
+                            }
+                            else {
+                                console.log('Sorry, I have no cache for this case');
+                                setText('You are offline. Data cannot be updated now.');
+                            }
+                        })
+                        .then(data => {
+                            if(data) {
+                                console.log('Happy cache!');
+                                createTransactionsList(data, mounted);
+                            }
+                        })
+                }
             }
         }
 
@@ -93,7 +120,7 @@ const TransactionPage = () => {
             </Tabs>
         </React.Fragment>
     ) : (
-        <p>{`You don't have any transactions yet`}</p>
+        <p>{text ? text : `You don't have any transactions yet`}</p>
         )
 }
 
